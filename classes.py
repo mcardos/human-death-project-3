@@ -2,31 +2,43 @@ import pygame,sys
 from pygame.locals import *
 
 
-pygame.init()
-size = (576, 1024)
-screen = pygame.display.set_mode(size) # Create a screen
-pygame.display.set_caption('HEALTHFY') # creates name of the game on top
-clock = pygame.time.Clock()
+# pygame.init()
+# size = (576, 1024)
+# screen = pygame.display.set_mode(size) # Create a screen
+# pygame.display.set_caption('HEALTHFY') # creates name of the game on top
+# clock = pygame.time.Clock()
 
 class HealthfyModel:
     '''
-    'Keep track of the state of the game, including 1. how many times it was fed
-    '2. how many times it rested, 3. how many times it worked, 
-    '4. how many times it socialized, 5. how many times it used the bathrooms'
-    'Attributes:
-                '_healthbar: A float bar represeting the health of the humanoid'
-                'feeding_status: A bool represeting if the humanoid is hungry or not(False)'
-                'sleeping_status: A bool represeting if the humanoid is sleepy or not(False)'
-                'working_status: A bool represeting if the humanoid needs to work or not(False)
-                '_current_status: A number representing the current activity of the humanoid'
-                'socializing_status: A bool represeting if the humanoid needs to socialize or not(False)'
-                'bathroom_status: A bool represeting if the humanoid is in need of the bathroom or not(False)'
+    Keeps track of the state of the game and the humanoid, including:
+        1. how many times it was fed,
+        2. how many times it rested,
+        3. how many times it worked,
+        4. how many times it socialized,
+        5. how many times it used the bathrooms
+
+    Attributes:
+        _healthbar: A float bar represeting the health of the humanoid
+        feeding_status: A bool represeting if the humanoid is hungry or not(False)
+        sleeping_status: A bool represeting if the humanoid is sleepy or not(False)
+        working_status: A bool represeting if the humanoid needs to work or not(False)
+        _current_status: A number representing the current activity of the humanoid'
+        socializing_status: A bool represeting if the humanoid needs to socialize or not(False)
+        bathroom_status: A bool represeting if the humanoid is in need of the bathroom or not(False)
     '''
     def __init__(self):
-        pass
-        # self._healthbar = pass
-        # self._current_status = pass
-    
+        """
+        Create a new Healthfy instance. Keeps track of health bar and current status of the humanoid.
+        """
+        self.health = 200.0      # Current Health
+        self._maxHealth = 200    # Max Health
+        self._healthDashes = 20  # Max Displayed dashes
+        self._user_score = None
+
+    def process_input(self):
+        """
+        """
+
     def feeding_status(self):
         pass
 
@@ -44,22 +56,31 @@ class HealthfyModel:
 
     def bathroom_status(self):
         pass
-                
-class HealthfyView:
-    """
-    'Displays the current game inputs/buttoms, the current status of the humanoid and its face, as well'
-    'as its health bar'
-    'Attributes:
-                '_healthbar: A float bar represeting the health of the humanoid'
-                '_current_status: A number representing the current activity of the humanoid'
-                'buttoms: A list of 5 numbers that represent each activity'
-    """
-
-    def __init__(self, HealthfyModel):
+    
+    def user_score(self, parameter_list):
         """
         docstring
         """
         pass
+
+
+
+class HealthfyView(HealthfyModel):
+    """
+    Displays the current game (the current status of the humanoid, face, and health bar)
+    and the inputs/buttoms to the player.
+
+    Attributes:
+        _healthbar: A float bar represeting the health of the humanoid
+        _current_status: A number representing the current activity of the humanoid
+        buttoms: A list of 5 numbers that represent each activity
+    """
+
+    def __init__(self, HealthfyModel):
+        """
+        Initialize the view class.
+        """
+        super().__init__()
     
     def buttoms(self, parameter_list):
         """
@@ -68,60 +89,108 @@ class HealthfyView:
         pass
 
     def current_status(self):
-        pass
-
+        """
+        Display the acitivity currently being performed by the humanoid. 
+        """
+        print(f"Humanoid is currently {model.process_input}\n Try to keep them alive ... or don't.")
+    
     def display_bar(self, parameter_list):
         """
-        Display the icon of the humanoid and its current healthbar.
+        Convert current health of the humanoid to a percenatage and corresponding dashes to display. 
+
+        Returns: 
+            A float representing the current health of the humanoid in percentange, 
+            and a bar with dashes the size of the percentange (i.e. 1 dash for 10%).
         """
-        pass
+        dashConvert = int(self._maxHealth/self._healthDashes)    # Get the number to divide by to convert health to dashes
+        currentDashes = int(self.health/dashConvert)             # Convert health to dash count
+        remainingHealth = self._healthDashes - currentDashes     # Get the health remaining to fill as space
+
+        healthDisplay = '-' * currentDashes                             # Convert to dashes as a string:   "--------"
+        remainingDisplay = ' ' * remainingHealth                        # Convert to spaces as a string: "            "
+        percent = str(int((self.health/self._maxHealth)*100)) + "%"     # Get the percent as a whole number:
+
+        print("|" + healthDisplay + remainingDisplay + "|")  # Print out textbased healthbar
+        print("         " + percent)                         # Print the percent
+    
     
     def display_score(self, parameter_list):
         """
-        docstring
+        Display the top score and the current score to the player.
         """
         pass
+
+
+
 
 class HealthfyController:
     """
-    'Process the inputs from the user'
-    'Attributes:
-                'quit_game: Command to exit the game'
-                'process_input: Process the user input of an integer from 1 to 5'
-                'user_score: Adds or decreases the user score based on the inputs'
+    Get the inputs from the user.
+
+    Attributes:
+        _quit_game: Command to exit the game
+        get_input: Gets the user input of an integer from 1 to 5
+        user_score: Adds or decreases the user score based on the inputs.
+        _help: Print short summary of the game.
+        _invalid_input: Print short message telling the user to input another command.
     """
 
-    def __init__(self, parameter_list):
+    def __init__(self):
         """
         docstring
         """
         pass
 
-    def process_input(self, parameter_list):
+    def get_input(self):
         """
-        docstring
+        Gets the input from the player and translates it into one of the 5 commands.
+
+        Returns:
+            A string with the current status of the humanoid and an updated healthbar.
         """
-        pass
+        player_input = input(
+            "What is your command? (or enter h for help, q to quit): ")
+        stripped_input = player_input.strip()
+        if stripped_input == "q":
+            self._quit_game()
+        elif stripped_input == "h":
+            self._help()
+# TODO: Add an else statement that corresponds with the commands.
     
-    def quit_game(self, parameter_list):
+    def _quit_game(self):
         """
-        docstring
+        Print a message and quit the game by exiting the program.
         """
-        pass
+        print('You quit, call 2BR02B or something.')
+        sys.exit()
 
-    def user_score(self, parameter_list):
+    def _help(self):
         """
-        docstring
+        Print a short summary of the game to help the player.
         """
-        pass
+        print("Click one of the buttoms or the keys 1 to 5 to command")
+        print("the humanoid to do something. Win by not letting them die.")
+    
+    def _invalid_input(self):
+        """
+        Print an error message stating that the input to the controller was
+        invalid in some way and for the user to input another command.
+        """
+        print("Invalid input. Please try again. Enter h for help or q to quit.")
+
+
+
+def main():
+    model = HealthfyModel()
 
 if __name__ == '__main__':
-    pygame.init()
-    size = (576, 1024)
-    screen = pygame.display.set_mode(size) # Create a screen
-    pygame.display.set_caption('HEALTHFY') # creates name of the game on top
-    clock = pygame.time.Clock()
+    HealthfyController().get_input
+    # pygame.init()
+    # size = (576, 1024)
+    # screen = pygame.display.set_mode(size) # Create a screen
+    # pygame.display.set_caption('HEALTHFY') # creates name of the game on top
+    # clock = pygame.time.Clock()
 
-    running = True
-    while True:
-        pass
+    # running = True
+    # while True:
+    #     pass
