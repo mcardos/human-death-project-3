@@ -1,3 +1,13 @@
+import pygame,sys
+from pygame.locals import *
+
+
+pygame.init()
+size = (576, 1024)
+screen = pygame.display.set_mode(size) # Create a screen
+pygame.display.set_caption('HEALTHFY') # creates name of the game on top
+clock = pygame.time.Clock()
+
 class HealthfyModel:
     '''
     'Keep track of the state of the game, including 1. how many times it was fed
@@ -13,8 +23,9 @@ class HealthfyModel:
                 'bathroom_status: A bool represeting if the humanoid is in need of the bathroom or not(False)'
     '''
     def __init__(self):
-        self._healthbar = pass
-        self._current_status = pass
+        pass
+        # self._healthbar = pass
+        # self._current_status = pass
     
     def feeding_status(self):
         pass
@@ -35,12 +46,14 @@ class HealthfyModel:
         pass
                 
 class HealthfyView:
+    """
     'Displays the current game inputs/buttoms, the current status of the humanoid and its face, as well'
     'as its health bar'
     'Attributes:
                 '_healthbar: A float bar represeting the health of the humanoid'
                 '_current_status: A number representing the current activity of the humanoid'
                 'buttoms: A list of 5 numbers that represent each activity'
+    """
 
     def __init__(self, HealthfyModel):
         """
@@ -70,11 +83,13 @@ class HealthfyView:
         pass
 
 class HealthfyController:
+    """
     'Process the inputs from the user'
     'Attributes:
                 'quit_game: Command to exit the game'
                 'process_input: Process the user input of an integer from 1 to 5'
                 'user_score: Adds or decreases the user score based on the inputs'
+    """
 
     def __init__(self, parameter_list):
         """
@@ -100,5 +115,13 @@ class HealthfyController:
         """
         pass
 
-def main():
-    
+if __name__ == '__main__':
+    pygame.init()
+    size = (576, 1024)
+    screen = pygame.display.set_mode(size) # Create a screen
+    pygame.display.set_caption('HEALTHFY') # creates name of the game on top
+    clock = pygame.time.Clock()
+
+    running = True
+    while True:
+        pass
