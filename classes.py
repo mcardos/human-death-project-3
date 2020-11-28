@@ -1,20 +1,21 @@
 class HealthfyModel:
     '''
-    'Keep track of the state of the game, including 1. how many times it was fed
-    '2. how many times it rested, 3. how many times it worked, 
-    '4. how many times it socialized, 5. how many times it used the bathrooms'
-    'Attributes:
-                '_healthbar: A float bar represeting the health of the humanoid'
-                'feeding_status: A bool represeting if the humanoid is hungry or not(False)'
-                'sleeping_status: A bool represeting if the humanoid is sleepy or not(False)'
-                'working_status: A bool represeting if the humanoid needs to work or not(False)
-                '_current_status: A number representing the current activity of the humanoid'
-                'socializing_status: A bool represeting if the humanoid needs to socialize or not(False)'
-                'bathroom_status: A bool represeting if the humanoid is in need of the bathroom or not(False)'
+    Keep track of the state of the game, including 1. how many times it was fed
+    2. how many times it rested, 3. how many times it worked, 
+    4. how many times it socialized, 5. how many times it used the bathrooms
+    Attributes:
+                _healthbar: A float bar represeting the health of the humanoid
+                feeding_status: A bool represeting if the humanoid is hungry or not(False)
+                sleeping_status: A bool represeting if the humanoid is sleepy or not(False)
+                working_status: A bool represeting if the humanoid needs to work or not(False)
+                _current_status: A number representing the current activity of the humanoid
+                socializing_status: A bool represeting if the humanoid needs to socialize or not(False)
+                bathroom_status: A bool represeting if the humanoid is in need of the bathroom or not(False)
     '''
     def __init__(self):
-        self._healthbar = pass
-        self._current_status = pass
+        pass
+        # self._healthbar = pass
+        # self._current_status = pass
     
     def feeding_status(self):
         pass
@@ -101,4 +102,5 @@ class HealthfyController:
         pass
 
 def main():
-    
+    ''' 
+    Run the game 
