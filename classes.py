@@ -18,13 +18,13 @@ class HealthfyModel:
         5. how many times it used the bathrooms
 
     Attributes:
-        _healthbar: A float bar represeting the health of the humanoid
-        feeding_status: A bool represeting if the humanoid is hungry or not(False)
-        sleeping_status: A bool represeting if the humanoid is sleepy or not(False)
-        working_status: A bool represeting if the humanoid needs to work or not(False)
+        _healthbar: A float bar representing the health of the humanoid
+        feeding_status: A bool representing if the humanoid is hungry or not(False)
+        sleeping_status: A bool representing if the humanoid is sleepy or not(False)
+        working_status: A bool representing if the humanoid needs to work or not(False)
         _current_status: A number representing the current activity of the humanoid'
-        socializing_status: A bool represeting if the humanoid needs to socialize or not(False)
-        bathroom_status: A bool represeting if the humanoid is in need of the bathroom or not(False)
+        socializing_status: A bool representing if the humanoid needs to socialize or not(False)
+        bathroom_status: A bool representing if the humanoid is in need of the bathroom or not(False)
     '''
     def __init__(self):
         """
@@ -44,7 +44,7 @@ class HealthfyModel:
 
     def sleeping_status(self, parameter_list):
         """
-        Add or decrease the healthbar if user inputs integer 2.
+        Add or decrease the health bar if user inputs integer 2.
         """
         pass
     
@@ -68,12 +68,12 @@ class HealthfyModel:
 class HealthfyView(HealthfyModel):
     """
     Displays the current game (the current status of the humanoid, face, and health bar)
-    and the inputs/buttoms to the player.
+    and the inputs/buttons to the player.
 
     Attributes:
-        _healthbar: A float bar represeting the health of the humanoid
+        _healthbar: A float bar representing the health of the humanoid
         _current_status: A number representing the current activity of the humanoid
-        buttoms: A list of 5 numbers that represent each activity
+        buttons: A list of 5 numbers that represent each activity
     """
 
     def __init__(self, HealthfyModel):
@@ -82,25 +82,25 @@ class HealthfyView(HealthfyModel):
         """
         super().__init__()
     
-    def buttoms(self, parameter_list):
+    def buttons(self, parameter_list):
         """
-        Display the 5 buttoms to the user.
+        Display the 5 buttons to the user.
         """
         pass
 
     def current_status(self):
         """
-        Display the acitivity currently being performed by the humanoid. 
+        Display the activity currently being performed by the humanoid. 
         """
-        print(f"Humanoid is currently {model.process_input}\n Try to keep them alive ... or don't.")
+        print(f"Humanoid is currently {model.process_input}\n Try to keep them alive.")
     
     def display_bar(self, parameter_list):
         """
-        Convert current health of the humanoid to a percenatage and corresponding dashes to display. 
+        Convert current health of the humanoid to a percentage and corresponding dashes to display. 
 
         Returns: 
-            A float representing the current health of the humanoid in percentange, 
-            and a bar with dashes the size of the percentange (i.e. 1 dash for 10%).
+            A float representing the current health of the humanoid in percentage, 
+            and a bar with dashes the size of the percentage (i.e. 1 dash for 10%).
         """
         dashConvert = int(self._maxHealth/self._healthDashes)    # Get the number to divide by to convert health to dashes
         currentDashes = int(self.health/dashConvert)             # Convert health to dash count
@@ -110,7 +110,7 @@ class HealthfyView(HealthfyModel):
         remainingDisplay = ' ' * remainingHealth                        # Convert to spaces as a string: "            "
         percent = str(int((self.health/self._maxHealth)*100)) + "%"     # Get the percent as a whole number:
 
-        print("|" + healthDisplay + remainingDisplay + "|")  # Print out textbased healthbar
+        print("|" + healthDisplay + remainingDisplay + "|")  # Print out text based health bar 
         print("         " + percent)                         # Print the percent
     
     
