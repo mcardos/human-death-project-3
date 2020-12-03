@@ -1,12 +1,7 @@
 import pygame,sys
 from pygame.locals import *
+import time
 
-
-# pygame.init()
-# size = (576, 1024)
-# screen = pygame.display.set_mode(size) # Create a screen
-# pygame.display.set_caption('HEALTHFY') # creates name of the game on top
-# clock = pygame.time.Clock()
 
 class HealthfyModel:
     '''
@@ -35,14 +30,11 @@ class HealthfyModel:
         self._healthDashes = 20  # Max Displayed dashes
         self._user_score = None
 
-    def process_input(self):
-        """
-        """
-
+    
     def feeding_status(self):
         pass
 
-    def sleeping_status(self, parameter_list):
+    def sleeping_status(self):
         """
         Add or decrease the health bar if user inputs integer 2.
         """
@@ -57,15 +49,21 @@ class HealthfyModel:
     def bathroom_status(self):
         pass
     
-    def user_score(self, parameter_list):
+    def user_score(self):
         """
         docstring
+        """
+        pass
+    
+    def update(self):
+        """
+        check and update the model values according to our set rules
         """
         pass
 
 
 
-class HealthfyView(HealthfyModel):
+class HealthfyView:
     """
     Displays the current game (the current status of the humanoid, face, and health bar)
     and the inputs/buttons to the player.
@@ -80,9 +78,31 @@ class HealthfyView(HealthfyModel):
         """
         Initialize the view class.
         """
-        super().__init__()
+        self.model = model
+        pygame.display.set_caption('Healthfy')
+        self.screen = pygame.display.set_mode((500,500))
+
     
-    def buttons(self, parameter_list):
+    def draw(self):
+        """ Draw the current game state to the screen """
+        background = pygame.image.load("Images/background.jpg")
+        self.screen.fill((255, 255, 255))
+        self.screen.blit(background, (0, 0))
+
+        x_pos = 200
+        for i in range(5):
+            pygame.draw.rect(self.screen,
+                             pygame.Color(255, 255, 255),
+                             pygame.Rect(x_pos,
+                                         250,
+                                         30,
+                                         30))
+            x_pos += 50
+        
+        pygame.display.update()
+
+    
+    def buttons(self):
         """
         Display the 5 buttons to the user.
         """
@@ -94,7 +114,7 @@ class HealthfyView(HealthfyModel):
         """
         print(f"Humanoid is currently {model.process_input}\n Try to keep them alive.")
     
-    def display_bar(self, parameter_list):
+    def display_bar(self):
         """
         Convert current health of the humanoid to a percentage and corresponding dashes to display. 
 
@@ -114,7 +134,7 @@ class HealthfyView(HealthfyModel):
         print("         " + percent)                         # Print the percent
     
     
-    def display_score(self, parameter_list):
+    def display_score(self):
         """
         Display the top score and the current score to the player.
         """
@@ -135,13 +155,13 @@ class HealthfyController:
         _invalid_input: Print short message telling the user to input another command.
     """
 
-    def __init__(self):
+    def __init__(self, HealthfyModel):
         """
         docstring
         """
         pass
 
-    def get_input(self):
+    def get_input(self): # USe as help function instead since we're already handling user input in a different method
         """
         Gets the input from the player and translates it into one of the 5 commands.
 
@@ -155,7 +175,15 @@ class HealthfyController:
             self._quit_game()
         elif stripped_input == "h":
             self._help()
-# TODO: Add an else statement that corresponds with the commands.
+
+    def handle_event(self, event):
+        """
+        """
+        if event.type == KEYDOWN:
+            if event.key == pygame.K_e:
+                print("Has Eaten!") # Will replace this with what happens to the game. 
+                # Add other Key board presses e.g S, B, W
+
     
     def _quit_game(self):
         """
@@ -180,17 +208,26 @@ class HealthfyController:
 
 
 
-def main():
-    model = HealthfyModel()
-
 if __name__ == '__main__':
-    HealthfyController().get_input
-    # pygame.init()
-    # size = (576, 1024)
-    # screen = pygame.display.set_mode(size) # Create a screen
-    # pygame.display.set_caption('HEALTHFY') # creates name of the game on top
-    # clock = pygame.time.Clock()
+    
+    pygame.init()
 
-    # running = True
-    # while True:
-    #     pass
+    size = (500, 500)
+
+    model = HealthfyModel()
+    print(model)
+    view = HealthfyView(model)
+    controller = HealthfyController(model)
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                running = False
+
+            controller.handle_event(event)
+        model.update()
+        view.draw()
+        time.sleep(.001)
+
+    pygame.quit()
