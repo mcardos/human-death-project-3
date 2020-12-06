@@ -19,9 +19,10 @@ clock = pygame.time.Clock()
 RUNNING = True
 CURRENT_SCORE = 0
 TIMER = pygame.USEREVENT + 1
-timer_sec = 240
+timer_sec = 48
 pygame.time.set_timer(TIMER, 1000)
 font = pygame.font.SysFont(None, 100)
+text = font.render(str(timer_sec), True, (0, 128, 0))
 
 def button(msg,x,y,w,h,ic,ac,action=None):
     mouse = pygame.mouse.get_pos()
@@ -46,11 +47,13 @@ def score():
     pass
 
 def health_bar():
-    pygame.draw.rect(screen, (0, 0, 0), (50, 75, 50, 100))
+    pygame.draw.rect(screen, green, (0, 100, 0, 0))
 while RUNNING:
     # clock.tick(240)
     screen.fill(white)
     screen.blit(background, (0, 0))
+    screen.blit(humanoid, (250, 350))
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             RUNNING = False
@@ -59,23 +62,30 @@ while RUNNING:
             text = font.render(str(timer_sec), True, (0, 128, 0))
             if timer_sec == 0:
                 pygame.time.set_timer(TIMER, 0)
-            # if timer_sec > 0:
-            #     timer_sec -= 1
-            else:
-                pygame.time.set_timer(TIMER, 0)
+    text_rect = text.get_rect(center = screen.get_rect().center)
+    screen.blit(text, text_rect)
         # Add inactive 'buttons' 
-    if 233 <= timer_sec <= 238 or 180 <= timer_sec <= 175 :
+    if 44 <= timer_sec <= 46:
         pygame.draw.rect(screen, red, (300, 375, 50, 50))
     else:
         pygame.draw.rect(screen, black, (300, 375, 50, 50))
-    if 60 <= timer_sec <= 65 or 40 <= timer_sec <= 45 :
+    if 40 <= timer_sec <= 42 or 30 <= timer_sec <= 35 :
         pygame.draw.rect(screen, red, (300, 315, 50, 50))
     else:
         pygame.draw.rect(screen, black, (300, 315, 50, 50))
-    pygame.draw.rect(screen, (0, 0, 0), (300, 315, 50, 50))
-    pygame.draw.rect(screen, (0, 0, 0), (200, 375, 50, 50))
-    pygame.draw.rect(screen, (0, 0, 0), (100, 315, 50, 50))
-    pygame.draw.rect(screen, (0, 0, 0), (100, 375, 50, 50))
+    if 24 <= timer_sec <= 26:
+        pygame.draw.rect(screen, red, (200, 375, 50, 50))
+    else:
+        pygame.draw.rect(screen, black, (200, 375, 50, 50))
+    if 15 <= timer_sec <= 20 or 28 <= timer_sec <= 30:
+        pygame.draw.rect(screen, black, (100, 315, 50, 50))
+    else:
+        pygame.draw.rect(screen, red, (100, 315, 50, 50))
+    if 36 <= timer_sec <= 40 or 10 <= timer_sec <= 8:
+        pygame.draw.rect(screen, red, (100, 375, 50, 50))
+    else:
+        pygame.draw.rect(screen, black, (100, 375, 50, 50))
+    pygame.draw.rect(screen, green, (100, 50, 0, 100))
     pygame.display.flip()
     mouse = pygame.mouse.get_pos()
     
