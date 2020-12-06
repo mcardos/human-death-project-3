@@ -9,7 +9,7 @@ background = pygame.image.load("/home/mcardoso/project-3-healthfy/Images/backgro
 clock = pygame.time.Clock()
 RUNNING = True
 while RUNNING:
-    clock.tick(240)
+    # clock.tick(240)
     screen.fill((255, 255, 255))
     screen.blit(background, (0, 0))
     for event in pygame.event.get():
