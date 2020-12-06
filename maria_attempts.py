@@ -13,14 +13,15 @@ red = (255, 0, 0)
 green = (27, 133, 27)
 
 # Add background.
-background = pygame.image.load("/home/mcardoso/project-3-healthfy/Images/background.jpg")
-humanoid = pygame.image.load("/home/mcardoso/project-3-healthfy/Images/humanoid.jpg")
+background = pygame.image.load("/home/softdes/project-3-healthfy/Images/background.jpg")
+humanoid = pygame.image.load("/home/softdes/project-3-healthfy/Images/humanoid.jpg")
 clock = pygame.time.Clock()
 RUNNING = True
 CURRENT_SCORE = 0
 TIMER = pygame.USEREVENT + 1
 timer_sec = 240
 pygame.time.set_timer(TIMER, 1000)
+font = pygame.font.SysFont(None, 100)
 
 def button(msg,x,y,w,h,ic,ac,action=None):
     mouse = pygame.mouse.get_pos()
@@ -39,11 +40,13 @@ def button(msg,x,y,w,h,ic,ac,action=None):
     screen.blit(textSurf, textRect)
 
 def action():
-    pass 
+    pass
 
 def score():
-     pass
+    pass
 
+def health_bar():
+    pygame.draw.rect(screen, (0, 0, 0), (50, 75, 50, 100))
 while RUNNING:
     # clock.tick(240)
     screen.fill(white)
@@ -52,16 +55,29 @@ while RUNNING:
         if event.type == pygame.QUIT:
             RUNNING = False
         if event.type == TIMER:
-            if timer_sec > 0:
-                timer_text = pygame.font.Font("04B_19__.ttf", 38).render('00:%02d' % timer_sec, True, black)
+            timer_sec -= 1
+            text = font.render(str(timer_sec), True, (0, 128, 0))
+            if timer_sec == 0:
+                pygame.time.set_timer(TIMER, 0)
+            # if timer_sec > 0:
+            #     timer_sec -= 1
             else:
                 pygame.time.set_timer(TIMER, 0)
         # Add inactive 'buttons' 
-    pygame.draw.rect(screen, (0, 0, 0), (300, 375, 50, 50))
+    if 233 <= timer_sec <= 238 or 180 <= timer_sec <= 175 :
+        pygame.draw.rect(screen, red, (300, 375, 50, 50))
+    else:
+        pygame.draw.rect(screen, black, (300, 375, 50, 50))
+    if 60 <= timer_sec <= 65 or 40 <= timer_sec <= 45 :
+        pygame.draw.rect(screen, red, (300, 315, 50, 50))
+    else:
+        pygame.draw.rect(screen, black, (300, 315, 50, 50))
     pygame.draw.rect(screen, (0, 0, 0), (300, 315, 50, 50))
     pygame.draw.rect(screen, (0, 0, 0), (200, 375, 50, 50))
     pygame.draw.rect(screen, (0, 0, 0), (100, 315, 50, 50))
     pygame.draw.rect(screen, (0, 0, 0), (100, 375, 50, 50))
     pygame.display.flip()
+    mouse = pygame.mouse.get_pos()
+    
 pygame.display.update()
 pygame.quit()
