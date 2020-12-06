@@ -81,27 +81,83 @@ class HealthfyView:
         self.model = model
         pygame.display.set_caption('Healthfy')
         self.screen = pygame.display.set_mode((500,500))
+        self.timer_sec = 48
+        self.TIMER = pygame.USEREVENT + 1
+        pygame.time.set_timer(self.TIMER, 1000)
+        self.black = (0, 0, 0)
+        self.white = (255, 255, 255)
+        self.red = (255, 0, 0)
+        self.green = (27, 133, 27)
 
-    
+
+    def text_objects(self, text, font):
+        text_surface = font.render(text, True, self.white)
+        return text_surface, text_surface.get_rect()
+
     def draw(self):
         """ Draw the current game state to the screen """
         background = pygame.image.load("Images/background.jpg")
         self.screen.fill((255, 255, 255))
         self.screen.blit(background, (0, 0))
 
-        x_pos = 200
-        for i in range(5):
-            pygame.draw.rect(self.screen,
-                             pygame.Color(255, 255, 255),
-                             pygame.Rect(x_pos,
-                                         250,
-                                         30,
-                                         30))
-            x_pos += 50
-        
-        pygame.display.update()
+        if 44 <= self.timer_sec <= 46:
+            pygame.draw.rect(self.screen, self.red, (300, 375, 50, 50))
+        else:
+            pass
+            # pygame.draw.rect(self.screen, self.black, (300, 375, 50, 50))
+            # text_surface, text_rectangle = text_objects("Talk", small_text)
+            # text_rectangle.center = ((300+(50/2)), 375+(50/2))
+            # screen.blit(text_surface, text_rectangle)
+        if 40 <= self.timer_sec <= 42 or 30 <= self.timer_sec <= 35 :
+            pygame.draw.rect(self.screen, self.red, (300, 315, 50, 50))
+        else:
+            pass
+            # pygame.draw.rect(self.screen, self.black, (300, 315, 50, 50))
+            # text_surface, text_rectangle = text_objects("Potty", small_text)
+            # text_rectangle.center = ((300+(50/2)), 315+(50/2))
+            # self.screen.blit(text_surface, text_rectangle)
+        if 24 <= self.timer_sec <= 26:
+            pygame.draw.rect(self.screen, self.red, (200, 375, 50, 50))
+        else:
+            pass
+            # pygame.draw.rect(self.screen, self.black, (200, 375, 50, 50))
+            # text_surface, text_rectangle = text_objects("Work", small_text)
+            # text_rectangle.center = ((200+(50/2)), 375+(50/2))
+            # self.screen.blit(text_surface, self.text_rectangle)
+        if 15 <= self.timer_sec <= 20 or 28 <= self.timer_sec <= 30:
+            pygame.draw.rect(self.screen, self.black, (100, 315, 50, 50))
+        else:
+            pass
+            # pygame.draw.rect(self.screen, self.red, (100, 315, 50, 50))
+            # text_surface, text_rectangle = text_objects("Sleep", small_text)
+            # text_rectangle.center = ((100+(50/2)), 315+(50/2))
+            # self.screen.blit(text_surface, text_rectangle)
+        if 36 <= self.timer_sec <= 40 or 10 <= self.timer_sec <= 8:
+            pygame.draw.rect(self.screen, self.red, (100, 375, 50, 50))
+        else:
+            pass
+            # pygame.draw.rect(self.screen, self.black, (100, 375, 50, 50))
+            # text_surface, text_rectangle = text_objects("Eat", small_text)
+            # text_rectangle.center = ((100+(50/2)), 375+(50/2))
+            # self.screen.blit(text_surface, text_rectangle)
 
-    
+
+
+    def set_timer(self):
+        # TIMER = pygame.USEREVENT + 1
+        # timer_sec = 48
+        # pygame.time.set_timer(TIMER, 1000)
+        font = pygame.font.SysFont(None, 100)
+        # text = font.render(str(self.timer_sec), True, (0, 128, 0))
+        # if event.type == self.TIMER:
+        self.timer_sec -= 1
+        text = font.render(str(self.timer_sec), True, (0, 128, 0))
+        if self.timer_sec == 0:
+            pygame.time.set_timer(self.TIMER, 0)
+        text_rect = text.get_rect(center = self.screen.get_rect().center)
+        self.screen.blit(text, text_rect)
+        print("Timer called")    
+
     def buttons(self):
         """
         Display the 5 buttons to the user.
@@ -161,6 +217,9 @@ class HealthfyController:
         """
         pass
 
+    
+
+
     def get_input(self): # USe as help function instead since we're already handling user input in a different method
         """
         Gets the input from the player and translates it into one of the 5 commands.
@@ -218,16 +277,25 @@ if __name__ == '__main__':
     print(model)
     view = HealthfyView(model)
     controller = HealthfyController(model)
+    
 
     running = True
     while running:
+        view.draw()
         for event in pygame.event.get():
             if event.type == QUIT:
                 running = False
+            if event.type == view.TIMER:
+                view.set_timer()
 
-            controller.handle_event(event)
+            
+
+        controller.handle_event(event)
         model.update()
-        view.draw()
+        # view.set_timer()
+        #   view.draw()
+        # view.set_timer()
         time.sleep(.001)
+        pygame.display.update()
 
     pygame.quit()
