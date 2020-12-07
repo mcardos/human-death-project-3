@@ -11,6 +11,7 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 0, 0)
 green = (27, 133, 27)
+grey = (80, 80, 80)
 
 # Add background.
 background = pygame.image.load("Images/background.jpg")
@@ -33,18 +34,44 @@ def text_objects(text, font):
     text_surface = font.render(text, True, white)
     return text_surface, text_surface.get_rect()
 
-def feeding_status(health_bar):
-    pass
+def feeding_status():
+    if 36 <= timer_sec <= 40 or 10 <= timer_sec <= 8:
+        if pygame.MOUSEBUTTONDOWN:
+            pygame.draw.rect(screen, green, (0, 0, 240, 30))
+            pygame.draw.rect(screen, red, (50, 0, 240, 30))
 
-def button(msg,x,y,w,h,ic,ac,action=None):
+def socializing_status():
+    if 44 <= timer_sec <= 46 or 4 <= timer_sec <= 10:
+        if pygame.MOUSEBUTTONDOWN:
+            pygame.draw.rect(screen, green, (0, 0, 240, 30))
+            pygame.draw.rect(screen, red, (50, 0, 240, 30))
+
+def bathroom_status():
+    if 40 <= timer_sec <= 42 or 30 <= timer_sec <= 35:
+        if pygame.MOUSEBUTTONDOWN:
+            pygame.draw.rect(screen, green, (0, 0, 240, 30))
+            pygame.draw.rect(screen, red, (50, 0, 240, 30))
+
+def sleeping_status():
+    if 17 <= timer_sec <= 20 or 28 <= timer_sec <= 30:
+        if pygame.MOUSEBUTTONDOWN:
+            pygame.draw.rect(screen, green, (0, 0, 240, 30))
+            pygame.draw.rect(screen, red, (50, 0, 240, 30))
+
+def working_status():
+    if 24 <= timer_sec <= 26:
+        if pygame.MOUSEBUTTONDOWN:
+            pygame.draw.rect(screen, green, (0, 0, 240, 30))
+            pygame.draw.rect(screen, red, (50, 0, 240, 30))
+
+def button(msg,x,y,w,h,ic,ac,key=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
     print(click)
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(screen, ac,(x,y,w,h))
-
         if click[0] == 1 and action != None:
-            action()         
+            action(key)         
     else:
         pygame.draw.rect(screen, ic,(x,y,w,h))
     smallText = pygame.font.SysFont("comicsansms",10)
@@ -53,17 +80,21 @@ def button(msg,x,y,w,h,ic,ac,action=None):
     screen.blit(text_surface, text_rectangle)
 
 def action(key):
-    if event.type == pygame.MOUSEBUTTONDOWN:
-        if key == e:
-            print("Has Eaten!")
-            health_bar = 80
-    
-
-def score():
-    pass
-
-def health_bar():
-    pygame.draw.rect(screen, green, (0, 100, 0, 0))
+    if key == pygame.K_e:
+        print("Humanoid Has Eaten!")
+        feeding_status()
+    if key == pygame.K_p:
+        print("Humanoid Has used the bathroom!")
+        bathroom_status()
+    if key == pygame.K_s:
+        print("Humanoid Has Slept!")
+        sleeping_status()
+    if key == pygame.K_w:
+        print("Humanoid Has made money!")
+        working_status()
+    if key == pygame.K_t:
+        print("Hi! How are you?")
+        socializing_status()
 
 
 while RUNNING:
@@ -78,15 +109,21 @@ while RUNNING:
             text = font.render(str(timer_sec), True, (0, 128, 0))
             if timer_sec == 0:
                 pygame.time.set_timer(TIMER, 0)
-                if pygame.key.get_pressed([pygame.K_e]):
-                    print ("pressed e")  
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            button("Eat", 100, 375, 70, 50, black, green, pygame.K_e)
+            button("Talk",300, 375, 70, 50, black, green, pygame.K_t)
+            button("Potty",300, 315, 70, 50, black, green, pygame.K_p)
+            button("Work", 200, 375, 70, 50, black, green, pygame.K_w)
+            button("Sleep",100, 315, 70, 50, black, green, pygame.K_s)
     text_rect = text.get_rect(center = screen.get_rect().center)
     screen.blit(text, text_rect)
-    button("Eat", 100, 375, 70, 50, black, green)
-     
+
 # Add inactive 'buttons' that change colors.
-    if 44 <= timer_sec <= 46:
+    if 44 <= timer_sec <= 46 or 4 <= timer_sec <= 10:
         pygame.draw.rect(screen, red, (300, 375, 70, 50))
+        text_surface, text_rectangle = text_objects("Talk", small_text)
+        text_rectangle.center = ((300+(70/2)), 375+(50/2))
+        screen.blit(text_surface, text_rectangle)
     else:
         pygame.draw.rect(screen, black, (300, 375, 70, 50))
         text_surface, text_rectangle = text_objects("Talk", small_text)
@@ -94,6 +131,9 @@ while RUNNING:
         screen.blit(text_surface, text_rectangle)
     if 40 <= timer_sec <= 42 or 30 <= timer_sec <= 35 :
         pygame.draw.rect(screen, red, (300, 315, 70, 50))
+        text_surface, text_rectangle = text_objects("Potty", small_text)
+        text_rectangle.center = ((300+(70/2)), 315+(50/2))
+        screen.blit(text_surface, text_rectangle)
     else:
         pygame.draw.rect(screen, black, (300, 315, 70, 50))
         text_surface, text_rectangle = text_objects("Potty", small_text)
@@ -101,31 +141,40 @@ while RUNNING:
         screen.blit(text_surface, text_rectangle)
     if 24 <= timer_sec <= 26:
         pygame.draw.rect(screen, red, (200, 375, 70, 50))
+        text_surface, text_rectangle = text_objects("Work", small_text)
+        text_rectangle.center = ((200+(70/2)), 375+(50/2))
+        screen.blit(text_surface, text_rectangle)
     else:
         pygame.draw.rect(screen, black, (200, 375, 70, 50))
         text_surface, text_rectangle = text_objects("Work", small_text)
         text_rectangle.center = ((200+(70/2)), 375+(50/2))
         screen.blit(text_surface, text_rectangle)
-    if 15 <= timer_sec <= 20 or 28 <= timer_sec <= 30:
-        pygame.draw.rect(screen, black, (100, 315, 70, 50))
-    else:
+    if 17 <= timer_sec <= 20 or 28 <= timer_sec <= 30:
         pygame.draw.rect(screen, red, (100, 315, 70, 50))
+        text_surface, text_rectangle = text_objects("Sleep", small_text)
+        text_rectangle.center = ((100+(70/2)), 315+(50/2))
+        screen.blit(text_surface, text_rectangle)
+    else:
+        pygame.draw.rect(screen, black, (100, 315, 70, 50))
         text_surface, text_rectangle = text_objects("Sleep", small_text)
         text_rectangle.center = ((100+(70/2)), 315+(50/2))
         screen.blit(text_surface, text_rectangle)
     if 36 <= timer_sec <= 40 or 10 <= timer_sec <= 8:
         pygame.draw.rect(screen, red, (100, 375, 70, 50))
-        if event.key == pygame.K_e:
-            print("Has Eaten!")
+        text_surface, text_rectangle = text_objects("Eat", small_text)
+        text_rectangle.center = ((100+(70/2)), 375+(50/2))
+        screen.blit(text_surface, text_rectangle)
     else:
         pygame.draw.rect(screen, black, (100, 375, 70, 50))
         text_surface, text_rectangle = text_objects("Eat", small_text)
         text_rectangle.center = ((100+(70/2)), 375+(50/2))
         screen.blit(text_surface, text_rectangle)
+
 # Add health bar visual
-    pygame.draw.rect(screen, green, (0, 0, 240, 30))
-    pygame.draw.rect(screen, red, (50, 0, 240, 30))
+    pygame.draw.rect(screen, grey, (0, 0, 240, 30))
+    pygame.draw.rect(screen, grey, (50, 0, 240, 30))
     pygame.display.flip()
-    mouse = pygame.mouse.get_pos() 
+    mouse = pygame.mouse.get_pos()
+
 pygame.display.update()
 pygame.quit()
