@@ -1,4 +1,5 @@
-import pygame,sys
+import pygame
+import sys
 from pygame.locals import *
 import time
 
@@ -35,38 +36,38 @@ class HealthfyModel:
     
     def feeding_status(self):
         """
-        Add or decresase the health bar if user clicks on the 'Eat'
+        Add or decrease the health bar if user clicks on the 'Eat'
         button when it flashes red.
         """
         if 36 <= self._timer_sec <= 40 or 10 <= self._timer_sec <= 8:
             if pygame.MOUSEBUTTONDOWN:
-                pygame.draw.rect(self.screen, green, (0, 0, 240, 30))
-                pygame.draw.rect(self.screen, red, (50, 0, 240, 30))
+                pygame.draw.rect(self.screen, (27, 133, 27), (0, 0, 240, 30))
+                pygame.draw.rect(self.screen, (255, 0, 0), (50, 0, 240, 30))
     
 
     def sleeping_status(self):
         """
-        Add or decresase the health bar if user clicks on the 'Sleep'
+        Add or decrease the health bar if user clicks on the 'Sleep'
         button when it flashes red.
         """
         if 17 <= self._timer_sec <= 20 or 28 <= self._timer_sec <= 30:
             if pygame.MOUSEBUTTONDOWN:
-                pygame.draw.rect(self.screen, green, (0, 0, 240, 30))
-                pygame.draw.rect(self.screen, red, (50, 0, 240, 30))
+                pygame.draw.rect(self.screen, (27, 133, 27), (0, 0, 240, 30))
+                pygame.draw.rect(self.screen, (255, 0, 0), (50, 0, 240, 30))
     
     def working_status(self):
         """
-        Add or decresase the health bar if user clicks on the 'Work'
+        Add or decrease the health bar if user clicks on the 'Work'
         button when it flashes red.
         """
         if 24 <= self._timer_sec <= 26:
             if pygame.MOUSEBUTTONDOWN:
-                pygame.draw.rect(self.screen, green, (0, 0, 240, 30))
-                pygame.draw.rect(self.screen, red, (50, 0, 240, 30))
+                pygame.draw.rect(self.screen, (27, 133, 27), (0, 0, 240, 30))
+                pygame.draw.rect(self.screen, (255, 0, 0), (50, 0, 240, 30))
 
     def socializing_status(self):
         """
-        Add or decresase the health bar if user clicks on the 'Talk'
+        Add or decrease the health bar if user clicks on the 'Talk'
         button when it flashes red.
         """
         if 44 <= self._self._timer_sec <= 46 or 4 <= self._self._timer_sec <= 10:
@@ -76,25 +77,39 @@ class HealthfyModel:
 
     def bathroom_status(self):
         """
-        Add or decresase the health bar if user clicks on the 'Potty'
+        Add or decrease the health bar if user clicks on the 'Potty'
         button when it flashes red.
         """
         if 40 <= self._timer_sec <= 42 or 30 <= self._timer_sec <= 35:
             if pygame.MOUSEBUTTONDOWN:
-                pygame.draw.rect(self.screen, green, (0, 0, 240, 30))
-                pygame.draw.rect(self.screen, red, (50, 0, 240, 30))
+                pygame.draw.rect(self.screen, (27, 133, 27), (0, 0, 240, 30))
+                pygame.draw.rect(self.screen, (255, 0, 0), (50, 0, 240, 30))
     
     def user_score(self):
         """
-        docstring
+        Convert health bar to scores by multiplying it by 1000.
         """
-        pass
+        self._user_score += self.health * 1000
     
-    def update(self):
+    def action(self, key):
         """
-        check and update the model values according to our set rules
+        Process user inputs and display the action the Humanoid has taken.
         """
-        pass
+        if key == pygame.K_e:
+            print("Humanoid Has Eaten!")
+            self.feeding_status()
+        if key == pygame.K_p:
+            print("Humanoid Has used the bathroom!")
+            self.bathroom_status()
+        if key == pygame.K_s:
+            print("Humanoid Has Slept!")
+            self.sleeping_status()
+        if key == pygame.K_w:
+            print("Humanoid Has made money!")
+            self.working_status()
+        if key == pygame.K_t:
+            print("Hi! How are you?")
+            self.socializing_status()
 
 
 
@@ -229,7 +244,7 @@ class HealthfyView:
         """
         Display the top score and the current score to the player.
         """
-        pass
+        score = font.render(f"Score: {HealthfyModel().user_score}")
 
 
 
@@ -283,15 +298,15 @@ class HealthfyController:
         """
         Print a message and quit the game by exiting the program.
         """
-        print('You quit, call 2BR02B or something.')
+        print('You quit.')
         sys.exit()
 
     def _help(self):
         """
         Print a short summary of the game to help the player.
         """
-        print("Click one of the buttoms or the keys 1 to 5 to command")
-        print("the humanoid to do something. Win by not letting them die.")
+        print("Click one of the buttoms on the screen to make the Humanoid take action")
+        print("Win by not letting the health bar reach below 40%")
     
     def _invalid_input(self):
         """
