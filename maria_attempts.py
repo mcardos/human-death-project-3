@@ -35,34 +35,40 @@ def text_objects(text, font):
     return text_surface, text_surface.get_rect()
 
 def feeding_status():
+
     if 36 <= timer_sec <= 40 or 10 <= timer_sec <= 8:
-        if pygame.MOUSEBUTTONDOWN:
-            pygame.draw.rect(screen, green, (0, 0, 240, 30))
-            pygame.draw.rect(screen, red, (50, 0, 240, 30))
+        # if pygame.MOUSEBUTTONDOWN:
+        print("Feeding")
+        pygame.draw.rect(screen, green, (0, 0, 240, 30))
+        pygame.draw.rect(screen, red, (50, 0, 240, 30))
 
 def socializing_status():
     if 44 <= timer_sec <= 46 or 4 <= timer_sec <= 10:
-        if pygame.MOUSEBUTTONDOWN:
-            pygame.draw.rect(screen, green, (0, 0, 240, 30))
-            pygame.draw.rect(screen, red, (50, 0, 240, 30))
+        # if pygame.MOUSEBUTTONDOWN:
+        print("Socializing")
+        pygame.draw.rect(screen, green, (0, 0, 240, 30))
+        pygame.draw.rect(screen, red, (50, 0, 240, 30))
 
 def bathroom_status():
     if 40 <= timer_sec <= 42 or 30 <= timer_sec <= 35:
-        if pygame.MOUSEBUTTONDOWN:
-            pygame.draw.rect(screen, green, (0, 0, 240, 30))
-            pygame.draw.rect(screen, red, (50, 0, 240, 30))
+        # if pygame.MOUSEBUTTONDOWN:
+        print("Bathroom")
+        pygame.draw.rect(screen, green, (0, 0, 240, 30))
+        pygame.draw.rect(screen, red, (50, 0, 240, 30))
 
 def sleeping_status():
     if 17 <= timer_sec <= 20 or 28 <= timer_sec <= 30:
-        if pygame.MOUSEBUTTONDOWN:
-            pygame.draw.rect(screen, green, (0, 0, 240, 30))
-            pygame.draw.rect(screen, red, (50, 0, 240, 30))
+        # if pygame.MOUSEBUTTONDOWN:
+        print("Sleeping")
+        pygame.draw.rect(screen, green, (0, 0, 240, 30))
+        pygame.draw.rect(screen, red, (50, 0, 240, 30))
 
 def working_status():
     if 24 <= timer_sec <= 26:
-        if pygame.MOUSEBUTTONDOWN:
-            pygame.draw.rect(screen, green, (0, 0, 240, 30))
-            pygame.draw.rect(screen, red, (50, 0, 240, 30))
+        # if pygame.MOUSEBUTTONDOWN:
+        print("Work")
+        pygame.draw.rect(screen, green, (0, 0, 240, 30))
+        pygame.draw.rect(screen, red, (50, 0, 240, 30))
 
 def button(msg,x,y,w,h,ic,ac,key=None):
     mouse = pygame.mouse.get_pos()
@@ -101,6 +107,8 @@ while RUNNING:
     screen.fill(white)
     screen.blit(background, (0, 0))
     screen.blit(humanoid, (250, 350))
+    # pygame.draw.rect(screen, grey, (0, 0, 240, 30))
+    # pygame.draw.rect(screen, grey, (50, 0, 240, 30))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             RUNNING = False
@@ -171,10 +179,10 @@ while RUNNING:
         screen.blit(text_surface, text_rectangle)
 
 # Add health bar visual
-    pygame.draw.rect(screen, grey, (0, 0, 240, 30))
-    pygame.draw.rect(screen, grey, (50, 0, 240, 30))
+    # pygame.draw.rect(screen, grey, (0, 0, 240, 30))
+    # pygame.draw.rect(screen, grey, (50, 0, 240, 30))
     pygame.display.flip()
     mouse = pygame.mouse.get_pos()
 
-pygame.display.update()
+    pygame.display.update()
 pygame.quit()

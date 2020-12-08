@@ -149,6 +149,10 @@ class HealthfyView:
         background = pygame.image.load("Images/background.jpg")
         self.screen.fill((255, 255, 255))
         self.screen.blit(background, (0, 0))
+        font = pygame.font.SysFont(None, 100)
+        text = font.render(str(self._timer_sec), True, (0, 128, 0))
+        text_rect = text.get_rect(center = self.screen.get_rect().center)
+        self.screen.blit(text, text_rect)
 
         if 44 <= self._timer_sec <= 46:
             pygame.draw.rect(self.screen, self.red, (300, 375, 50, 50))
@@ -194,19 +198,10 @@ class HealthfyView:
 
 
     def set_timer(self):
-        # TIMER = pygame.USEREVENT + 1
-        # self._timer_sec = 48
-        # pygame.time.set_timer(TIMER, 1000)
-        font = pygame.font.SysFont(None, 100)
-        # text = font.render(str(self.self._timer_sec), True, (0, 128, 0))
-        # if event.type == self.TIMER:
         self._timer_sec -= 1
-        text = font.render(str(self._timer_sec), True, (0, 128, 0))
         if self._timer_sec == 0:
             pygame.time.set_timer(self.TIMER, 0)
-        text_rect = text.get_rect(center = self.screen.get_rect().center)
-        self.screen.blit(text, text_rect)
-        print("Timer called")    
+      
 
     def buttons(self):
         """
