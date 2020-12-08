@@ -131,7 +131,7 @@ class HealthfyView:
         self.model = model
         pygame.display.set_caption('Healthfy')
         self.screen = pygame.display.set_mode((500,500))
-        self.self._timer_sec = 48
+        self._timer_sec = 48
         self.TIMER = pygame.USEREVENT + 1
         pygame.time.set_timer(self.TIMER, 1000)
         self.black = (0, 0, 0)
@@ -150,7 +150,7 @@ class HealthfyView:
         self.screen.fill((255, 255, 255))
         self.screen.blit(background, (0, 0))
 
-        if 44 <= self.self._timer_sec <= 46:
+        if 44 <= self._timer_sec <= 46:
             pygame.draw.rect(self.screen, self.red, (300, 375, 50, 50))
         else:
             pass
@@ -158,7 +158,7 @@ class HealthfyView:
             # text_surface, text_rectangle = text_objects("Talk", small_text)
             # text_rectangle.center = ((300+(50/2)), 375+(50/2))
             # screen.blit(text_surface, text_rectangle)
-        if 40 <= self.self._timer_sec <= 42 or 30 <= self.self._timer_sec <= 35 :
+        if 40 <= self._timer_sec <= 42 or 30 <= self._timer_sec <= 35 :
             pygame.draw.rect(self.screen, self.red, (300, 315, 50, 50))
         else:
             pass
@@ -166,7 +166,7 @@ class HealthfyView:
             # text_surface, text_rectangle = text_objects("Potty", small_text)
             # text_rectangle.center = ((300+(50/2)), 315+(50/2))
             # self.screen.blit(text_surface, text_rectangle)
-        if 24 <= self.self._timer_sec <= 26:
+        if 24 <= self._timer_sec <= 26:
             pygame.draw.rect(self.screen, self.red, (200, 375, 50, 50))
         else:
             pass
@@ -174,7 +174,7 @@ class HealthfyView:
             # text_surface, text_rectangle = text_objects("Work", small_text)
             # text_rectangle.center = ((200+(50/2)), 375+(50/2))
             # self.screen.blit(text_surface, self.text_rectangle)
-        if 15 <= self.self._timer_sec <= 20 or 28 <= self.self._timer_sec <= 30:
+        if 15 <= self._timer_sec <= 20 or 28 <= self._timer_sec <= 30:
             pygame.draw.rect(self.screen, self.black, (100, 315, 50, 50))
         else:
             pass
@@ -182,7 +182,7 @@ class HealthfyView:
             # text_surface, text_rectangle = text_objects("Sleep", small_text)
             # text_rectangle.center = ((100+(50/2)), 315+(50/2))
             # self.screen.blit(text_surface, text_rectangle)
-        if 36 <= self.self._timer_sec <= 40 or 10 <= self.self._timer_sec <= 8:
+        if 36 <= self._timer_sec <= 40 or 10 <= self._timer_sec <= 8:
             pygame.draw.rect(self.screen, self.red, (100, 375, 50, 50))
         else:
             pass
@@ -200,9 +200,9 @@ class HealthfyView:
         font = pygame.font.SysFont(None, 100)
         # text = font.render(str(self.self._timer_sec), True, (0, 128, 0))
         # if event.type == self.TIMER:
-        self.self._timer_sec -= 1
-        text = font.render(str(self.self._timer_sec), True, (0, 128, 0))
-        if self.self._timer_sec == 0:
+        self._timer_sec -= 1
+        text = font.render(str(self._timer_sec), True, (0, 128, 0))
+        if self._timer_sec == 0:
             pygame.time.set_timer(self.TIMER, 0)
         text_rect = text.get_rect(center = self.screen.get_rect().center)
         self.screen.blit(text, text_rect)
@@ -334,7 +334,7 @@ if __name__ == '__main__':
             if event.type == view.TIMER:
                 view.set_timer()
         controller.handle_event(event)
-        model.update()
+        pygame.display.update()
         # view.set_timer()
         #   view.draw()
         # view.set_timer()
