@@ -3,6 +3,15 @@ import sys
 from pygame.locals import *
 import time
 
+black = (0, 0, 0)
+white = (255, 255, 255)
+red = (255, 0, 0)
+green = (27, 133, 27)
+global timer_sec
+timer_sec  = 48
+TIMER = pygame.USEREVENT + 1
+pygame.time.set_timer(TIMER, 1000)
+
 
 class HealthfyModel:
     '''
@@ -30,8 +39,13 @@ class HealthfyModel:
         self._maxHealth = 200    # Max Health
         self._healthDashes = 20  # Max Displayed dashes
         self._user_score = None
-        self._timer_sec = 48
+        timer_sec = 48
         self.screen = pygame.display.set_mode((500,500))
+        self.feed = Button(100, 375, "Eat", self.feeding_status, self.screen)
+        self.work = Button(200, 375, "Work", self.working_status, self.screen)
+        self.talk = Button(300, 375, "Talk", self.socializing_status, self.screen)
+        self.potty = Button(300, 315, "Potty", self.bathroom_status, self.screen)
+        self.sleep = Button(100, 315, "sleep", self.sleeping_status, self.screen)
 
     
     def feeding_status(self):
@@ -39,51 +53,42 @@ class HealthfyModel:
         Add or decrease the health bar if user clicks on the 'Eat'
         button when it flashes red.
         """
-        if 36 <= self._timer_sec <= 40 or 10 <= self._timer_sec <= 8:
-            if pygame.MOUSEBUTTONDOWN:
-                pygame.draw.rect(self.screen, (27, 133, 27), (0, 0, 240, 30))
-                pygame.draw.rect(self.screen, (255, 0, 0), (50, 0, 240, 30))
-    
+        if 36 <= timer_sec <= 40 or 10 <= timer_sec <= 8:
+            print("Feeding")
+            self.health += 5
+                
 
     def sleeping_status(self):
         """
         Add or decrease the health bar if user clicks on the 'Sleep'
         button when it flashes red.
         """
-        if 17 <= self._timer_sec <= 20 or 28 <= self._timer_sec <= 30:
-            if pygame.MOUSEBUTTONDOWN:
-                pygame.draw.rect(self.screen, (27, 133, 27), (0, 0, 240, 30))
-                pygame.draw.rect(self.screen, (255, 0, 0), (50, 0, 240, 30))
+        if 17 <= timer_sec <= 20 or 28 <= timer_sec <= 30:
+            self.health += 5
     
     def working_status(self):
         """
         Add or decrease the health bar if user clicks on the 'Work'
         button when it flashes red.
         """
-        if 24 <= self._timer_sec <= 26:
-            if pygame.MOUSEBUTTONDOWN:
-                pygame.draw.rect(self.screen, (27, 133, 27), (0, 0, 240, 30))
-                pygame.draw.rect(self.screen, (255, 0, 0), (50, 0, 240, 30))
+        if 24 <= timer_sec <= 26:
+            self.health += 5
 
     def socializing_status(self):
         """
         Add or decrease the health bar if user clicks on the 'Talk'
         button when it flashes red.
         """
-        if 44 <= self._self._timer_sec <= 46 or 4 <= self._self._timer_sec <= 10:
-            if pygame.MOUSEBUTTONDOWN:
-                pygame.draw.rect(self.screen, (27, 133, 27), (0, 0, 240, 30))
-                pygame.draw.rect(self.screen, (255, 0, 0), (50, 0, 240, 30))
+        if 44 <= timer_sec <= 46 or 4 <= timer_sec <= 10:
+            self.health += 5
 
     def bathroom_status(self):
         """
         Add or decrease the health bar if user clicks on the 'Potty'
         button when it flashes red.
         """
-        if 40 <= self._timer_sec <= 42 or 30 <= self._timer_sec <= 35:
-            if pygame.MOUSEBUTTONDOWN:
-                pygame.draw.rect(self.screen, (27, 133, 27), (0, 0, 240, 30))
-                pygame.draw.rect(self.screen, (255, 0, 0), (50, 0, 240, 30))
+        if 40 <= timer_sec <= 42 or 30 <= timer_sec <= 35:
+            self.health += 5
     
     def user_score(self):
         """
@@ -111,6 +116,53 @@ class HealthfyModel:
             print("Hi! How are you?")
             self.socializing_status()
 
+class Button:
+    """
+    Keep track of colors and know when the user has clicked the button
+    """
+    
+    def __init__(self, x, y, name, on_click, screen):
+        self.x = x
+        self.y = y
+        self.width = 70
+        self.height = 50
+        self.name = name
+        self.on_click = on_click
+        self.normal_color = black
+        self.alert_color = red
+        self.click_color = green
+        self.current_color = black
+        self.screen = screen
+    
+    def set_to_alert(self):
+        self.current_color = self.alert_color
+        print("ALERT", self.name)
+
+
+    def set_to_normal(self):
+        self.current_color = self.normal_color
+
+    
+    def check_click(self):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+        print(click)
+        if self.x+self.width > mouse[0] > self.x and self.y+self.height > mouse[1] > self.y:
+            if click[0] == 1 and self.on_click != None:
+                self.on_click()
+                self.current_color = self.click_color
+
+
+    def draw(self):
+        pygame.draw.rect(self.screen, self.current_color,(self.x,self.y,self.width,self.height))
+        smallText = pygame.font.SysFont("comicsansms",10)
+        text_surface, text_rectangle = self.create_text_objects(self.name, smallText)
+        text_rectangle.center = ( (self.x+(self.width/2)), (self.y+(self.height/2)) )
+        self.screen.blit(text_surface, text_rectangle)
+    
+    def create_text_objects(self, text, font):
+        text_surface = font.render(text, True, white)
+        return text_surface, text_surface.get_rect()
 
 
 class HealthfyView:
@@ -124,20 +176,15 @@ class HealthfyView:
         buttons: A list of 5 numbers that represent each activity
     """
 
-    def __init__(self, HealthfyModel):
+    def __init__(self, model):
         """
         Initialize the view class.
         """
         self.model = model
+        self.screen = model.screen
         pygame.display.set_caption('Healthfy')
-        self.screen = pygame.display.set_mode((500,500))
-        self._timer_sec = 48
-        self.TIMER = pygame.USEREVENT + 1
-        pygame.time.set_timer(self.TIMER, 1000)
-        self.black = (0, 0, 0)
-        self.white = (255, 255, 255)
-        self.red = (255, 0, 0)
-        self.green = (27, 133, 27)
+        self.background = pygame.image.load("Images/background.jpg")
+        self.humanoid = pygame.image.load("Images/humanoid.jpg")
 
 
     def text_objects(self, text, font):
@@ -146,61 +193,21 @@ class HealthfyView:
 
     def draw(self):
         """ Draw the current game state to the screen """
-        background = pygame.image.load("Images/background.jpg")
+       
         self.screen.fill((255, 255, 255))
-        self.screen.blit(background, (0, 0))
+        self.screen.blit(self.background, (0, 0))
+        self.screen.blit(self.humanoid, (250, 350))
         font = pygame.font.SysFont(None, 100)
-        text = font.render(str(self._timer_sec), True, (0, 128, 0))
+        text = font.render(str(timer_sec), True, (0, 128, 0))
         text_rect = text.get_rect(center = self.screen.get_rect().center)
         self.screen.blit(text, text_rect)
-
-        if 44 <= self._timer_sec <= 46:
-            pygame.draw.rect(self.screen, self.red, (300, 375, 50, 50))
-        else:
-            pass
-            # pygame.draw.rect(self.screen, self.black, (300, 375, 50, 50))
-            # text_surface, text_rectangle = text_objects("Talk", small_text)
-            # text_rectangle.center = ((300+(50/2)), 375+(50/2))
-            # screen.blit(text_surface, text_rectangle)
-        if 40 <= self._timer_sec <= 42 or 30 <= self._timer_sec <= 35 :
-            pygame.draw.rect(self.screen, self.red, (300, 315, 50, 50))
-        else:
-            pass
-            # pygame.draw.rect(self.screen, self.black, (300, 315, 50, 50))
-            # text_surface, text_rectangle = text_objects("Potty", small_text)
-            # text_rectangle.center = ((300+(50/2)), 315+(50/2))
-            # self.screen.blit(text_surface, text_rectangle)
-        if 24 <= self._timer_sec <= 26:
-            pygame.draw.rect(self.screen, self.red, (200, 375, 50, 50))
-        else:
-            pass
-            # pygame.draw.rect(self.screen, self.black, (200, 375, 50, 50))
-            # text_surface, text_rectangle = text_objects("Work", small_text)
-            # text_rectangle.center = ((200+(50/2)), 375+(50/2))
-            # self.screen.blit(text_surface, self.text_rectangle)
-        if 15 <= self._timer_sec <= 20 or 28 <= self._timer_sec <= 30:
-            pygame.draw.rect(self.screen, self.black, (100, 315, 50, 50))
-        else:
-            pass
-            # pygame.draw.rect(self.screen, self.red, (100, 315, 50, 50))
-            # text_surface, text_rectangle = text_objects("Sleep", small_text)
-            # text_rectangle.center = ((100+(50/2)), 315+(50/2))
-            # self.screen.blit(text_surface, text_rectangle)
-        if 36 <= self._timer_sec <= 40 or 10 <= self._timer_sec <= 8:
-            pygame.draw.rect(self.screen, self.red, (100, 375, 50, 50))
-        else:
-            pass
-            # pygame.draw.rect(self.screen, self.black, (100, 375, 50, 50))
-            # text_surface, text_rectangle = text_objects("Eat", small_text)
-            # text_rectangle.center = ((100+(50/2)), 375+(50/2))
-            # self.screen.blit(text_surface, text_rectangle)
 
 
 
     def set_timer(self):
-        self._timer_sec -= 1
-        if self._timer_sec == 0:
-            pygame.time.set_timer(self.TIMER, 0)
+        timer_sec -= 1
+        if timer_sec == 0:
+            pygame.time.set_timer(TIMER, 0)
       
 
     def buttons(self):
@@ -240,8 +247,6 @@ class HealthfyView:
         Display the top score and the current score to the player.
         """
         score = font.render(f"Score: {HealthfyModel().user_score}")
-
-
 
 
 class HealthfyController:
@@ -320,19 +325,79 @@ if __name__ == '__main__':
     print(model)
     view = HealthfyView(model)
     controller = HealthfyController(model)
+    
     running = True
+    talk_alert = False
+    feed_alert = False
+    potty_alert = False
+    work_alert = False
+    sleep_alert = False
     while running:
-        view.draw()
         for event in pygame.event.get():
             if event.type == QUIT:
                 running = False
-            if event.type == view.TIMER:
-                view.set_timer()
-        controller.handle_event(event)
-        pygame.display.update()
-        # view.set_timer()
-        #   view.draw()
-        # view.set_timer()
-        time.sleep(.001)
+            if event.type == TIMER:
+                timer_sec -= 1
+                if timer_sec == 0:
+                    pygame.time.set_timer(TIMER, 0)
+                
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                model.feed.check_click()
+                model.work.check_click()
+                model.talk.check_click()
+                model.potty.check_click()
+                model.sleep.check_click()
+
+        
+        if 44 <= timer_sec <= 46 or 4 <= timer_sec <= 10:
+            if talk_alert == False:
+                model.talk.set_to_alert()
+                model.health -= 5
+                talk_alert = True
+        else:
+            talk_alert = False
+            model.talk.set_to_normal()
+            
+        if 40 <= timer_sec <= 42 or 30 <= timer_sec <= 35 :
+            if potty_alert == False:
+                model.potty.set_to_alert()
+                model.health -= 5
+                potty_alert = True
+        else:
+            potty_alert = False
+            model.potty.set_to_normal()
+        if 24 <= timer_sec <= 26:
+            if work_alert == False:
+                model.work.set_to_alert()
+                model.health -= 5
+                work_alert = True
+        else:
+            work_alert = False
+            model.work.set_to_normal()
+        if 17 <= timer_sec <= 20 or 28 <= timer_sec <= 30:
+            if sleep_alert == False:
+                model.sleep.set_to_alert()
+                model.health -= 5
+                sleep_alert = True
+        else:
+            sleep_alert = False
+            model.sleep.set_to_normal()
+        if 36 <= timer_sec <= 40 or 8 <= timer_sec <= 10:
+            if feed_alert == False:
+                model.feed.set_to_alert()
+                model.health -= 5
+                feed_alert = True
+        else:
+            feed_alert = False
+            model.feed.set_to_normal()
+
+        view.draw()
+        model.feed.draw()
+        model.work.draw()
+        model.talk.draw()
+        model.potty.draw()
+        model.sleep.draw()
+        pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
+        pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model._maxHealth, 30))
         pygame.display.update()
     pygame.quit()
