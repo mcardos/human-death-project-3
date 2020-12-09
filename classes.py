@@ -2,7 +2,10 @@ import pygame
 import sys
 from pygame.locals import *
 import time
+import os 
 
+
+os.environ["SDL_AUDIODRIVER"]= "dsp"
 black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 0, 0)
@@ -45,7 +48,7 @@ class HealthfyModel:
         self.work = Button(200, 375, "Work", self.working_status, self.screen)
         self.talk = Button(300, 375, "Talk", self.socializing_status, self.screen)
         self.potty = Button(300, 315, "Potty", self.bathroom_status, self.screen)
-        self.sleep = Button(100, 315, "sleep", self.sleeping_status, self.screen)
+        self.sleep = Button(100, 315, "Sleep", self.sleeping_status, self.screen)
 
     
     def feeding_status(self):
@@ -155,8 +158,8 @@ class Button:
 
     def draw(self):
         pygame.draw.rect(self.screen, self.current_color,(self.x,self.y,self.width,self.height))
-        smallText = pygame.font.SysFont("comicsansms",10)
-        text_surface, text_rectangle = self.create_text_objects(self.name, smallText)
+        small_text = pygame.font.SysFont("comicsansms",30)
+        text_surface, text_rectangle = self.create_text_objects(self.name, small_text)
         text_rectangle.center = ( (self.x+(self.width/2)), (self.y+(self.height/2)) )
         self.screen.blit(text_surface, text_rectangle)
     
@@ -188,7 +191,7 @@ class HealthfyView:
 
 
     def text_objects(self, text, font):
-        text_surface = font.render(text, True, self.white)
+        text_surface = font.render(text, True, white)
         return text_surface, text_surface.get_rect()
 
     def draw(self):
@@ -221,27 +224,8 @@ class HealthfyView:
         Display the activity currently being performed by the humanoid. 
         """
         print(f"Humanoid is currently {model.process_input}\n Try to keep them alive.")
-    
-    def display_bar(self):
-        """
-        Convert current health of the humanoid to a percentage and corresponding dashes to display. 
-
-        Returns: 
-            A float representing the current health of the humanoid in percentage, 
-            and a bar with dashes the size of the percentage (i.e. 1 dash for 10%).
-        """
-        dashConvert = int(self._maxHealth/self._healthDashes)    # Get the number to divide by to convert health to dashes
-        currentDashes = int(self.health/dashConvert)             # Convert health to dash count
-        remainingHealth = self._healthDashes - currentDashes     # Get the health remaining to fill as space
-
-        healthDisplay = '-' * currentDashes                             # Convert to dashes as a string:   "--------"
-        remainingDisplay = ' ' * remainingHealth                        # Convert to spaces as a string: "            "
-        percent = str(int((self.health/self._maxHealth)*100)) + "%"     # Get the percent as a whole number:
-
-        print("|" + healthDisplay + remainingDisplay + "|")  # Print out text based health bar 
-        print("         " + percent)                         # Print the percent
-    
-    
+     
+      
     def display_score(self):
         """
         Display the top score and the current score to the player.
@@ -318,7 +302,6 @@ class HealthfyController:
 
 
 if __name__ == '__main__':
-    
     pygame.init()
     size = (500, 500)
     model = HealthfyModel()
@@ -352,7 +335,7 @@ if __name__ == '__main__':
         if 44 <= timer_sec <= 46 or 4 <= timer_sec <= 10:
             if talk_alert == False:
                 model.talk.set_to_alert()
-                model.health -= 5
+                model.health -= 10
                 talk_alert = True
         else:
             talk_alert = False
@@ -361,7 +344,7 @@ if __name__ == '__main__':
         if 40 <= timer_sec <= 42 or 30 <= timer_sec <= 35 :
             if potty_alert == False:
                 model.potty.set_to_alert()
-                model.health -= 5
+                model.health -= 10
                 potty_alert = True
         else:
             potty_alert = False
@@ -369,7 +352,7 @@ if __name__ == '__main__':
         if 24 <= timer_sec <= 26:
             if work_alert == False:
                 model.work.set_to_alert()
-                model.health -= 5
+                model.health -= 20
                 work_alert = True
         else:
             work_alert = False
@@ -377,7 +360,7 @@ if __name__ == '__main__':
         if 17 <= timer_sec <= 20 or 28 <= timer_sec <= 30:
             if sleep_alert == False:
                 model.sleep.set_to_alert()
-                model.health -= 5
+                model.health -= 10
                 sleep_alert = True
         else:
             sleep_alert = False
@@ -385,7 +368,7 @@ if __name__ == '__main__':
         if 36 <= timer_sec <= 40 or 8 <= timer_sec <= 10:
             if feed_alert == False:
                 model.feed.set_to_alert()
-                model.health -= 5
+                model.health -= 10
                 feed_alert = True
         else:
             feed_alert = False
