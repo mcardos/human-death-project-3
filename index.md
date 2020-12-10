@@ -1,12 +1,10 @@
-## Welcome to GitHub Pages
+## Welcome to Healthfy
 
-You can use the [editor on GitHub](https://github.com/mcardos/project-3-healthfy/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+This game is all about keeping a humanoid alive. This humanoid is simply an icon with a health bar. The player needs to keep this humanoid alive by correctly commanding the feeding, working, socializing, sleeping, and bathroom usage of this humanoid.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### The Code
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Below you will find all the code you need to copy this game into your own local machine and play around with it.
 
 ```markdown
 Syntax highlighted code block
@@ -28,7 +26,7 @@ Syntax highlighted code block
 [Link](url) and ![Image](src)
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+For more information visit our GitHub repo at https://github.com/mcardos/project-3-healthfy/
 
 ### Jekyll Themes
 
