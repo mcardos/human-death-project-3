@@ -8,8 +8,6 @@ import controller
 pygame.init()
 
 #  Add constants.
-black = (0, 0, 0)
-white = (255, 255, 255)
 red = (255, 0, 0)
 green = (27, 133, 27)
 TIMER = USEREVENT + 1

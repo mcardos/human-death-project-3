@@ -1,11 +1,13 @@
 import pygame
+from pygame.locals import (USEREVENT, K_e, K_p, 
+K_s, K_t, K_w)
 
 # Constant variables.
 black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 0, 0)
 green = (27, 133, 27)
-TIMER = pygame.USEREVENT + 1
+TIMER = USEREVENT + 1
 
 
 class HealthfyModel:
@@ -44,17 +46,16 @@ class HealthfyModel:
     
     def feeding_status(self):
         """
-        Add or decrease the health bar if user clicks on the 'Eat'
+        Add to the health bar if user clicks on the 'Eat'
         button when it flashes red.
         """
         if 36 <= self.timer_sec <= 40 or 10 <= self.timer_sec <= 8:
-            print("Feeding")
             self.health += 10
                 
 
     def sleeping_status(self):
         """
-        Add or decrease the health bar if user clicks on the 'Sleep'
+        Add to the health bar if user clicks on the 'Sleep'
         button when it flashes red.
         """
         if 17 <= self.timer_sec <= 20 or 28 <= self.timer_sec <= 30:
@@ -62,7 +63,7 @@ class HealthfyModel:
     
     def working_status(self):
         """
-        Add or decrease the health bar if user clicks on the 'Work'
+        Add to the health bar if user clicks on the 'Work'
         button when it flashes red.
         """
         if 24 <= self.timer_sec <= 26:
@@ -70,7 +71,7 @@ class HealthfyModel:
 
     def socializing_status(self):
         """
-        Add or decrease the health bar if user clicks on the 'Talk'
+        Add to the health bar if user clicks on the 'Talk'
         button when it flashes red.
         """
         if 44 <= self.timer_sec <= 46 or 4 <= self.timer_sec <= 10:
@@ -78,7 +79,7 @@ class HealthfyModel:
 
     def bathroom_status(self):
         """
-        Add or decrease the health bar if user clicks on the 'Potty'
+        Add to the health bar if user clicks on the 'Potty'
         button when it flashes red.
         """
         if 40 <= self.timer_sec <= 42 or 30 <= self.timer_sec <= 35:
@@ -88,35 +89,41 @@ class HealthfyModel:
         """
         Convert health bar to scores by multiplying it by 100.
         """
-        self._user_score += self.health * 100
+        self._user_score += self.health
         return self._user_score
     
     def action(self, key):
         """
-        Process user inputs and display the action the Humanoid has taken.
+        Process user inputs and call appropiate function to update health bar.
         """
-        if key == pygame.K_e:
+        if key == K_e:
             print("Humanoid Has Eaten!")
             self.feeding_status()
-        if key == pygame.K_p:
+        if key == K_p:
             print("Humanoid Has used the bathroom!")
             self.bathroom_status()
-        if key == pygame.K_s:
+        if key == K_s:
             print("Humanoid Has Slept!")
             self.sleeping_status()
-        if key == pygame.K_w:
+        if key == K_w:
             print("Humanoid Has made money!")
             self.working_status()
-        if key == pygame.K_t:
+        if key == K_t:
             print("Hi! How are you?")
             self.socializing_status()
 
     def countdown(self):
+        """
+        Decrease time by 1 second and if time is at 0 seconds, set timer to 0.
+        """
         self.timer_sec -= 1
         if self.timer_sec == 0:
             pygame.time.set_timer(TIMER, 0)
     
     def get_timer_sec(self):
+        """
+        Return the current time, an integer.
+        """
         return self.timer_sec
 
 
