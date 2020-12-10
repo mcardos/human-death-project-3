@@ -2,7 +2,10 @@ import pygame
 import sys
 from pygame.locals import *
 import time
+import os 
 
+
+os.environ["SDL_AUDIODRIVER"]= "dsp"
 black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 0, 0)
@@ -43,7 +46,7 @@ class HealthfyModel:
         self.work = Button(200, 375, "Work", self.working_status, self.screen)
         self.talk = Button(300, 375, "Talk", self.socializing_status, self.screen)
         self.potty = Button(300, 315, "Potty", self.bathroom_status, self.screen)
-        self.sleep = Button(100, 315, "sleep", self.sleeping_status, self.screen)
+        self.sleep = Button(100, 315, "Sleep", self.sleeping_status, self.screen)
 
     
     def feeding_status(self):
@@ -116,10 +119,15 @@ class HealthfyModel:
 
 class Button:
     """
-    Keep track of colors and know when the user has clicked the button
+    A class that Keeps track of button colors and translates appropriately
+    when the user clicks a particular any of the 5 buttons.
     """
     
     def __init__(self, x, y, name, on_click, screen):
+        """
+        Initialize the buttons' sizes, their positions on the screen and color displays
+        when specific actions are required or completed.
+        """
         self.x = x
         self.y = y
         self.width = 70
@@ -133,12 +141,21 @@ class Button:
         self.screen = screen
     
     def set_to_alert(self):
+        """
+        Set current color to the alert color
+        """
         self.current_color = self.alert_color
 
     def set_to_normal(self):
+        """
+        set current color to the normal color
+        """
         self.current_color = self.normal_color
 
     def check_click(self):
+        """
+        set the current color to the click color when the user has clicked on the button
+        """
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
         print(click)
@@ -149,13 +166,19 @@ class Button:
 
 
     def draw(self):
-        pygame.draw.rect(self.screen, self.current_color, (self.x, self.y, self.width, self.height))
-        smallText = pygame.font.SysFont("comicsansms", 30)
-        text_surface, text_rectangle = self.create_text_objects(self.name, smallText)
-        text_rectangle.center = ((self.x+(self.width/2)), (self.y+(self.height/2)))
+        """
+        Create the 5 buttons with their specified colors, sizes and positions on the game screen
+        """
+        pygame.draw.rect(self.screen, self.current_color,(self.x,self.y,self.width,self.height))
+        small_text = pygame.font.SysFont("comicsansms",30)
+        text_surface, text_rectangle = self.create_text_objects(self.name, small_text)
+        text_rectangle.center = ( (self.x+(self.width/2)), (self.y+(self.height/2)) )
         self.screen.blit(text_surface, text_rectangle)
     
     def create_text_objects(self, text, font):
+        """
+        Create a new surface and return a specified text rendered on it.
+        """
         text_surface = font.render(text, True, white)
         return text_surface, text_surface.get_rect()
 
@@ -183,11 +206,16 @@ class HealthfyView:
 
 
     def text_objects(self, text, font):
+        """
+        Create a new surface and return a specified text rendered on it.
+        """
         text_surface = font.render(text, True, white)
         return text_surface, text_surface.get_rect()
 
     def draw(self):
-        """ Draw the current game state to the screen """
+        """
+        Draw the current game state to the screen
+        """
        
         self.screen.fill((255, 255, 255))
         self.screen.blit(self.background, (0, 0))
@@ -196,14 +224,13 @@ class HealthfyView:
         text = font.render(str(timer_sec), True, (0, 128, 0))
         text_rect = text.get_rect(center = self.screen.get_rect().center)
         self.screen.blit(text, text_rect)
-      
     def current_status(self):
         """
         Display the activity currently being performed by the humanoid. 
         """
         print(f"Humanoid is currently {model.process_input}\n Try to keep them alive.")
-    
-    
+     
+      
     def display_score(self):
         """
         Display the top score and the current score to the player.
@@ -247,7 +274,6 @@ class HealthfyController:
         elif stripped_input == "h":
             self._help()
 
-
     
     def _quit_game(self):
         """
@@ -273,7 +299,6 @@ class HealthfyController:
 
 
 if __name__ == '__main__':
-    
     pygame.init()
     model = HealthfyModel()
     print(model)
@@ -306,7 +331,7 @@ if __name__ == '__main__':
         if 44 <= timer_sec <= 46 or 4 <= timer_sec <= 10:
             if talk_alert == False:
                 model.talk.set_to_alert()
-                model.health -= 5
+                model.health -= 10
                 talk_alert = True
         else:
             talk_alert = False
@@ -315,7 +340,7 @@ if __name__ == '__main__':
         if 40 <= timer_sec <= 42 or 30 <= timer_sec <= 35 :
             if potty_alert == False:
                 model.potty.set_to_alert()
-                model.health -= 5
+                model.health -= 10
                 potty_alert = True
         else:
             potty_alert = False
@@ -323,7 +348,7 @@ if __name__ == '__main__':
         if 24 <= timer_sec <= 26:
             if work_alert == False:
                 model.work.set_to_alert()
-                model.health -= 5
+                model.health -= 20
                 work_alert = True
         else:
             work_alert = False
@@ -331,7 +356,7 @@ if __name__ == '__main__':
         if 17 <= timer_sec <= 20 or 28 <= timer_sec <= 30:
             if sleep_alert == False:
                 model.sleep.set_to_alert()
-                model.health -= 5
+                model.health -= 10
                 sleep_alert = True
         else:
             sleep_alert = False
@@ -339,7 +364,7 @@ if __name__ == '__main__':
         if 36 <= timer_sec <= 40 or 8 <= timer_sec <= 10:
             if feed_alert == False:
                 model.feed.set_to_alert()
-                model.health -= 5
+                model.health -= 10
                 feed_alert = True
         else:
             feed_alert = False

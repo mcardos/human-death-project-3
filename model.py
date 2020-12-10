@@ -1,14 +1,13 @@
 import pygame
+from pygame.locals import (USEREVENT, K_e, K_p, 
+K_s, K_t, K_w)
 
 # Constant variables.
 black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 0, 0)
 green = (27, 133, 27)
-global timer_sec
-timer_sec  = 48
-TIMER = pygame.USEREVENT + 1
-pygame.time.set_timer(TIMER, 1000)
+TIMER = USEREVENT + 1
 
 
 class HealthfyModel:
@@ -33,85 +32,99 @@ class HealthfyModel:
         """
         Create a new Healthfy instance. Keeps track of health bar and current status of the humanoid.
         """
-        self.health = 240.0      # Current Health
-        self._max_health = 240    # Max Health
+        self.health = 240.0 
+        self._max_health = 240
         self._user_score = 0
         self.screen = pygame.display.set_mode((500, 500))
+        self.timer_sec = 48
         self.feed = Button(100, 375, "Eat", self.feeding_status, self.screen)
         self.work = Button(200, 375, "Work", self.working_status, self.screen)
         self.talk = Button(300, 375, "Talk", self.socializing_status, self.screen)
         self.potty = Button(300, 315, "Potty", self.bathroom_status, self.screen)
-        self.sleep = Button(100, 315, "sleep", self.sleeping_status, self.screen)
+        self.sleep = Button(100, 315, "Sleep", self.sleeping_status, self.screen)
 
     
     def feeding_status(self):
         """
-        Add or decrease the health bar if user clicks on the 'Eat'
+        Add to the health bar if user clicks on the 'Eat'
         button when it flashes red.
         """
-        if 36 <= timer_sec <= 40 or 10 <= timer_sec <= 8:
-            print("Feeding")
-            self.health += 5
+        if 36 <= self.timer_sec <= 40 or 10 <= self.timer_sec <= 8:
+            self.health += 10
                 
 
     def sleeping_status(self):
         """
-        Add or decrease the health bar if user clicks on the 'Sleep'
+        Add to the health bar if user clicks on the 'Sleep'
         button when it flashes red.
         """
-        if 17 <= timer_sec <= 20 or 28 <= timer_sec <= 30:
-            self.health += 5
+        if 17 <= self.timer_sec <= 20 or 28 <= self.timer_sec <= 30:
+            self.health += 10
     
     def working_status(self):
         """
-        Add or decrease the health bar if user clicks on the 'Work'
+        Add to the health bar if user clicks on the 'Work'
         button when it flashes red.
         """
-        if 24 <= timer_sec <= 26:
-            self.health += 5
+        if 24 <= self.timer_sec <= 26:
+            self.health += 48
 
     def socializing_status(self):
         """
-        Add or decrease the health bar if user clicks on the 'Talk'
+        Add to the health bar if user clicks on the 'Talk'
         button when it flashes red.
         """
-        if 44 <= timer_sec <= 46 or 4 <= timer_sec <= 10:
-            self.health += 5
+        if 44 <= self.timer_sec <= 46 or 4 <= self.timer_sec <= 10:
+            self.health += 10
 
     def bathroom_status(self):
         """
-        Add or decrease the health bar if user clicks on the 'Potty'
+        Add to the health bar if user clicks on the 'Potty'
         button when it flashes red.
         """
-        if 40 <= timer_sec <= 42 or 30 <= timer_sec <= 35:
-            self.health += 5
+        if 40 <= self.timer_sec <= 42 or 30 <= self.timer_sec <= 35:
+            self.health += 10
     
     def user_score(self):
         """
-        Convert health bar to scores by multiplying it by 1000.
+        Convert health bar to scores by multiplying it by 100.
         """
-        self._user_score += self.health * 1000
+        self._user_score += self.health
+        return self._user_score
     
     def action(self, key):
         """
-        Process user inputs and display the action the Humanoid has taken.
+        Process user inputs and call appropiate function to update health bar.
         """
-        if key == pygame.K_e:
+        if key == K_e:
             print("Humanoid Has Eaten!")
             self.feeding_status()
-        if key == pygame.K_p:
+        if key == K_p:
             print("Humanoid Has used the bathroom!")
             self.bathroom_status()
-        if key == pygame.K_s:
+        if key == K_s:
             print("Humanoid Has Slept!")
             self.sleeping_status()
-        if key == pygame.K_w:
+        if key == K_w:
             print("Humanoid Has made money!")
             self.working_status()
-        if key == pygame.K_t:
+        if key == K_t:
             print("Hi! How are you?")
             self.socializing_status()
 
+    def countdown(self):
+        """
+        Decrease time by 1 second and if time is at 0 seconds, set timer to 0.
+        """
+        self.timer_sec -= 1
+        if self.timer_sec == 0:
+            pygame.time.set_timer(TIMER, 0)
+    
+    def get_timer_sec(self):
+        """
+        Return the current time, an integer.
+        """
+        return self.timer_sec
 
 
 class Button:
