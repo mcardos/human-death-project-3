@@ -37,15 +37,6 @@ class HealthfyController:
             self._quit_game()
         elif stripped_input == "h":
             self._help()
-
-    def handle_event(self, event):
-        """
-        """
-        if event.type == KEYDOWN:
-            if event.key == pygame.K_e:
-                print("Has Eaten!") # Will replace this with what happens to the game. 
-                # Add other Key board presses e.g S, B, W
-
     
     def _quit_game(self):
         """

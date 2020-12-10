@@ -121,10 +121,15 @@ class HealthfyModel:
 
 class Button:
     """
-    Keep track of colors and know when the user has clicked the button
+    A class that Keeps track of button colors and translates appropriately
+    when the user clicks a particular any of the 5 buttons.
     """
     
     def __init__(self, x, y, name, on_click, screen):
+        """
+        Initialize the buttons' sizes, their positions on the screen and color displays
+        when specific actions are required or completed.
+        """
         self.x = x
         self.y = y
         self.width = 70
@@ -138,15 +143,24 @@ class Button:
         self.screen = screen
     
     def set_to_alert(self):
+        """
+        Set current color to the alert color
+        """
         self.current_color = self.alert_color
-        print("ALERT", self.name)
+        
 
 
     def set_to_normal(self):
+        """
+        set current color to the normal color
+        """
         self.current_color = self.normal_color
 
     
     def check_click(self):
+        """
+        set the current color to the click color when the user has clicked on the button
+        """
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
         print(click)
@@ -157,6 +171,9 @@ class Button:
 
 
     def draw(self):
+        """
+        Create the 5 buttons with their specified colors, sizes and positions on the game screen
+        """
         pygame.draw.rect(self.screen, self.current_color,(self.x,self.y,self.width,self.height))
         small_text = pygame.font.SysFont("comicsansms",30)
         text_surface, text_rectangle = self.create_text_objects(self.name, small_text)
@@ -164,6 +181,9 @@ class Button:
         self.screen.blit(text_surface, text_rectangle)
     
     def create_text_objects(self, text, font):
+        """
+        Create a new surface and return a specified text rendered on it.
+        """
         text_surface = font.render(text, True, white)
         return text_surface, text_surface.get_rect()
 
@@ -191,11 +211,16 @@ class HealthfyView:
 
 
     def text_objects(self, text, font):
+        """
+        Create a new surface and return a specified text rendered on it.
+        """
         text_surface = font.render(text, True, white)
         return text_surface, text_surface.get_rect()
 
     def draw(self):
-        """ Draw the current game state to the screen """
+        """
+        Draw the current game state to the screen
+        """
        
         self.screen.fill((255, 255, 255))
         self.screen.blit(self.background, (0, 0))
@@ -204,20 +229,6 @@ class HealthfyView:
         text = font.render(str(timer_sec), True, (0, 128, 0))
         text_rect = text.get_rect(center = self.screen.get_rect().center)
         self.screen.blit(text, text_rect)
-
-
-
-    def set_timer(self):
-        timer_sec -= 1
-        if timer_sec == 0:
-            pygame.time.set_timer(TIMER, 0)
-      
-
-    def buttons(self):
-        """
-        Display the 5 buttons to the user.
-        """
-        pass
 
     def current_status(self):
         """
@@ -268,14 +279,6 @@ class HealthfyController:
             self._quit_game()
         elif stripped_input == "h":
             self._help()
-
-    def handle_event(self, event):
-        """
-        """
-        if event.type == KEYDOWN:
-            if event.key == pygame.K_e:
-                print("Has Eaten!") # Will replace this with what happens to the game. 
-                # Add other Key board presses e.g S, B, W
 
     
     def _quit_game(self):

@@ -12,7 +12,8 @@ pygame.time.set_timer(TIMER, 1000)
 
 class HealthfyView:
     """
-    Displays the current game (the current status of the humanoid, face, and health bar)
+    Displays the current state of the game
+    (the current status of the humanoid, face, and health bar)
     and the inputs/buttons to the player.
 
     Attributes:
@@ -23,7 +24,8 @@ class HealthfyView:
 
     def __init__(self, model):
         """
-        Initialize the view class.
+        Initialize the view class with reference to the model and create
+        instances of the  background and humanoid images.
         """
         self.model = model
         self.screen = model.screen
@@ -33,6 +35,9 @@ class HealthfyView:
 
 
     def text_objects(self, text, font):
+        """
+        
+        """
         text_surface = font.render(text, True, white)
         return text_surface, text_surface.get_rect()
 
