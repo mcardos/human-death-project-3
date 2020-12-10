@@ -5,8 +5,6 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 0, 0)
 green = (27, 133, 27)
-global timer_sec
-timer_sec  = 48
 TIMER = pygame.USEREVENT + 1
 pygame.time.set_timer(TIMER, 1000)
 
@@ -48,7 +46,7 @@ class HealthfyView:
         self.screen.blit(self.background, (0, 0))
         self.screen.blit(self.humanoid, (250, 350))
         font = pygame.font.SysFont(None, 100)
-        text = font.render(str(timer_sec), True, (0, 128, 0))
+        text = font.render(str(self.model.get_timer_sec()), True, (0, 128, 0))
         text_rect = text.get_rect(center = self.screen.get_rect().center)
         self.screen.blit(text, text_rect)
       
@@ -56,11 +54,11 @@ class HealthfyView:
         """
         Display the activity currently being performed by the humanoid. 
         """
-        print(f"Humanoid is currently {model.process_input}\n Try to keep them alive.")
+        print(f"Humanoid is currently {model.action}\n Try to keep them alive.")
     
     
     def display_score(self):
         """
         Display the top score and the current score to the player.
         """
-        score = font.render(f"Score: {HealthfyModel().user_score}")
+        score = font.render(f"Score: {model.user_score}")

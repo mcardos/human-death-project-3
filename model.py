@@ -5,10 +5,7 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 0, 0)
 green = (27, 133, 27)
-global timer_sec
-timer_sec  = 48
 TIMER = pygame.USEREVENT + 1
-pygame.time.set_timer(TIMER, 1000)
 
 
 class HealthfyModel:
@@ -33,15 +30,16 @@ class HealthfyModel:
         """
         Create a new Healthfy instance. Keeps track of health bar and current status of the humanoid.
         """
-        self.health = 240.0      # Current Health
-        self._max_health = 240    # Max Health
+        self.health = 240.0 
+        self._max_health = 240
         self._user_score = 0
         self.screen = pygame.display.set_mode((500, 500))
+        self.timer_sec = 48
         self.feed = Button(100, 375, "Eat", self.feeding_status, self.screen)
         self.work = Button(200, 375, "Work", self.working_status, self.screen)
         self.talk = Button(300, 375, "Talk", self.socializing_status, self.screen)
         self.potty = Button(300, 315, "Potty", self.bathroom_status, self.screen)
-        self.sleep = Button(100, 315, "sleep", self.sleeping_status, self.screen)
+        self.sleep = Button(100, 315, "Sleep", self.sleeping_status, self.screen)
 
     
     def feeding_status(self):
@@ -49,7 +47,7 @@ class HealthfyModel:
         Add or decrease the health bar if user clicks on the 'Eat'
         button when it flashes red.
         """
-        if 36 <= timer_sec <= 40 or 10 <= timer_sec <= 8:
+        if 36 <= self.timer_sec <= 40 or 10 <= self.timer_sec <= 8:
             print("Feeding")
             self.health += 5
                 
@@ -59,7 +57,7 @@ class HealthfyModel:
         Add or decrease the health bar if user clicks on the 'Sleep'
         button when it flashes red.
         """
-        if 17 <= timer_sec <= 20 or 28 <= timer_sec <= 30:
+        if 17 <= self.timer_sec <= 20 or 28 <= self.timer_sec <= 30:
             self.health += 5
     
     def working_status(self):
@@ -67,15 +65,15 @@ class HealthfyModel:
         Add or decrease the health bar if user clicks on the 'Work'
         button when it flashes red.
         """
-        if 24 <= timer_sec <= 26:
-            self.health += 5
+        if 24 <= self.timer_sec <= 26:
+            self.health += 10
 
     def socializing_status(self):
         """
         Add or decrease the health bar if user clicks on the 'Talk'
         button when it flashes red.
         """
-        if 44 <= timer_sec <= 46 or 4 <= timer_sec <= 10:
+        if 44 <= self.timer_sec <= 46 or 4 <= self.timer_sec <= 10:
             self.health += 5
 
     def bathroom_status(self):
@@ -83,7 +81,7 @@ class HealthfyModel:
         Add or decrease the health bar if user clicks on the 'Potty'
         button when it flashes red.
         """
-        if 40 <= timer_sec <= 42 or 30 <= timer_sec <= 35:
+        if 40 <= self.timer_sec <= 42 or 30 <= self.timer_sec <= 35:
             self.health += 5
     
     def user_score(self):
@@ -112,6 +110,13 @@ class HealthfyModel:
             print("Hi! How are you?")
             self.socializing_status()
 
+    def countdown(self):
+        self.timer_sec -= 1
+        if self.timer_sec == 0:
+            pygame.time.set_timer(TIMER, 0)
+    
+    def get_timer_sec(self):
+        return self.timer_sec
 
 
 class Button:
