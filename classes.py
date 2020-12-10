@@ -35,12 +35,10 @@ class HealthfyModel:
         """
         Create a new Healthfy instance. Keeps track of health bar and current status of the humanoid.
         """
-        self.health = 200.0      # Current Health
-        self._maxHealth = 200    # Max Health
-        self._healthDashes = 20  # Max Displayed dashes
-        self._user_score = None
-        timer_sec = 48
-        self.screen = pygame.display.set_mode((500,500))
+        self.health = 240.0      # Current Health
+        self._max_health = 240    # Max Health
+        self._user_score = 0
+        self.screen = pygame.display.set_mode((500, 500))
         self.feed = Button(100, 375, "Eat", self.feeding_status, self.screen)
         self.work = Button(200, 375, "Work", self.working_status, self.screen)
         self.talk = Button(300, 375, "Talk", self.socializing_status, self.screen)
@@ -136,13 +134,10 @@ class Button:
     
     def set_to_alert(self):
         self.current_color = self.alert_color
-        print("ALERT", self.name)
-
 
     def set_to_normal(self):
         self.current_color = self.normal_color
 
-    
     def check_click(self):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -154,10 +149,10 @@ class Button:
 
 
     def draw(self):
-        pygame.draw.rect(self.screen, self.current_color,(self.x,self.y,self.width,self.height))
-        smallText = pygame.font.SysFont("comicsansms",10)
+        pygame.draw.rect(self.screen, self.current_color, (self.x, self.y, self.width, self.height))
+        smallText = pygame.font.SysFont("comicsansms", 30)
         text_surface, text_rectangle = self.create_text_objects(self.name, smallText)
-        text_rectangle.center = ( (self.x+(self.width/2)), (self.y+(self.height/2)) )
+        text_rectangle.center = ((self.x+(self.width/2)), (self.y+(self.height/2)))
         self.screen.blit(text_surface, text_rectangle)
     
     def create_text_objects(self, text, font):
@@ -188,7 +183,7 @@ class HealthfyView:
 
 
     def text_objects(self, text, font):
-        text_surface = font.render(text, True, self.white)
+        text_surface = font.render(text, True, white)
         return text_surface, text_surface.get_rect()
 
     def draw(self):
@@ -201,45 +196,12 @@ class HealthfyView:
         text = font.render(str(timer_sec), True, (0, 128, 0))
         text_rect = text.get_rect(center = self.screen.get_rect().center)
         self.screen.blit(text, text_rect)
-
-
-
-    def set_timer(self):
-        timer_sec -= 1
-        if timer_sec == 0:
-            pygame.time.set_timer(TIMER, 0)
       
-
-    def buttons(self):
-        """
-        Display the 5 buttons to the user.
-        """
-        pass
-
     def current_status(self):
         """
         Display the activity currently being performed by the humanoid. 
         """
         print(f"Humanoid is currently {model.process_input}\n Try to keep them alive.")
-    
-    def display_bar(self):
-        """
-        Convert current health of the humanoid to a percentage and corresponding dashes to display. 
-
-        Returns: 
-            A float representing the current health of the humanoid in percentage, 
-            and a bar with dashes the size of the percentage (i.e. 1 dash for 10%).
-        """
-        dashConvert = int(self._maxHealth/self._healthDashes)    # Get the number to divide by to convert health to dashes
-        currentDashes = int(self.health/dashConvert)             # Convert health to dash count
-        remainingHealth = self._healthDashes - currentDashes     # Get the health remaining to fill as space
-
-        healthDisplay = '-' * currentDashes                             # Convert to dashes as a string:   "--------"
-        remainingDisplay = ' ' * remainingHealth                        # Convert to spaces as a string: "            "
-        percent = str(int((self.health/self._maxHealth)*100)) + "%"     # Get the percent as a whole number:
-
-        print("|" + healthDisplay + remainingDisplay + "|")  # Print out text based health bar 
-        print("         " + percent)                         # Print the percent
     
     
     def display_score(self):
@@ -285,13 +247,6 @@ class HealthfyController:
         elif stripped_input == "h":
             self._help()
 
-    def handle_event(self, event):
-        """
-        """
-        if event.type == KEYDOWN:
-            if event.key == pygame.K_e:
-                print("Has Eaten!") # Will replace this with what happens to the game. 
-                # Add other Key board presses e.g S, B, W
 
     
     def _quit_game(self):
@@ -320,19 +275,18 @@ class HealthfyController:
 if __name__ == '__main__':
     
     pygame.init()
-    size = (500, 500)
     model = HealthfyModel()
     print(model)
     view = HealthfyView(model)
     controller = HealthfyController(model)
     
-    running = True
+    RUNNING = True
     talk_alert = False
     feed_alert = False
     potty_alert = False
     work_alert = False
     sleep_alert = False
-    while running:
+    while RUNNING:
         for event in pygame.event.get():
             if event.type == QUIT:
                 running = False
@@ -398,6 +352,6 @@ if __name__ == '__main__':
         model.potty.draw()
         model.sleep.draw()
         pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
-        pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model._maxHealth, 30))
+        pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model._max_health, 30))
         pygame.display.update()
     pygame.quit()
