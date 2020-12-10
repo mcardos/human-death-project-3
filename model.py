@@ -49,7 +49,7 @@ class HealthfyModel:
         """
         if 36 <= self.timer_sec <= 40 or 10 <= self.timer_sec <= 8:
             print("Feeding")
-            self.health += 5
+            self.health += 10
                 
 
     def sleeping_status(self):
@@ -58,7 +58,7 @@ class HealthfyModel:
         button when it flashes red.
         """
         if 17 <= self.timer_sec <= 20 or 28 <= self.timer_sec <= 30:
-            self.health += 5
+            self.health += 10
     
     def working_status(self):
         """
@@ -66,7 +66,7 @@ class HealthfyModel:
         button when it flashes red.
         """
         if 24 <= self.timer_sec <= 26:
-            self.health += 10
+            self.health += 48
 
     def socializing_status(self):
         """
@@ -74,7 +74,7 @@ class HealthfyModel:
         button when it flashes red.
         """
         if 44 <= self.timer_sec <= 46 or 4 <= self.timer_sec <= 10:
-            self.health += 5
+            self.health += 10
 
     def bathroom_status(self):
         """
@@ -82,13 +82,14 @@ class HealthfyModel:
         button when it flashes red.
         """
         if 40 <= self.timer_sec <= 42 or 30 <= self.timer_sec <= 35:
-            self.health += 5
+            self.health += 10
     
     def user_score(self):
         """
-        Convert health bar to scores by multiplying it by 1000.
+        Convert health bar to scores by multiplying it by 100.
         """
-        self._user_score += self.health * 1000
+        self._user_score += self.health * 100
+        return self._user_score
     
     def action(self, key):
         """

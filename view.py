@@ -1,12 +1,14 @@
 import pygame
 import model
 
+pygame.font.init()
 black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 0, 0)
 green = (27, 133, 27)
 TIMER = pygame.USEREVENT + 1
 pygame.time.set_timer(TIMER, 1000)
+font = pygame.font.SysFont("freesans", 50)
 
 class HealthfyView:
     """
@@ -54,11 +56,12 @@ class HealthfyView:
         """
         Display the activity currently being performed by the humanoid. 
         """
-        print(f"Humanoid is currently {model.action}\n Try to keep them alive.")
+        self.screen.blit(f"Humanoid is currently {self.model.action()}\n Try to keep them alive.")
     
     
     def display_score(self):
         """
         Display the top score and the current score to the player.
         """
-        score = font.render(f"Score: {model.user_score}")
+        score = font.render(f"Score: {self.model.user_score()}", True, black)
+        self.screen.blit(score, (250,0))
