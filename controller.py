@@ -6,10 +6,6 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 0, 0)
 green = (27, 133, 27)
-global timer_sec
-timer_sec  = 48
-TIMER = pygame.USEREVENT + 1
-pygame.time.set_timer(TIMER, 1000)
 
 class HealthfyController:
     """

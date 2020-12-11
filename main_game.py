@@ -5,7 +5,7 @@ import view
 import controller
 import os
 
-os.environ['SDL_AUDIODRIVER'] = 'dsp'
+# os.environ['SDL_AUDIODRIVER'] = 'alsa'
 #  Initialize pygame.
 pygame.init()
 
@@ -19,11 +19,11 @@ model = model.HealthfyModel()
 view = view.HealthfyView(model)
 controller = controller.HealthfyController(model)
 
-#Background Music
+#  Background Music
 pygame.mixer.init()
-pygame.mixer.music.load('Images/Picket Fence Lol.mp3')
+pygame.mixer.music.load('Images/Picket Fence Lol.ogg')
 pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
-pygame.mixer.music.play()
+pygame.mixer.music.play(-1)
 
 #  Set variables to change when needed.
 running = True
@@ -91,6 +91,7 @@ while running:
         model.feed.set_to_normal()
 
 #  Draw and update all screen displays.
+    pygame.mixer.music.play(-1)
     view.draw()
     view.display_score()
     # view.current_status()
