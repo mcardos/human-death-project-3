@@ -3,7 +3,9 @@ from pygame.locals import (USEREVENT, MOUSEBUTTONDOWN, QUIT)
 import model
 import view
 import controller
+import os
 
+os.environ['SDL_AUDIODRIVER'] = 'dsp'
 #  Initialize pygame.
 pygame.init()
 
@@ -16,6 +18,12 @@ TIMER = USEREVENT + 1
 model = model.HealthfyModel()
 view = view.HealthfyView(model)
 controller = controller.HealthfyController(model)
+
+#Background Music
+pygame.mixer.init()
+pygame.mixer.music.load('Images/Picket Fence Lol.mp3')
+pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
+pygame.mixer.music.play()
 
 #  Set variables to change when needed.
 running = True

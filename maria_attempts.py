@@ -1,5 +1,9 @@
-import time
+import view, model
 import pygame
+import sys
+
+model = model.HealthfyModel()
+view = view.HealthfyView(model)
 
 # Step 1: Initialize Game Screen.
 pygame.init()
@@ -16,6 +20,8 @@ grey = (80, 80, 80)
 # Add background.
 background = pygame.image.load("Images/background.jpg")
 humanoid = pygame.image.load("Images/humanoid.jpg")
+isabelle = pygame.image.load("Images/isabele background small.jpg")
+tom = pygame.image.load("Images/tom background.jpg")
 
 # Add constants 
 clock = pygame.time.Clock()
@@ -29,13 +35,59 @@ font = pygame.font.SysFont(None, 100)
 text = font.render(str(timer_sec), True, (0, 128, 0))
 small_text = pygame.font.Font("freesansbold.ttf", 20)
 large_text = pygame.font.SysFont("comicsans.ttf", 115)
+MENU_TEXT = pygame.font.SysFont("freesansbold.ttf", 170)
+
+def main_menu_setup():
+    pygame.mouse.get_pos()
+    text_surface, text_rectangle = text_objects('HEALTHFY', MENU_TEXT)
+    text_rectangle.center = (int(500/ 2), int(500/ 4))
+    screen.blit(text_surface, text_rectangle)
+    text_surface, text_rectangle = text_objects("Menu", large_text)
+    text_rectangle.center = (int(500 * 0.98), int(500 * 0.98))
+    screen.blit(text_surface, text_rectangle)
+    text_surface, text_rectangle = text_objects('Created by Maria', large_text)
+    text_rectangle.center = (int(500 / 2), int(500 * 0.84))
+    screen.blit(text_surface, text_rectangle)
+    pygame.display.update()
+
+def _help():
+        """
+        Print a short summary of the game to help the player.
+        """
+        print("Click one of the buttoms on the screen to make the Humanoid take action")
+        print("Win by not letting the health bar reach below 40%")
+
+def main_menu():
+    global ticks
+    main_menu_setup()
+    # while True:
+    click = False
+    pressed_keys = pygame.key.get_pressed()
+    for event in pygame.event.get():
+        alt_f4 = (event.type == pygame.KEYDOWN and (event.key == pygame.K_q or event.key == pygame.K_ESCAPE))
+        if event.type == pygame.QUIT or alt_f4: sys.exit()
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            RUNNING = True
+        elif event.type == pygame.KEYDOWN and (event.key == pygame.K_v or event.key == pygame.K_h):
+            _help()
+    if button('S T A R T  G A M E', 100, 375, 100, 50, black, green, pygame.K_SPACE):
+        background = background
+    elif button('P L A Y  A S  I S A B E L L E', 200, 375, 100, 50, black, green, pygame.K_i):
+        background = isabelle
+        main_menu_setup()
+    elif button('P L A Y  A S  T O M', 300, 375, 100, 50, black, green, pygame.K_o):
+        background = tom
+        main_menu_setup()
+    elif button('Q U I T  G A M E', 400, 375, 100, 50, black, green, pygame.K_q):
+        sys.exit()
+    pygame.display.update()
+    clock.tick(60)
 
 def text_objects(text, font):
     text_surface = font.render(text, True, white)
     return text_surface, text_surface.get_rect()
 
 def feeding_status():
-
     if 36 <= timer_sec <= 40 or 10 <= timer_sec <= 8:
         # if pygame.MOUSEBUTTONDOWN:
         print("Feeding")
@@ -80,8 +132,8 @@ def button(msg,x,y,w,h,ic,ac,key=None):
             action(key)         
     else:
         pygame.draw.rect(screen, ic,(x,y,w,h))
-    smallText = pygame.font.SysFont("comicsansms",10)
-    text_surface, text_rectangle = text_objects("Click one of the buttoms", smallText)
+    smallText = pygame.font.SysFont("comicsansms", 10)
+    text_surface, text_rectangle = text_objects("whatever", smallText)
     text_rectangle.center = ( (x+(w/2)), (y+(h/2)) )
     screen.blit(text_surface, text_rectangle)
 
@@ -102,13 +154,39 @@ def action(key):
         print("Hi! How are you?")
         socializing_status()
 
-
+# while RUNNING:
+#     main_menu_setup()
+#     screen.blit(background, (0, 0))
+#     if 47 <= timer_sec <= 48:
+#         pygame.draw.rect(screen, red, (300, 375, 200, 70))
+#         text_surface, text_rectangle = text_objects("Menu", MENU_TEXT)
+#         text_rectangle.center = ((300+(200/2)), 375+(70/2))
+#         screen.blit(text_surface, text_rectangle)
+#     for event in pygame.event.get():
+#         if event.type == pygame.KEYDOWN:
+#             if button('S T A R T  G A M E', 100, 375, 100, 50, black, green, pygame.K_SPACE):
+#                 background = background
+#                 screen.blit(background, (0, 0))
+#             elif button('P L A Y  A S  I S A B E L L E', 200, 375, 100, 50, black, green, pygame.K_i):
+#                 background = isabelle
+#                 screen.blit(background, (0, 0))
+#                 main_menu_setup()
+#             elif button('P L A Y  A S  T O M', 300, 375, 100, 50, black, green, pygame.K_o):
+#                 background = tom
+#                 screen.blit(background, (0, 0))
+#                 main_menu_setup()
+#             elif button('Q U I T  G A M E', 400, 375, 100, 50, black, green, pygame.K_q):
+#                 sys.exit()
+    
+# #         pygame.draw.rect(screen, red, (300, 375, 70, 50))
+# #         text_surface, text_rectangle = text_objects("Talk", small_text)
+# #         text_rectangle.center = ((300+(70/2)), 375+(50/2))
+# #         screen.blit(text_surface, text_rectangle)
 while RUNNING:
+    # main_menu()
     screen.fill(white)
-    screen.blit(background, (0, 0))
+    screen.blit(isabelle, (0, 0))
     screen.blit(humanoid, (250, 350))
-    # pygame.draw.rect(screen, grey, (0, 0, 240, 30))
-    # pygame.draw.rect(screen, grey, (50, 0, 240, 30))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             RUNNING = False
@@ -181,7 +259,6 @@ while RUNNING:
 # Add health bar visual
     # pygame.draw.rect(screen, grey, (0, 0, 240, 30))
     # pygame.draw.rect(screen, grey, (50, 0, 240, 30))
-    pygame.display.flip()
     mouse = pygame.mouse.get_pos()
 
     pygame.display.update()
