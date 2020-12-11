@@ -114,11 +114,7 @@ class HealthfyModel:
 
     def countdown(self):
         """
-<<<<<<< HEAD
-        Decrement the timer each second by 1 until it reaches 0.
-=======
         Decrease time by 1 second and if time is at 0 seconds, set timer to 0.
->>>>>>> 162128810cc137c2399b88d4cb3b28b9f025e1c3
         """
         self.timer_sec -= 1
         if self.timer_sec == 0:
