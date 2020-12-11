@@ -20,10 +20,10 @@ view = view.HealthfyView(model)
 controller = controller.HealthfyController()
 
 #  Background Music
-# pygame.mixer.init()
-# pygame.mixer.music.load('Images/Picket Fence Lol.ogg')
-# pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
-# pygame.mixer.music.play(-1)
+pygame.mixer.init()
+pygame.mixer.music.load('Images/Picket Fence Lol.ogg')
+pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
+pygame.mixer.music.play(-1)
 
 #  Set variables to change when needed.
 RUNNING = True

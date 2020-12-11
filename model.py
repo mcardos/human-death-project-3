@@ -2,7 +2,7 @@ import random
 import pygame
 from pygame.locals import (USEREVENT)
 
-
+pygame.init()
 # Constant variables.
 black = (0, 0, 0)
 white = (255, 255, 255)
