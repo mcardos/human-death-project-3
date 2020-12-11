@@ -8,8 +8,6 @@ import controller
 pygame.init()
 
 #  Add constants.
-black = (0, 0, 0)
-white = (255, 255, 255)
 red = (255, 0, 0)
 green = (27, 133, 27)
 TIMER = USEREVENT + 1
@@ -95,6 +93,5 @@ while running:
     model.sleep.draw()
     pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
     pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model._max_health, 30))
-    pygame.display.flip()
     pygame.display.update()
 pygame.quit()

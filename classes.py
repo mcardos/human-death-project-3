@@ -38,12 +38,10 @@ class HealthfyModel:
         """
         Create a new Healthfy instance. Keeps track of health bar and current status of the humanoid.
         """
-        self.health = 200.0      # Current Health
-        self._maxHealth = 200    # Max Health
-        self._healthDashes = 20  # Max Displayed dashes
-        self._user_score = None
-        timer_sec = 48
-        self.screen = pygame.display.set_mode((500,500))
+        self.health = 240.0      # Current Health
+        self._max_health = 240    # Max Health
+        self._user_score = 0
+        self.screen = pygame.display.set_mode((500, 500))
         self.feed = Button(100, 375, "Eat", self.feeding_status, self.screen)
         self.work = Button(200, 375, "Work", self.working_status, self.screen)
         self.talk = Button(300, 375, "Talk", self.socializing_status, self.screen)
@@ -147,8 +145,6 @@ class Button:
         Set current color to the alert color
         """
         self.current_color = self.alert_color
-        
-
 
     def set_to_normal(self):
         """
@@ -156,7 +152,6 @@ class Button:
         """
         self.current_color = self.normal_color
 
-    
     def check_click(self):
         """
         set the current color to the click color when the user has clicked on the button
@@ -229,7 +224,6 @@ class HealthfyView:
         text = font.render(str(timer_sec), True, (0, 128, 0))
         text_rect = text.get_rect(center = self.screen.get_rect().center)
         self.screen.blit(text, text_rect)
-
     def current_status(self):
         """
         Display the activity currently being performed by the humanoid. 
@@ -306,19 +300,18 @@ class HealthfyController:
 
 if __name__ == '__main__':
     pygame.init()
-    size = (500, 500)
     model = HealthfyModel()
     print(model)
     view = HealthfyView(model)
     controller = HealthfyController(model)
     
-    running = True
+    RUNNING = True
     talk_alert = False
     feed_alert = False
     potty_alert = False
     work_alert = False
     sleep_alert = False
-    while running:
+    while RUNNING:
         for event in pygame.event.get():
             if event.type == QUIT:
                 running = False
@@ -384,6 +377,6 @@ if __name__ == '__main__':
         model.potty.draw()
         model.sleep.draw()
         pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
-        pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model._maxHealth, 30))
+        pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model._max_health, 30))
         pygame.display.update()
     pygame.quit()

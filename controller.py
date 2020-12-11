@@ -1,6 +1,15 @@
-import pygame 
-import sys
+import pygame
+import model
+import view 
 
+black = (0, 0, 0)
+white = (255, 255, 255)
+red = (255, 0, 0)
+green = (27, 133, 27)
+global timer_sec
+timer_sec  = 48
+TIMER = pygame.USEREVENT + 1
+pygame.time.set_timer(TIMER, 1000)
 
 class HealthfyController:
     """
@@ -19,9 +28,6 @@ class HealthfyController:
         Initialize the controller class.
         """
         pass
-
-    
-
 
     def get_input(self): # USe as help function instead since we're already handling user input in a different method
         """
@@ -58,4 +64,3 @@ class HealthfyController:
         invalid in some way and for the user to input another command.
         """
         print("Invalid input. Please try again. Enter h for help or q to quit.")
-
