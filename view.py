@@ -36,7 +36,7 @@ class HealthfyView:
 
     def text_objects(self, text, font):
         """
-        
+        Create a new surface and return a specified text rendered on it.
         """
         text_surface = font.render(text, True, white)
         return text_surface, text_surface.get_rect()

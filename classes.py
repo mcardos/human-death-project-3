@@ -258,7 +258,7 @@ class HealthfyController:
 
     def __init__(self, HealthfyModel):
         """
-        docstring
+        Initialize the controller class
         """
         pass
 

@@ -112,6 +112,9 @@ class HealthfyModel:
             self.socializing_status()
 
     def countdown(self):
+        """
+        Decrement the timer each second by 1 until it reaches 0.
+        """
         self.timer_sec -= 1
         if self.timer_sec == 0:
             pygame.time.set_timer(TIMER, 0)
@@ -138,12 +141,21 @@ class Button:
         self.screen = screen
     
     def set_to_alert(self):
+        """
+        Set current color to the alert color
+        """
         self.current_color = self.alert_color
 
     def set_to_normal(self):
+        """
+        set current color to the normal color
+        """
         self.current_color = self.normal_color
 
     def check_click(self):
+        """
+        set the current color to the click color when the user has clicked on the button
+        """
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
         print(click)
@@ -154,6 +166,9 @@ class Button:
 
 
     def draw(self):
+        """
+        Create the 5 buttons with their specified colors, sizes and positions on the game screen
+        """
         pygame.draw.rect(self.screen, self.current_color, (self.x, self.y, self.width, self.height))
         smallText = pygame.font.SysFont("comicsansms", 30)
         text_surface, text_rectangle = self.create_text_objects(self.name, smallText)
@@ -161,5 +176,8 @@ class Button:
         self.screen.blit(text_surface, text_rectangle)
     
     def create_text_objects(self, text, font):
+        """
+        Create a new surface and return a specified text rendered on it.
+        """
         text_surface = font.render(text, True, white)
         return text_surface, text_surface.get_rect()
