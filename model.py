@@ -1,7 +1,6 @@
 import random
 import pygame
-from pygame.locals import (USEREVENT, K_e, K_p,
-                           K_s, K_t, K_w)
+from pygame.locals import (USEREVENT)
 
 
 # Constant variables.
@@ -15,7 +14,7 @@ class HealthfyModel:
     Maintains all information included in the game Healthfy.
 
     Attributes:
-        health = An integer represeting the health of the humanoid. 
+        health = An integer represeting the health of the humanoid.
         _max_health = An integer representing the maximum health of the humanoid.
         _user_score = An integer representing the score of the player.
         screen = A display surface 500 pixels wide and 500 pixels long.
@@ -27,11 +26,11 @@ class HealthfyModel:
         """
         Creates a new Healthfy instance and the buttons necessary
         to begin a game.
-        
+
         Initializing the health, user score and current status of the humanoid.
         """
         self.health = 240
-        self._max_health = 240
+        self.max_health = 240
         self._user_score = 0
         self.screen = pygame.display.set_mode((500, 500))
         self.timer_sec = 48
@@ -49,15 +48,12 @@ class HealthfyModel:
         self.work_alert = False
         self.sleep_alert = False
 
-    
     def feeding_status(self):
         """
         Add to the health bar if user clicks on the 'Eat'
         button when it flashes red.
         """
-        # if 36 <= self.timer_sec <= 40 or 10 <= self.timer_sec <= 8:
-        #     self.health += 10
-        if 36 <= self.get_timer_sec()<= 40 or 8 <= self.get_timer_sec() <= 10:
+        if 36 <= self.get_timer_sec() <= 40 or 8 <= self.get_timer_sec() <= 10:
             if self.feed_alert == False:
                 self.feed.set_to_alert()
                 self.health -= 24
@@ -66,23 +62,33 @@ class HealthfyModel:
             self.feed_alert = False
             self.feed.set_to_normal()
 
-                
-
     def sleeping_status(self):
         """
         Add to the health bar if user clicks on the 'Sleep'
         button when it flashes red.
         """
-        if 17 <= self.timer_sec <= 20 or 28 <= self.timer_sec <= 30:
-            self.health += 10
-    
+        if 17 <= self.get_timer_sec() <= 20 or 28 <= self.get_timer_sec() <= 30:
+            if self.sleep_alert == False:
+                self.sleep.set_to_alert()
+                self.health -= 24
+                self.sleep_alert = True
+        else:
+            self.sleep_alert = False
+            self.sleep.set_to_normal()
+
     def working_status(self):
         """
         Add to the health bar if user clicks on the 'Work'
         button when it flashes red.
         """
-        if 24 <= self.timer_sec <= 26:
-            self.health += 48
+        if 24 <= self.get_timer_sec() <= 26:
+            if self.work_alert == False:
+                self.work.set_to_alert()
+                self.health -= 48
+                self.work_alert = True
+        else:
+            self.work_alert = False
+            self.work.set_to_normal()
 
     def socializing_status(self):
         """
@@ -111,15 +117,19 @@ class HealthfyModel:
         else:
             self.potty_alert = False
             self.potty.set_to_normal()
-    
+
     def bomb_status(self):
         """
         Decrease the health bar if user clicks on the "Binge..."
         button when it flashes red.
         """
-        
-        if self.random_sec <= self.timer_sec <= self.random_sec or 3 <= self.timer_sec <= 4 or 10 <= self.timer_sec <= 11:
+        if (self.random_sec <= self.timer_sec <= self.random_sec)\
+            or (3 <= self.timer_sec <= 4) \
+            or (10 <= self.timer_sec <= 11):
             self.health -= 48
+            self.bomb.set_to_alert()
+        else:
+            self.bomb.set_to_normal()
 
     def user_score(self):
         """
@@ -127,7 +137,7 @@ class HealthfyModel:
         """
         self._user_score += self.health
         return self._user_score
-    
+
     # def action(self, key):
     #     """
     #     Process user inputs and call appropiate function to update health bar.
@@ -155,12 +165,14 @@ class HealthfyModel:
         self.timer_sec -= 1
         if self.timer_sec == 0:
             pygame.time.set_timer(self.TIMER, 0)
-    
+
     def get_timer_sec(self):
         """
         Return the current time, an integer.
         """
         return self.timer_sec
+
+
 
 
 class Button:
@@ -179,7 +191,7 @@ class Button:
         self.click_color = green
         self.current_color = black
         self.screen = screen
-    
+
     def set_to_alert(self):
         """
         Set current color to the alert color
@@ -198,12 +210,10 @@ class Button:
         """
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
-        print(click)
         if self.x+self.width > mouse[0] > self.x and self.y+self.height > mouse[1] > self.y:
             if click[0] == 1 and self.on_click is not None:
                 self.on_click()
                 self.current_color = self.click_color
-
 
     def draw(self):
         """
@@ -214,7 +224,7 @@ class Button:
         text_surface, text_rectangle = self.create_text_objects(self.name, small_text)
         text_rectangle.center = ((self.x+(self.width/2)), (self.y+(self.height/2)))
         self.screen.blit(text_surface, text_rectangle)
-    
+
     def create_text_objects(self, text, font):
         """
         Create a new surface and return a specified text rendered on it.

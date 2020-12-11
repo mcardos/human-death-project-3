@@ -1,6 +1,7 @@
 import pygame
 import model
-import view 
+import view
+import sys
 
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -19,11 +20,11 @@ class HealthfyController:
         _invalid_input: Print short message telling the user to input another command.
     """
 
-    def __init__(self, HealthfyModel):
+    def __init__(self):
         """
         Initialize the controller class.
         """
-        pass
+        self.model = model.HealthfyModel()
 
     def get_input(self): # USe as help function instead since we're already handling user input in a different method
         """
@@ -33,7 +34,7 @@ class HealthfyController:
             A string with the current status of the humanoid and an updated healthbar.
         """
         player_input = input(
-            "What is your command? (or enter h for help, q to quit): ")
+            "Press a button to command the humanoid! (or enter h for help, q to quit): ")
         stripped_input = player_input.strip()
         if stripped_input == "q":
             self._quit_game()
@@ -44,7 +45,7 @@ class HealthfyController:
         """
         Print a message and quit the game by exiting the program.
         """
-        print('You quit.')
+        model.Button(250, 300, 'You quit.', pygame.QUIT, self.model.screen)
         sys.exit()
 
     def _help(self):

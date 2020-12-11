@@ -1,9 +1,9 @@
+import os
 import pygame
 from pygame.locals import (USEREVENT, MOUSEBUTTONDOWN, QUIT)
 import model
 import view
 import controller
-import os
 
 # os.environ['SDL_AUDIODRIVER'] = 'alsa'
 #  Initialize pygame.
@@ -17,7 +17,7 @@ TIMER = USEREVENT + 1
 #  Set classes to simple name.
 model = model.HealthfyModel()
 view = view.HealthfyView(model)
-controller = controller.HealthfyController(model)
+controller = controller.HealthfyController()
 
 #  Background Music
 # pygame.mixer.init()
@@ -26,18 +26,13 @@ controller = controller.HealthfyController(model)
 # pygame.mixer.music.play(-1)
 
 #  Set variables to change when needed.
-running = True
-talk_alert = False
-feed_alert = False
-potty_alert = False
-work_alert = False
-sleep_alert = False
+RUNNING = True
 
 #  Main loop:
-while running:
+while RUNNING:
     for event in pygame.event.get():
         if event.type == QUIT:
-            running = False
+            RUNNING = False
         if event.type == TIMER:
             model.countdown()
         if event.type == MOUSEBUTTONDOWN:
@@ -52,35 +47,9 @@ while running:
     model.socializing_status()
     model.bathroom_status()
     model.working_status()
-    if 24 <= model.get_timer_sec()<= 26:
-        if work_alert == False:
-            model.work.set_to_alert()
-            model.health -= 48
-            work_alert = True
-    else:
-        work_alert = False
-        model.work.set_to_normal()
-    if 17 <= model.get_timer_sec() <= 20 or 28 <= model.get_timer_sec() <= 30:
-        if sleep_alert == False:
-            model.sleep.set_to_alert()
-            model.health -= 24
-            sleep_alert = True
-    else:
-        sleep_alert = False
-        model.sleep.set_to_normal()
+    model.sleeping_status()
     model.feeding_status()
-    # if 36 <= model.get_timer_sec()<= 40 or 8 <= model.get_timer_sec() <= 10:
-    #     if feed_alert == False:
-    #         model.feed.set_to_alert()
-    #         model.health -= 24
-    #         feed_alert = True
-    # else:
-    #     feed_alert = False
-    #     model.feed.set_to_normal()
-    if model.random_sec <= model.get_timer_sec() <= model.random_sec or 2 <= model.timer_sec <= 3 or 10 <= model.timer_sec <= 11:
-        model.bomb.set_to_alert()
-    else:
-        model.bomb.set_to_normal()
+    model.bomb_status()
 
 #  Draw and update all screen displays.
     # pygame.mixer.music.play(-1)
@@ -94,6 +63,6 @@ while running:
     model.sleep.draw()
     model.bomb.draw()
     pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
-    pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model._max_health, 30))
+    pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model.max_health, 30))
     pygame.display.update()
 pygame.quit()
