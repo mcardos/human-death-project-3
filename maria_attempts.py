@@ -183,7 +183,7 @@ def action(key):
 # #         text_rectangle.center = ((300+(70/2)), 375+(50/2))
 # #         screen.blit(text_surface, text_rectangle)
 while RUNNING:
-    # main_menu()
+    main_menu()
     screen.fill(white)
     screen.blit(isabelle, (0, 0))
     screen.blit(humanoid, (250, 350))

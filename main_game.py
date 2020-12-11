@@ -20,10 +20,10 @@ view = view.HealthfyView(model)
 controller = controller.HealthfyController(model)
 
 #  Background Music
-pygame.mixer.init()
-pygame.mixer.music.load('Images/Picket Fence Lol.ogg')
-pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
-pygame.mixer.music.play(-1)
+# pygame.mixer.init()
+# pygame.mixer.music.load('Images/Picket Fence Lol.ogg')
+# pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
+# pygame.mixer.music.play(-1)
 
 #  Set variables to change when needed.
 running = True
@@ -46,25 +46,12 @@ while running:
             model.talk.check_click()
             model.potty.check_click()
             model.sleep.check_click()
+            model.bomb.check_click()
 
 #  Create events at specific time intervals.
-    if 44 <= model.get_timer_sec() <= 46 or 4 <= model.get_timer_sec() <= 10:
-        if talk_alert == False:
-            model.talk.set_to_alert()
-            model.health -= 24
-            talk_alert = True
-    else:
-        talk_alert = False
-        model.talk.set_to_normal()
-        
-    if 40 <= model.get_timer_sec() <= 42 or 30 <= model.get_timer_sec() <= 35 :
-        if potty_alert == False:
-            model.potty.set_to_alert()
-            model.health -= 24
-            potty_alert = True
-    else:
-        potty_alert = False
-        model.potty.set_to_normal()
+    model.socializing_status()
+    model.bathroom_status()
+    model.working_status()
     if 24 <= model.get_timer_sec()<= 26:
         if work_alert == False:
             model.work.set_to_alert()
@@ -81,17 +68,22 @@ while running:
     else:
         sleep_alert = False
         model.sleep.set_to_normal()
-    if 36 <= model.get_timer_sec()<= 40 or 8 <= model.get_timer_sec() <= 10:
-        if feed_alert == False:
-            model.feed.set_to_alert()
-            model.health -= 24
-            feed_alert = True
+    model.feeding_status()
+    # if 36 <= model.get_timer_sec()<= 40 or 8 <= model.get_timer_sec() <= 10:
+    #     if feed_alert == False:
+    #         model.feed.set_to_alert()
+    #         model.health -= 24
+    #         feed_alert = True
+    # else:
+    #     feed_alert = False
+    #     model.feed.set_to_normal()
+    if model.random_sec <= model.get_timer_sec() <= model.random_sec or 2 <= model.timer_sec <= 3 or 10 <= model.timer_sec <= 11:
+        model.bomb.set_to_alert()
     else:
-        feed_alert = False
-        model.feed.set_to_normal()
+        model.bomb.set_to_normal()
 
 #  Draw and update all screen displays.
-    pygame.mixer.music.play(-1)
+    # pygame.mixer.music.play(-1)
     view.draw()
     view.display_score()
     # view.current_status()
@@ -100,6 +92,7 @@ while running:
     model.talk.draw()
     model.potty.draw()
     model.sleep.draw()
+    model.bomb.draw()
     pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
     pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model._max_health, 30))
     pygame.display.update()

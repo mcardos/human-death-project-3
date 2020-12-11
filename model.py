@@ -1,38 +1,36 @@
+import random
 import pygame
-from pygame.locals import (USEREVENT, K_e, K_p, 
-K_s, K_t, K_w)
+from pygame.locals import (USEREVENT, K_e, K_p,
+                           K_s, K_t, K_w)
+
 
 # Constant variables.
 black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 0, 0)
 green = (27, 133, 27)
-TIMER = USEREVENT + 1
-
 
 class HealthfyModel:
-    '''
-    Keeps track of the state of the game and the humanoid, including:
-        1. how many times it was fed,
-        2. how many times it rested,
-        3. how many times it worked,
-        4. how many times it socialized,
-        5. how many times it used the bathrooms
+    """
+    Maintains all information included in the game Healthfy.
 
     Attributes:
-        _healthbar: A float bar representing the health of the humanoid
-        feeding_status: A bool representing if the humanoid is hungry or not(False)
-        sleeping_status: A bool representing if the humanoid is sleepy or not(False)
-        working_status: A bool representing if the humanoid needs to work or not(False)
-        _current_status: A number representing the current activity of the humanoid'
-        socializing_status: A bool representing if the humanoid needs to socialize or not(False)
-        bathroom_status: A bool representing if the humanoid is in need of the bathroom or not(False)
-    '''
+        health = An integer represeting the health of the humanoid. 
+        _max_health = An integer representing the maximum health of the humanoid.
+        _user_score = An integer representing the score of the player.
+        screen = A display surface 500 pixels wide and 500 pixels long.
+        timer_sec = An integer representing the time, in seconds, of a single game.
+        TIMER = An event, represented by the integer 25, that appears at 0 seconds in
+        a single game.
+    """
     def __init__(self):
         """
-        Create a new Healthfy instance. Keeps track of health bar and current status of the humanoid.
+        Creates a new Healthfy instance and the buttons necessary
+        to begin a game.
+        
+        Initializing the health, user score and current status of the humanoid.
         """
-        self.health = 240.0 
+        self.health = 240
         self._max_health = 240
         self._user_score = 0
         self.screen = pygame.display.set_mode((500, 500))
@@ -42,6 +40,14 @@ class HealthfyModel:
         self.talk = Button(300, 375, "Talk", self.socializing_status, self.screen)
         self.potty = Button(300, 315, "Potty", self.bathroom_status, self.screen)
         self.sleep = Button(100, 315, "Sleep", self.sleeping_status, self.screen)
+        self.bomb = Button(200, 315, "Binge...", self.bomb_status, self.screen)
+        self.TIMER = USEREVENT + 1
+        self.random_sec = random.randint(0, 48)
+        self.talk_alert = False
+        self.feed_alert = False
+        self.potty_alert = False
+        self.work_alert = False
+        self.sleep_alert = False
 
     
     def feeding_status(self):
@@ -49,8 +55,17 @@ class HealthfyModel:
         Add to the health bar if user clicks on the 'Eat'
         button when it flashes red.
         """
-        if 36 <= self.timer_sec <= 40 or 10 <= self.timer_sec <= 8:
-            self.health += 10
+        # if 36 <= self.timer_sec <= 40 or 10 <= self.timer_sec <= 8:
+        #     self.health += 10
+        if 36 <= self.get_timer_sec()<= 40 or 8 <= self.get_timer_sec() <= 10:
+            if self.feed_alert == False:
+                self.feed.set_to_alert()
+                self.health -= 24
+                self.feed_alert = True
+        else:
+            self.feed_alert = False
+            self.feed.set_to_normal()
+
                 
 
     def sleeping_status(self):
@@ -74,17 +89,38 @@ class HealthfyModel:
         Add to the health bar if user clicks on the 'Talk'
         button when it flashes red.
         """
-        if 44 <= self.timer_sec <= 46 or 4 <= self.timer_sec <= 10:
-            self.health += 10
+        if 44 <= self.get_timer_sec() <= 46 or 4 <= self.get_timer_sec() <= 10:
+            if self.talk_alert == False:
+                self.talk.set_to_alert()
+                self.health -= 24
+                self.talk_alert = True
+        else:
+            self.talk_alert = False
+            self.talk.set_to_normal()
 
     def bathroom_status(self):
         """
         Add to the health bar if user clicks on the 'Potty'
         button when it flashes red.
         """
-        if 40 <= self.timer_sec <= 42 or 30 <= self.timer_sec <= 35:
-            self.health += 10
+        if 40 <= self.get_timer_sec() <= 42 or 30 <= self.get_timer_sec() <= 35:
+            if self.potty_alert == False:
+                self.potty.set_to_alert()
+                self.health -= 24
+                self.potty_alert = True
+        else:
+            self.potty_alert = False
+            self.potty.set_to_normal()
     
+    def bomb_status(self):
+        """
+        Decrease the health bar if user clicks on the "Binge..."
+        button when it flashes red.
+        """
+        
+        if self.random_sec <= self.timer_sec <= self.random_sec or 3 <= self.timer_sec <= 4 or 10 <= self.timer_sec <= 11:
+            self.health -= 48
+
     def user_score(self):
         """
         Convert health bar to scores by multiplying it by 100.
@@ -92,25 +128,25 @@ class HealthfyModel:
         self._user_score += self.health
         return self._user_score
     
-    def action(self, key):
-        """
-        Process user inputs and call appropiate function to update health bar.
-        """
-        if key == K_e:
-            print("Humanoid Has Eaten!")
-            self.feeding_status()
-        if key == K_p:
-            print("Humanoid Has used the bathroom!")
-            self.bathroom_status()
-        if key == K_s:
-            print("Humanoid Has Slept!")
-            self.sleeping_status()
-        if key == K_w:
-            print("Humanoid Has made money!")
-            self.working_status()
-        if key == K_t:
-            print("Hi! How are you?")
-            self.socializing_status()
+    # def action(self, key):
+    #     """
+    #     Process user inputs and call appropiate function to update health bar.
+    #     """
+    #     if key == K_e:
+    #         print("Humanoid Has Eaten!")
+    #         self.feeding_status()
+    #     if key == K_p:
+    #         print("Humanoid Has used the bathroom!")
+    #         self.bathroom_status()
+    #     if key == K_s:
+    #         print("Humanoid Has Slept!")
+    #         self.sleeping_status()
+    #     if key == K_w:
+    #         print("Humanoid Has made money!")
+    #         self.working_status()
+    #     if key == K_t:
+    #         print("Hi! How are you?")
+    #         self.socializing_status()
 
     def countdown(self):
         """
@@ -118,7 +154,7 @@ class HealthfyModel:
         """
         self.timer_sec -= 1
         if self.timer_sec == 0:
-            pygame.time.set_timer(TIMER, 0)
+            pygame.time.set_timer(self.TIMER, 0)
     
     def get_timer_sec(self):
         """
@@ -164,7 +200,7 @@ class Button:
         click = pygame.mouse.get_pressed()
         print(click)
         if self.x+self.width > mouse[0] > self.x and self.y+self.height > mouse[1] > self.y:
-            if click[0] == 1 and self.on_click != None:
+            if click[0] == 1 and self.on_click is not None:
                 self.on_click()
                 self.current_color = self.click_color
 
@@ -174,8 +210,8 @@ class Button:
         Create the 5 buttons with their specified colors, sizes and positions on the game screen
         """
         pygame.draw.rect(self.screen, self.current_color, (self.x, self.y, self.width, self.height))
-        smallText = pygame.font.SysFont("comicsansms", 30)
-        text_surface, text_rectangle = self.create_text_objects(self.name, smallText)
+        small_text = pygame.font.SysFont("comicsansms", 30)
+        text_surface, text_rectangle = self.create_text_objects(self.name, small_text)
         text_rectangle.center = ((self.x+(self.width/2)), (self.y+(self.height/2)))
         self.screen.blit(text_surface, text_rectangle)
     
