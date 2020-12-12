@@ -10,23 +10,20 @@ green = (27, 133, 27)
 
 class HealthfyController:
     """
-    Get the inputs from the user.
+    Controller class of the game that translates input from the user into arguements
+    that can be used to play the game.
 
     Attributes:
-        _quit_game: Command to exit the game
-        get_input: Gets the user input of an integer from 1 to 5
-        user_score: Adds or decreases the user score based on the inputs.
-        _help: Print short summary of the game.
-        _invalid_input: Print short message telling the user to input another command.
+        model = an instance of the model class that references the features of the game model
     """
 
     def __init__(self):
         """
-        Initialize the controller class.
+        Instantiate the controller class.
         """
         self.model = model.HealthfyModel()
 
-    def get_input(self): # USe as help function instead since we're already handling user input in a different method
+    def get_input(self):
         """
         Gets the input from the player and translates it into one of the 5 commands.
 

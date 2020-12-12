@@ -12,27 +12,25 @@ font = pygame.font.SysFont("freesans", 50)
 
 class HealthfyView:
     """
-    Displays the current state of the game
-    (the current status of the humanoid, face, and health bar)
-    and the inputs/buttons to the player.
-
+    A view class that displays to the user the current status of
+    the game: the screen, background, humanoid and state of buttons.
+   
     Attributes:
-        _healthbar: A float bar representing the health of the humanoid
-        _current_status: A number representing the current activity of the humanoid
-        buttons: A list of 5 numbers that represent each activity
+        _model = an instance of the model class that references the features of the game model
+        screen = an instance of the model class referring to the screen display
+        background = an image instance representing the background of the game display
+        humanoid = an image instance represrenting the humanoid to be displayed on the screen.
     """
 
     def __init__(self, model):
         """
-        Initialize the view class with reference to the model and create
-        instances of the  background and humanoid images.
+        Instantiate the view class with reference to the game model.
         """
         self.model = model
         self.screen = model.screen
         pygame.display.set_caption('Healthfy')
         self.background = pygame.image.load("Images/background.jpg")
         self.humanoid = pygame.image.load("Images/humanoid.jpg")
-
 
     def text_objects(self, text, font):
         """
@@ -42,8 +40,9 @@ class HealthfyView:
         return text_surface, text_surface.get_rect()
 
     def draw(self):
-        """ Draw the current game state to the screen """
-       
+        """
+        Draw the current game state to the screen 
+        """
         self.screen.fill((255, 255, 255))
         self.screen.blit(self.background, (0, 0))
         self.screen.blit(self.humanoid, (250, 350))
