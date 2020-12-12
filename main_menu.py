@@ -1,11 +1,10 @@
 import pygame, sys
 import model, view
-# Setup pygame/window ---------------------------------------- #
 from pygame.locals import *
+
+
 pygame.init()
-
-
-pygame.display.set_caption('game base')
+pygame.display.set_caption('Main Menu')
 screen = pygame.display.set_mode((500, 500),0,32)
  
 font = pygame.font.SysFont(None, 20)
@@ -46,7 +45,7 @@ click = False
 def main_menu():
     click = False
     while True:
-        screen.fill(white)
+        screen.fill(white )
         draw_text('main menu', font, (255, 255, 255), screen, 20, 20)
  
         mx, my = pygame.mouse.get_pos()
@@ -116,7 +115,6 @@ def options():
         
         pygame.display.update()
  
-main_menu()
 
 tom = pygame.image.load("Images/tom background.jpg")
 
@@ -135,3 +133,5 @@ def tom_game():
             button("Work", 200, 375, 70, 50, black, green, pygame.K_w)
             button("Sleep",100, 315, 70, 50, black, green, pygame.K_s)
         pygame.display.update()
+
+main_menu()

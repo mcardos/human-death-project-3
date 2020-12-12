@@ -62,5 +62,5 @@ class HealthfyView:
         """
         Display the top score and the current score to the player.
         """
-        score = font.render(f"Score: {self.model.user_score()}", True, black)
+        score = font.render(f"Score: {self.model._user_score}", True, black)
         self.screen.blit(score, (250,0))
