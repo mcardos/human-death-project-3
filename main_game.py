@@ -1,15 +1,14 @@
-import os
 import pygame
 from pygame.locals import (USEREVENT, MOUSEBUTTONDOWN, QUIT)
 import model
 import view
 import controller
 
-# os.environ['SDL_AUDIODRIVER'] = 'alsa'
+
 #  Initialize pygame.
 pygame.init()
 
-#  Add constants.
+#  Add constant variables.
 red = (255, 0, 0)
 green = (27, 133, 27)
 TIMER = USEREVENT + 1
@@ -19,7 +18,7 @@ model = model.HealthfyModel()
 view = view.HealthfyView(model)
 controller = controller.HealthfyController()
 
-#  Background Music
+#  Add background music.
 pygame.mixer.init()
 pygame.mixer.music.load('Images/Picket Fence Lol.ogg')
 pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
@@ -52,7 +51,6 @@ while RUNNING:
     model.bomb_status()
 
 #  Draw and update all screen displays.
-    # pygame.mixer.music.play(-1)
     view.draw()
     view.display_score()
     # view.current_status()

@@ -1,6 +1,7 @@
 import view, model
 import pygame
 import sys
+from pygame.locals import *
 
 model = model.HealthfyModel()
 view = view.HealthfyView(model)
@@ -57,31 +58,43 @@ def _help():
         print("Click one of the buttoms on the screen to make the Humanoid take action")
         print("Win by not letting the health bar reach below 40%")
 
+click = False
 def main_menu():
-    global ticks
-    main_menu_setup()
-    # while True:
-    click = False
-    pressed_keys = pygame.key.get_pressed()
-    for event in pygame.event.get():
-        alt_f4 = (event.type == pygame.KEYDOWN and (event.key == pygame.K_q or event.key == pygame.K_ESCAPE))
-        if event.type == pygame.QUIT or alt_f4: sys.exit()
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            RUNNING = True
-        elif event.type == pygame.KEYDOWN and (event.key == pygame.K_v or event.key == pygame.K_h):
-            _help()
-    if button('S T A R T  G A M E', 100, 375, 100, 50, black, green, pygame.K_SPACE):
-        background = background
-    elif button('P L A Y  A S  I S A B E L L E', 200, 375, 100, 50, black, green, pygame.K_i):
-        background = isabelle
-        main_menu_setup()
-    elif button('P L A Y  A S  T O M', 300, 375, 100, 50, black, green, pygame.K_o):
-        background = tom
-        main_menu_setup()
-    elif button('Q U I T  G A M E', 400, 375, 100, 50, black, green, pygame.K_q):
-        sys.exit()
-    pygame.display.update()
-    clock.tick(60)
+    # main_menu_setup()
+    while True:
+        screen.fill(black)
+        button('Main Menu',0, 0, 70, 30, white, black)
+ 
+        mx, my = pygame.mouse.get_pos()
+
+        button('S T A R T  G A M E', 50, 100, 200, 50, black, white)
+        button('P L A Y  A S  I S A B E L L E', 50, 200, 200, 50, white, black)
+        button ('P L A Y  A S  T O M', 50, 300, 200, 50, white, black)
+        button_1 = pygame.Rect(50, 100, 200, 50)
+        button_2 = pygame.Rect(50, 200, 200, 50)
+        button_3 = pygame.Rect(50, 300, 200, 50)
+        if button_1.collidepoint((mx, my)):
+            if click:
+                game()
+        if button_2.collidepoint((mx, my)):
+            if click:
+                options()
+        # pygame.draw.rect(screen, (255, 0, 0), button_1)
+        # pygame.draw.rect(screen, (255, 0, 0), button_2)
+        
+        click = False
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+            if event.type == MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
+        pygame.display.update()
 
 def text_objects(text, font):
     text_surface = font.render(text, True, white)
@@ -125,7 +138,6 @@ def working_status():
 def button(msg,x,y,w,h,ic,ac,key=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
-    print(click)
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(screen, ac,(x,y,w,h))
         if click[0] == 1 and action != None:
