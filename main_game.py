@@ -12,6 +12,7 @@ pygame.init()
 red = (255, 0, 0)
 green = (27, 133, 27)
 TIMER = USEREVENT + 1
+background = pygame.image.load("Images/background.jpg")
 
 #  Set classes to simple name.
 model = model.HealthfyModel()
@@ -24,11 +25,10 @@ pygame.mixer.music.load('Images/Picket Fence Lol.ogg')
 pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
 pygame.mixer.music.play(-1)
 
-#  Set variables to change when needed.
-RUNNING = True
-
 #  Main loop:
+RUNNING = True
 while RUNNING:
+    model.screen.fill((250, 250, 250))
     for event in pygame.event.get():
         if event.type == QUIT:
             RUNNING = False
@@ -51,7 +51,7 @@ while RUNNING:
     model.bomb_status()
 
 #  Draw and update all screen displays.
-    view.draw()
+    view.draw(background)
     view.display_score()
     # view.current_status()
     model.feed.draw()

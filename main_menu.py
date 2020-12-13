@@ -40,7 +40,7 @@ def main_menu():
         screen.fill(white)
         mx, my = pygame.mouse.get_pos()
         button('S T A R T  G A M E', 50, 100, 200, 50, black, grey)
-        button('P L A Y  A S  I S A B E L L E', 50, 200, 200, 50, black, grey)
+        button('P L A Y  A S  I S A B E L E', 50, 200, 200, 50, black, grey)
         button ('P L A Y  A S  T O M', 50, 300, 200, 50, black, grey)
         button_1 = pygame.Rect(50, 100, 200, 50)
         button_2 = pygame.Rect(50, 200, 200, 50)
@@ -50,11 +50,11 @@ def main_menu():
                 start_game()
         if button_2.collidepoint((mx, my)):
             if click:
-                isabelle_game()
+                isabele_game()
         if button_3.collidepoint((mx, my)):
             if click:
                 tom_game()
- 
+#  When to change click to True.
         click = False
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -83,6 +83,10 @@ pygame.mixer.music.load('Images/Picket Fence Lol.ogg')
 pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
 pygame.mixer.music.play(-1)
 
+#  Add posible backdrops.
+tom = pygame.image.load("Images/tom background.jpg")
+isabele = pygame.image.load("Images/isabele background small.jpg")
+background = pygame.image.load("Images/background.jpg")
 
 def start_game():
     RUNNING = True
@@ -99,7 +103,6 @@ def start_game():
                 model.potty.check_click()
                 model.sleep.check_click()
                 model.bomb.check_click()
-
 #  Create events at specific time intervals.
         model.socializing_status()
         model.bathroom_status()
@@ -107,9 +110,8 @@ def start_game():
         model.sleeping_status()
         model.feeding_status()
         model.bomb_status()
-
 #  Draw and update all screen displays.
-        view.draw()
+        view.draw(background)
         view.display_score()
         # view.current_status()
         model.feed.draw()
@@ -122,15 +124,47 @@ def start_game():
         pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model.max_health, 30))
         pygame.display.update()
     pygame.quit()
+
  
-def isabelle_game():
+def isabele_game():
     running = True
     while running:
-        pass
-       
- 
-
-tom = pygame.image.load("Images/tom background.jpg")
+        screen.fill(white)
+        screen.blit(tom, (0, 0))
+#  Main loop:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                RUNNING = False
+            if event.type == TIMER:
+                model.countdown()
+            if event.type == MOUSEBUTTONDOWN:
+                model.feed.check_click()
+                model.work.check_click()
+                model.talk.check_click()
+                model.potty.check_click()
+                model.sleep.check_click()
+                model.bomb.check_click()
+#  Create events at specific time intervals.
+        model.socializing_status()
+        model.bathroom_status()
+        model.working_status()
+        model.sleeping_status()
+        model.feeding_status()
+        model.bomb_status()
+#  Draw and update all screen displays.
+        view.draw(isabele)
+        view.display_score()
+        # view.current_status()
+        model.feed.draw()
+        model.work.draw()
+        model.talk.draw()
+        model.potty.draw()
+        model.sleep.draw()
+        model.bomb.draw()
+        pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
+        pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model.max_health, 30))
+        pygame.display.update()
+    pygame.quit()
 
 def tom_game():
     RUNNING = True
@@ -150,7 +184,6 @@ def tom_game():
                 model.potty.check_click()
                 model.sleep.check_click()
                 model.bomb.check_click()
-
 #  Create events at specific time intervals.
         model.socializing_status()
         model.bathroom_status()
@@ -158,9 +191,8 @@ def tom_game():
         model.sleeping_status()
         model.feeding_status()
         model.bomb_status()
-
 #  Draw and update all screen displays.
-        view.draw()
+        view.draw(tom)
         view.display_score()
         # view.current_status()
         model.feed.draw()
@@ -173,5 +205,5 @@ def tom_game():
         pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model.max_health, 30))
         pygame.display.update()
     pygame.quit()
-
+#  Call main_menu.
 main_menu()
