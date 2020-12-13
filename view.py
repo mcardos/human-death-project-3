@@ -31,6 +31,8 @@ class HealthfyView:
         pygame.display.set_caption('Healthfy')
         self.background = pygame.image.load("Images/background.jpg")
         self.humanoid = pygame.image.load("Images/humanoid.jpg")
+        self.tom = pygame.image.load("Images/tom background.jpg")
+        self.isabele = pygame.image.load("Images/isabele background small.jpg")
 
     def text_objects(self, text, font):
         """
@@ -41,7 +43,7 @@ class HealthfyView:
 
     def draw(self):
         """
-        Draw the current game state to the screen 
+        Draw the current game state to the screen.
         """
         self.screen.fill((255, 255, 255))
         self.screen.blit(self.background, (0, 0))

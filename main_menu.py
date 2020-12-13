@@ -1,12 +1,10 @@
 import pygame, sys
-import model, view
+import model, view, controller
 from pygame.locals import *
 
 
 pygame.init()
-pygame.display.set_caption('Main Menu')
-screen = pygame.display.set_mode((500, 500),0,32)
- 
+screen = pygame.display.set_mode((500, 500))
 font = pygame.font.SysFont(None, 20)
 
 black = (0, 0, 0)
@@ -30,43 +28,32 @@ def button(msg,x,y,w,h,ic,ac,key=None):
             pass        
     else:
         pygame.draw.rect(screen, ic,(x,y,w,h))
-    smallText = pygame.font.SysFont("comicsansms", 10)
-    text_surface, text_rectangle = text_objects("whatever", smallText)
+    smallText = pygame.font.SysFont("comicsansms", 20)
+    text_surface, text_rectangle = text_objects(msg, smallText)
     text_rectangle.center = ( (x+(w/2)), (y+(h/2)) )
     screen.blit(text_surface, text_rectangle)
 
-def draw_text(text, font, color, surface, x, y):
-    textobj = font.render(text, 1, color)
-    textrect = textobj.get_rect()
-    textrect.topleft = (x, y)
-    surface.blit(textobj, textrect)
- 
 click = False
 def main_menu():
     click = False
     while True:
-        screen.fill(white )
-        draw_text('main menu', font, (255, 255, 255), screen, 20, 20)
- 
+        screen.fill(white)
         mx, my = pygame.mouse.get_pos()
- 
-        button('S T A R T  G A M E', 50, 100, 200, 50, black, white)
-        button('P L A Y  A S  I S A B E L L E', 50, 200, 200, 50, white, black)
-        button ('P L A Y  A S  T O M', 50, 300, 200, 50, white, black)
+        button('S T A R T  G A M E', 50, 100, 200, 50, black, grey)
+        button('P L A Y  A S  I S A B E L L E', 50, 200, 200, 50, black, grey)
+        button ('P L A Y  A S  T O M', 50, 300, 200, 50, black, grey)
         button_1 = pygame.Rect(50, 100, 200, 50)
         button_2 = pygame.Rect(50, 200, 200, 50)
         button_3 = pygame.Rect(50, 300, 200, 50)
         if button_1.collidepoint((mx, my)):
             if click:
-                game()
+                start_game()
         if button_2.collidepoint((mx, my)):
             if click:
-                options()
+                isabelle_game()
         if button_3.collidepoint((mx, my)):
             if click:
                 tom_game()
-        pygame.draw.rect(screen, (255, 0, 0), button_1)
-        pygame.draw.rect(screen, (255, 0, 0), button_2)
  
         click = False
         for event in pygame.event.get():
@@ -80,40 +67,67 @@ def main_menu():
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
- 
         pygame.display.update()
- 
-def game():
-    running = True
-    while running:
-        screen.fill((0,0,0))
-        
-        draw_text('game', font, (255, 255, 255), screen, 20, 20)
+
+#  Add constant variable.
+TIMER = USEREVENT + 1
+
+#  Set classes to simple name.
+model = model.HealthfyModel()
+view = view.HealthfyView(model)
+controller = controller.HealthfyController()
+
+#  Add background music.
+pygame.mixer.init()
+pygame.mixer.music.load('Images/Picket Fence Lol.ogg')
+pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
+pygame.mixer.music.play(-1)
+
+
+def start_game():
+    RUNNING = True
+    while RUNNING:
         for event in pygame.event.get():
             if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    running = False
-        
+                RUNNING = False
+            if event.type == TIMER:
+                model.countdown()
+            if event.type == MOUSEBUTTONDOWN:
+                model.feed.check_click()
+                model.work.check_click()
+                model.talk.check_click()
+                model.potty.check_click()
+                model.sleep.check_click()
+                model.bomb.check_click()
+
+#  Create events at specific time intervals.
+        model.socializing_status()
+        model.bathroom_status()
+        model.working_status()
+        model.sleeping_status()
+        model.feeding_status()
+        model.bomb_status()
+
+#  Draw and update all screen displays.
+        view.draw()
+        view.display_score()
+        # view.current_status()
+        model.feed.draw()
+        model.work.draw()
+        model.talk.draw()
+        model.potty.draw()
+        model.sleep.draw()
+        model.bomb.draw()
+        pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
+        pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model.max_health, 30))
         pygame.display.update()
+    pygame.quit()
  
-def options():
+def isabelle_game():
     running = True
     while running:
-        screen.fill((0,0,0))
- 
-        draw_text('options', font, (255, 255, 255), screen, 20, 20)
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    running = False
-        
-        pygame.display.update()
+        pass
+       
  
 
 tom = pygame.image.load("Images/tom background.jpg")
@@ -123,15 +137,41 @@ def tom_game():
     while RUNNING:
         screen.fill(white)
         screen.blit(tom, (0, 0))
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            RUNNING = False
-        if event.type == MOUSEBUTTONDOWN:
-            button("Eat", 100, 375, 70, 50, black, green, pygame.K_e)
-            button("Talk",300, 375, 70, 50, black, green, pygame.K_t)
-            button("Potty",300, 315, 70, 50, black, green, pygame.K_p)
-            button("Work", 200, 375, 70, 50, black, green, pygame.K_w)
-            button("Sleep",100, 315, 70, 50, black, green, pygame.K_s)
+#  Main loop:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                RUNNING = False
+            if event.type == TIMER:
+                model.countdown()
+            if event.type == MOUSEBUTTONDOWN:
+                model.feed.check_click()
+                model.work.check_click()
+                model.talk.check_click()
+                model.potty.check_click()
+                model.sleep.check_click()
+                model.bomb.check_click()
+
+#  Create events at specific time intervals.
+        model.socializing_status()
+        model.bathroom_status()
+        model.working_status()
+        model.sleeping_status()
+        model.feeding_status()
+        model.bomb_status()
+
+#  Draw and update all screen displays.
+        view.draw()
+        view.display_score()
+        # view.current_status()
+        model.feed.draw()
+        model.work.draw()
+        model.talk.draw()
+        model.potty.draw()
+        model.sleep.draw()
+        model.bomb.draw()
+        pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
+        pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model.max_health, 30))
         pygame.display.update()
+    pygame.quit()
 
 main_menu()
