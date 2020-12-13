@@ -35,6 +35,9 @@ class HealthfyView:
     def text_objects(self, text, font):
         """
         Create a new surface and return a specified text rendered on it.
+        Arguement:
+                  text = A string representing the words that shall be rendered on the screen
+                  font = An object representing a font type from the system fonts.
         """
         text_surface = font.render(text, True, white)
         return text_surface, text_surface.get_rect()
@@ -42,6 +45,9 @@ class HealthfyView:
     def draw(self, backdrop):
         """
         Draw the current game state to the screen.
+        Arguement:
+                backdrop: A surface upon which another surface is displayed.
+
         """
         self.screen.fill((255, 255, 255))
         self.screen.blit(backdrop, (0, 0))

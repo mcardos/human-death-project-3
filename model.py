@@ -138,26 +138,6 @@ class HealthfyModel:
         self._user_score += self.health * 100
         # return self._user_score
 
-    # def action(self, key):
-    #     """
-    #     Process user inputs and call appropiate function to update health bar.
-    #     """
-    #     if key == K_e:
-    #         print("Humanoid Has Eaten!")
-    #         self.feeding_status()
-    #     if key == K_p:
-    #         print("Humanoid Has used the bathroom!")
-    #         self.bathroom_status()
-    #     if key == K_s:
-    #         print("Humanoid Has Slept!")
-    #         self.sleeping_status()
-    #     if key == K_w:
-    #         print("Humanoid Has made money!")
-    #         self.working_status()
-    #     if key == K_t:
-    #         print("Hi! How are you?")
-    #         self.socializing_status()
-
     def countdown(self):
         """
         Decrease time by 1 second and if time is at 0 seconds, set timer to 0.
@@ -173,13 +153,28 @@ class HealthfyModel:
         return self.timer_sec
 
 
-
-
 class Button:
     """
     Keep track of colors and know when the user has clicked the button
+    Attributes:
+        width = An integer showing that the horizontal length of the buttons (70 pixels)
+        height = An integer showing that the vertical length of the buttons (50 pixels)
+        normal_color = A string representing the default color of the game buttons.
+        alert_color = A string representing the color of the button that requires user action.
+        click_color = A string representing the color of the button when user clicks on it.
+        current_color = A string representing the color of the button in current status
+        
     """
     def __init__(self, x, y, name, on_click, screen):
+        """
+        Instantiate the button class.
+        Arguements:
+                   x = An integer representing the horizontal(x-axis) position of the buttons on the screen
+                   y = An integer representing the horizontal(y_axis) of the buttons on the screen
+                   name = A string label of the name of action represented by the button
+                   on_click = A boolean representing a button has been clicked or not.
+                   screen = A display surface 500 pixels wide and 500 pixels long.          
+        """
         self.x = x
         self.y = y
         self.width = 70
@@ -228,6 +223,9 @@ class Button:
     def create_text_objects(self, text, font):
         """
         Create a new surface and return a specified text rendered on it.
+        Arguements:
+                  text = A string representing the words that shall be rendered on the screen
+                  font = An object representing a font type from the system fonts.
         """
         text_surface = font.render(text, True, white)
         return text_surface, text_surface.get_rect()
