@@ -12,7 +12,6 @@ pygame.init()
 red = (255, 0, 0)
 green = (27, 133, 27)
 TIMER = USEREVENT + 1
-background = pygame.image.load("Images/background.jpg")
 
 #  Set classes to simple name.
 model = model.HealthfyModel()
@@ -61,6 +60,8 @@ while RUNNING:
     model.sleep.draw()
     model.bomb.draw()
     pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
-    pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model.max_health, 30))
+    pygame.draw.rect(model.screen, green, (
+        0, 0, 240*model.health/model.max_health, 30
+    ))
     pygame.display.update()
 pygame.quit()

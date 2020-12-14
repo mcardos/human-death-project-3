@@ -1,5 +1,8 @@
-import pygame, sys
-import model, view, controller
+import pygame
+import sys
+import model
+import view
+import controller
 from pygame.locals import *
 
 
@@ -19,21 +22,24 @@ def text_objects(text, font):
     return text_surface, text_surface.get_rect()
 
 
-def button(msg,x,y,w,h,ic,ac,key=None):
+def button(msg, x, y, w, h, ic, ac, key=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
-        pygame.draw.rect(screen, ac,(x,y,w,h))
+        pygame.draw.rect(screen, ac, (x, y, w, h))
         if click[0] == 1:
-            pass        
+            pass
     else:
-        pygame.draw.rect(screen, ic,(x,y,w,h))
+        pygame.draw.rect(screen, ic, (x, y, w, h))
     smallText = pygame.font.SysFont("comicsansms", 20)
     text_surface, text_rectangle = text_objects(msg, smallText)
-    text_rectangle.center = ( (x+(w/2)), (y+(h/2)) )
+    text_rectangle.center = ((x+(w/2)), (y+(h/2)))
     screen.blit(text_surface, text_rectangle)
 
+
 click = False
+
+
 def main_menu():
     click = False
     while True:
@@ -41,7 +47,7 @@ def main_menu():
         mx, my = pygame.mouse.get_pos()
         button('S T A R T  G A M E', 50, 100, 200, 50, black, grey)
         button('P L A Y  A S  I S A B E L E', 50, 200, 200, 50, black, grey)
-        button ('P L A Y  A S  T O M', 50, 300, 200, 50, black, grey)
+        button('P L A Y  A S  T O M', 50, 300, 200, 50, black, grey)
         button_1 = pygame.Rect(50, 100, 200, 50)
         button_2 = pygame.Rect(50, 200, 200, 50)
         button_3 = pygame.Rect(50, 300, 200, 50)
@@ -69,6 +75,7 @@ def main_menu():
                     click = True
         pygame.display.update()
 
+
 #  Add constant variable.
 TIMER = USEREVENT + 1
 
@@ -87,6 +94,7 @@ pygame.mixer.music.play(-1)
 tom = pygame.image.load("Images/tom background.jpg")
 isabele = pygame.image.load("Images/isabele background small.jpg")
 background = pygame.image.load("Images/background.jpg")
+
 
 def start_game():
     RUNNING = True
@@ -121,11 +129,13 @@ def start_game():
         model.sleep.draw()
         model.bomb.draw()
         pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
-        pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model.max_health, 30))
+        pygame.draw.rect(model.screen, green, (
+            0, 0, 240*model.health/model.max_health, 30
+        ))
         pygame.display.update()
     pygame.quit()
 
- 
+
 def isabele_game():
     running = True
     while running:
@@ -162,9 +172,12 @@ def isabele_game():
         model.sleep.draw()
         model.bomb.draw()
         pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
-        pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model.max_health, 30))
+        pygame.draw.rect(model.screen, green, (
+            0, 0, 240*model.health/model.max_health, 30
+        ))
         pygame.display.update()
     pygame.quit()
+
 
 def tom_game():
     RUNNING = True
@@ -202,8 +215,12 @@ def tom_game():
         model.sleep.draw()
         model.bomb.draw()
         pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
-        pygame.draw.rect(model.screen, green, (0, 0, 240*model.health/model.max_health, 30))
+        pygame.draw.rect(model.screen, green, (
+            0, 0, 240*model.health/model.max_health, 30
+        ))
         pygame.display.update()
     pygame.quit()
+
+
 #  Call main_menu.
 main_menu()
