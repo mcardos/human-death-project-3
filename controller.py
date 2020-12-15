@@ -63,4 +63,5 @@ class HealthfyController:
         Print an error message stating that the input to the controller was
         invalid in some way and for the user to input another command.
         """
-        print("Invalid input. Please try again. Enter h for help or q to quit.")
+        print("Invalid input. Please try again. Enter h for help or q\
+        to quit.")

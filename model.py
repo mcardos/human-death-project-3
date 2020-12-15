@@ -39,9 +39,12 @@ class HealthfyModel:
         self.timer_sec = 48
         self.feed = Button(100, 375, "Eat", self.feeding_status, self.screen)
         self.work = Button(200, 375, "Work", self.working_status, self.screen)
-        self.talk = Button(300, 375, "Talk", self.socializing_status, self.screen)
-        self.potty = Button(300, 315, "Potty", self.bathroom_status, self.screen)
-        self.sleep = Button(100, 315, "Sleep", self.sleeping_status, self.screen)
+        self.talk = Button(300, 375, "Talk", self.socializing_status,
+                           self.screen)
+        self.potty = Button(300, 315, "Potty", self.bathroom_status,
+                            self.screen)
+        self.sleep = Button(100, 315, "Sleep", self.sleeping_status,
+                            self.screen)
         self.bomb = Button(200, 315, "Bomb", self.bomb_status, self.screen)
         self.TIMER = USEREVENT + 1
         self.random_sec = random.randint(0, 48)
@@ -70,7 +73,8 @@ class HealthfyModel:
         Add to the health bar if user clicks on the
         'Sleep' button when it flashes red.
         """
-        if 17 <= self.get_timer_sec() <= 20 or 28 <= self.get_timer_sec() <= 30:
+        if (17 <= self.get_timer_sec() <= 20 or
+                28 <= self.get_timer_sec() <= 30):
             if not self.sleep_alert:
                 self.sleep.set_to_alert()
                 self.health -= 24
@@ -112,7 +116,8 @@ class HealthfyModel:
         Add to the health bar if user clicks on the 'Potty'
         button when it flashes red.
         """
-        if 40 <= self.get_timer_sec() <= 42 or 30 <= self.get_timer_sec() <= 35:
+        if (40 <= self.get_timer_sec() <= 42 or
+                30 <= self.get_timer_sec() <= 35):
             if not self.potty_alert:
                 self.potty.set_to_alert()
                 self.health -= 24
@@ -123,14 +128,13 @@ class HealthfyModel:
 
     def bomb_status(self):
         """
-        Decrease the health bar if user clicks on the "Binge..."
+        Decrease the health bar if user clicks on the "Bomb"
         button when it flashes red.
         """
-        if (self.random_sec <= self.timer_sec <= self.random_sec)\
-            or (3 <= self.timer_sec <= 4) \
-            or (10 <= self.timer_sec <= 11):
-                self.health -= 48
-                self.bomb.set_to_alert()
+        if (self.random_sec <= self.timer_sec <= self.random_sec
+                or 3 <= self.timer_sec <= 4 or 10 <= self.timer_sec <= 11):
+            self.health -= 48
+            self.bomb.set_to_alert()
         else:
             self.bomb.set_to_normal()
 
@@ -181,7 +185,8 @@ class Button:
             the buttons on the screen.
             y = An integer representing the horizontal(y_axis) of the buttons
             on the screen.
-            name = A string label of the name of action represented by the button.
+            name = A string label of the name of action represented
+            by the button.
             on_click = A boolean representing a button has been clicked or not.
             screen = A display surface 500 pixels wide and 500 pixels long.
         """
@@ -216,8 +221,8 @@ class Button:
         """
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
-        if self.x+self.width > mouse[0] > self.x and\
-            self.y+self.height > mouse[1] > self.y:
+        if (self.x+self.width > mouse[0] > self.x and
+                self.y+self.height > mouse[1] > self.y):
             if click[0] == 1 and self.on_click is not None:
                 self.on_click()
                 self.current_color = self.click_color
@@ -227,12 +232,13 @@ class Button:
         Create the 5 buttons with their specified colors, sizes and positions
         on the game screen.
         """
-        pygame.draw.rect(self.screen, self.current_color, (self.x, self.y,
-                                                        self.width, self.height))
+        pygame.draw.rect(self.screen, self.current_color,
+                         (self.x, self.y, self.width, self.height))
         small_text = pygame.font.SysFont("comicsansms", 30)
         text_surface, text_rectangle = self.create_text_objects(self.name,
                                                                 small_text)
-        text_rectangle.center = ((self.x+(self.width/2)), (self.y+(self.height/2)))
+        text_rectangle.center = ((self.x+(self.width/2)),
+                                 (self.y+(self.height/2)))
         self.screen.blit(text_surface, text_rectangle)
 
     def create_text_objects(self, text, font):
