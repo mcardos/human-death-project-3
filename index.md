@@ -15,8 +15,9 @@ Syntax highlighted code block
 ## Stay alive Humanoid!
 ### Header 3
 
-- Bulleted
-- List
+- To install pygame run the following command on the terminal: `python3 -m pip install -U pygame --user`
+- Clone the repo: `https://github.com/mcardos/project-3-healthfy.git`
+- `cd` into the cloned repo on your terminal node and run the main_game.py to start playing the game.
 
 1. Numbered
 2. List
