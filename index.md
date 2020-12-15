@@ -9,15 +9,17 @@ Below you will find all the code you need to copy this game into your own local 
 ```markdown
 Syntax highlighted code block
 
-# Header 1
+# Playing the Game:
+1. Install Pygame (`python3 -m pip install -U pygame --user`)
+2. [Clone](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/cloning-a-repository) the repo: `https://github.com/mcardos/project-3-healthfy.git`
+3. `cd` into the cloned repo and run the main_game.py
+4. Have fun!
+```
 # Healthfy Game
 ## Header 2
 ## Stay alive Humanoid!
 ### Header 3
 
-- To install pygame run the following command on the terminal: `python3 -m pip install -U pygame --user`
-- Clone the repo: `https://github.com/mcardos/project-3-healthfy.git`
-- `cd` into the cloned repo on your terminal node and run the main_game.py to start playing the game.
 
 1. Numbered
 2. List
@@ -25,7 +27,7 @@ Syntax highlighted code block
 **Bold** and _Italic_ and `Code` text
 
 [Link](url) and ![Image](src)
-```
+
 
 For more information visit our GitHub repo at https://github.com/mcardos/project-3-healthfy/
 
