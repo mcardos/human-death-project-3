@@ -8,6 +8,8 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 0, 0)
 green = (27, 133, 27)
+global health
+health = 240
 
 
 class HealthfyModel:
@@ -32,7 +34,7 @@ class HealthfyModel:
 
         Initializing the health, user score and current status of the humanoid.
         """
-        self.health = 240
+        # self.health = 240
         self.max_health = 240
         self._user_score = 0
         self.screen = pygame.display.set_mode((500, 500))
@@ -62,7 +64,7 @@ class HealthfyModel:
         if 36 <= self.get_timer_sec() <= 40 or 8 <= self.get_timer_sec() <= 10:
             if not self.feed_alert:
                 self.feed.set_to_alert()
-                self.health -= 24
+                health -= 10
                 self.feed_alert = True
         else:
             self.feed_alert = False
@@ -77,7 +79,7 @@ class HealthfyModel:
                 28 <= self.get_timer_sec() <= 30):
             if not self.sleep_alert:
                 self.sleep.set_to_alert()
-                self.health -= 24
+                health -= 10
                 self.sleep_alert = True
         else:
             self.sleep_alert = False
@@ -91,7 +93,7 @@ class HealthfyModel:
         if 24 <= self.get_timer_sec() <= 26:
             if not self.work_alert:
                 self.work.set_to_alert()
-                self.health -= 48
+                health -= 10
                 self.work_alert = True
         else:
             self.work_alert = False
@@ -102,11 +104,13 @@ class HealthfyModel:
         Add to the health bar if user clicks on the 'Talk'
         button when it flashes red.
         """
+        # self.talk_alert = False
         if 44 <= self.get_timer_sec() <= 46 or 4 <= self.get_timer_sec() <= 10:
             if not self.talk_alert:
                 self.talk.set_to_alert()
-                self.health -= 24
+                health -= 10
                 self.talk_alert = True
+    
         else:
             self.talk_alert = False
             self.talk.set_to_normal()
@@ -120,7 +124,7 @@ class HealthfyModel:
                 30 <= self.get_timer_sec() <= 35):
             if not self.potty_alert:
                 self.potty.set_to_alert()
-                self.health -= 24
+                health -= 10
                 self.potty_alert = True
         else:
             self.potty_alert = False
@@ -133,16 +137,18 @@ class HealthfyModel:
         """
         if (self.random_sec <= self.timer_sec <= self.random_sec
                 or 3 <= self.timer_sec <= 4 or 10 <= self.timer_sec <= 11):
-            self.health -= 48
-            self.bomb.set_to_alert()
+            if not self.bomb_alert:
+                health -= 10
+                self.bomb.set_to_alert()
         else:
+            self.bomb_alert = False
             self.bomb.set_to_normal()
 
     def user_score(self):
         """
         Convert health bar to scores by multiplying it by 100.
         """
-        self._user_score += self.health * 100
+        self._user_score += health * 100
         # return self._user_score
 
     def countdown(self):

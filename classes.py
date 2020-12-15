@@ -57,6 +57,7 @@ class HealthfyModel:
         if 36 <= timer_sec <= 40 or 10 <= timer_sec <= 8:
             print("Feeding")
             self.health += 5
+
                 
 
     def sleeping_status(self):
@@ -66,6 +67,7 @@ class HealthfyModel:
         """
         if 17 <= timer_sec <= 20 or 28 <= timer_sec <= 30:
             self.health += 5
+            # print(self.health)
     
     def working_status(self):
         """
@@ -82,6 +84,7 @@ class HealthfyModel:
         """
         if 44 <= timer_sec <= 46 or 4 <= timer_sec <= 10:
             self.health += 5
+            print(self.health)
 
     def bathroom_status(self):
         """

@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import (USEREVENT, MOUSEBUTTONDOWN, QUIT)
-import model
+import model as m
 import view
 import controller
 
@@ -14,7 +14,7 @@ green = (27, 133, 27)
 TIMER = USEREVENT + 1
 
 #  Set classes to simple name.
-model = model.HealthfyModel()
+model = m.HealthfyModel()
 view = view.HealthfyView(model)
 controller = controller.HealthfyController()
 
@@ -23,6 +23,8 @@ pygame.mixer.init()
 pygame.mixer.music.load('Images/Picket Fence Lol.ogg')
 pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
 pygame.mixer.music.play(-1)
+
+background = pygame.image.load("Images/background.jpg")
 
 #  Main loop:
 RUNNING = True
@@ -61,7 +63,7 @@ while RUNNING:
     model.bomb.draw()
     pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
     pygame.draw.rect(model.screen, green, (
-        0, 0, 240*model.health/model.max_health, 30
+        0, 0, 240*m.health/model.max_health, 30
     ))
     pygame.display.update()
 pygame.quit()

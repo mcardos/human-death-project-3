@@ -37,16 +37,6 @@ class HealthfyView:
         self.background = pygame.image.load("Images/background.jpg")
         self.humanoid = pygame.image.load("Images/humanoid.jpg")
 
-    def text_objects(self, text, font):
-        """
-        Create a new surface and return a specified text rendered on it.
-        Arguement:
-            text = A string representing the words that shall be rendered
-            on the screen.
-            font = An object representing a font type from the system fonts.
-        """
-        text_surface = font.render(text, True, white)
-        return text_surface, text_surface.get_rect()
 
     def draw(self, backdrop):
         """
