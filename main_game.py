@@ -12,6 +12,7 @@ pygame.init()
 red = (255, 0, 0)
 green = (27, 133, 27)
 TIMER = USEREVENT + 1
+background = pygame.image.load("Images/background.jpg")
 
 #  Set classes to simple name.
 model = m.HealthfyModel()
