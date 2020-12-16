@@ -27,6 +27,14 @@ class HealthfyModel:
         TIMER = An event, represented by the integer 25, that appears
         at 0 seconds in a single game.
     """
+    __instance = None
+    @staticmethod
+    def getInstance():
+      """ Static access method. """
+      if HealthfyModel.__instance == None:
+         HealthfyModel()
+      return HealthfyModel.__instance
+
     def __init__(self):
         """
         Creates a new Healthfy instance and the buttons necessary
@@ -34,27 +42,32 @@ class HealthfyModel:
 
         Initializing the health, user score and current status of the humanoid.
         """
-        # self.health = 240
-        self.max_health = 240
-        self._user_score = 0
-        self.screen = pygame.display.set_mode((500, 500))
-        self.timer_sec = 48
-        self.feed = Button(100, 375, "Eat", self.feeding_status, self.screen)
-        self.work = Button(200, 375, "Work", self.working_status, self.screen)
-        self.talk = Button(300, 375, "Talk", self.socializing_status,
-                           self.screen)
-        self.potty = Button(300, 315, "Potty", self.bathroom_status,
+        if HealthfyModel.__instance != None:
+            raise Exception("This class is a singleton!")
+        else:
+            HealthfyModel.__instance = self
+            self.health = 240
+            self.max_health = 240
+            self._user_score = 0
+            self.screen = pygame.display.set_mode((500, 500))
+            self.timer_sec = 48
+            self.feed = Button(100, 375, "Eat", self.feeding_status, self.screen)
+            self.work = Button(200, 375, "Work", self.working_status, self.screen)
+            self.talk = Button(300, 375, "Talk", self.socializing_status,
                             self.screen)
-        self.sleep = Button(100, 315, "Sleep", self.sleeping_status,
-                            self.screen)
-        self.bomb = Button(200, 315, "Bomb", self.bomb_status, self.screen)
-        self.TIMER = USEREVENT + 1
-        self.random_sec = random.randint(0, 48)
-        self.talk_alert = False
-        self.feed_alert = False
-        self.potty_alert = False
-        self.work_alert = False
-        self.sleep_alert = False
+            self.potty = Button(300, 315, "Potty", self.bathroom_status,
+                                self.screen)
+            self.sleep = Button(100, 315, "Sleep", self.sleeping_status,
+                                self.screen)
+            self.bomb = Button(200, 315, "Bomb", self.bomb_status, self.screen)
+            self.TIMER = USEREVENT + 1
+            self.random_sec = random.randint(0, 48)
+            self.talk_alert = False
+            self.feed_alert = False
+            self.potty_alert = False
+            self.work_alert = False
+            self.sleep_alert = False
+            self.bomb_alert = False
 
     def feeding_status(self):
         """
@@ -64,7 +77,7 @@ class HealthfyModel:
         if 36 <= self.get_timer_sec() <= 40 or 8 <= self.get_timer_sec() <= 10:
             if not self.feed_alert:
                 self.feed.set_to_alert()
-                health -= 10
+                self.health -= 10
                 self.feed_alert = True
         else:
             self.feed_alert = False
@@ -79,7 +92,7 @@ class HealthfyModel:
                 28 <= self.get_timer_sec() <= 30):
             if not self.sleep_alert:
                 self.sleep.set_to_alert()
-                health -= 10
+                self.health -= 10
                 self.sleep_alert = True
         else:
             self.sleep_alert = False
@@ -93,7 +106,7 @@ class HealthfyModel:
         if 24 <= self.get_timer_sec() <= 26:
             if not self.work_alert:
                 self.work.set_to_alert()
-                health -= 10
+                self.health -= 10
                 self.work_alert = True
         else:
             self.work_alert = False
@@ -108,7 +121,7 @@ class HealthfyModel:
         if 44 <= self.get_timer_sec() <= 46 or 4 <= self.get_timer_sec() <= 10:
             if not self.talk_alert:
                 self.talk.set_to_alert()
-                health -= 10
+                self.health -= 10
                 self.talk_alert = True
     
         else:
@@ -124,7 +137,7 @@ class HealthfyModel:
                 30 <= self.get_timer_sec() <= 35):
             if not self.potty_alert:
                 self.potty.set_to_alert()
-                health -= 10
+                self.health -= 10
                 self.potty_alert = True
         else:
             self.potty_alert = False
@@ -138,7 +151,7 @@ class HealthfyModel:
         if (self.random_sec <= self.timer_sec <= self.random_sec
                 or 3 <= self.timer_sec <= 4 or 10 <= self.timer_sec <= 11):
             if not self.bomb_alert:
-                health -= 10
+                self.health -= 10
                 self.bomb.set_to_alert()
         else:
             self.bomb_alert = False
@@ -207,6 +220,8 @@ class Button:
         self.click_color = green
         self.current_color = black
         self.screen = screen
+        self.model = HealthfyModel.getInstance()
+        # TODO: EXPLAIN SINGLETON
 
     def set_to_alert(self):
         """
@@ -232,6 +247,7 @@ class Button:
             if click[0] == 1 and self.on_click is not None:
                 self.on_click()
                 self.current_color = self.click_color
+                self.model.health += 10
 
     def draw(self):
         """
