@@ -41,6 +41,9 @@ click = False
 
 
 def main_menu():
+    """
+    Present the user with three buttons that directs to the chosen game.
+    """
     click = False
     while True:
         screen.fill(white)
@@ -86,7 +89,7 @@ controller = controller.HealthfyController()
 
 #  Add background music.
 pygame.mixer.init()
-pygame.mixer.music.load('Images/Picket Fence Lol.ogg')
+pygame.mixer.music.load('Audio/Picket Fence Lol.ogg')
 pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
 pygame.mixer.music.play(-1)
 
@@ -97,6 +100,9 @@ background = pygame.image.load("Images/background.jpg")
 
 
 def start_game():
+    """
+    Play the game with the default background.
+    """
     RUNNING = True
     while RUNNING:
         for event in pygame.event.get():
