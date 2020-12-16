@@ -1,6 +1,9 @@
 - title: Home
-url: /
+  url: /
 
-- title: Learn Python
-  url: /learnpython
+- title: Learn Pygame
+  url: /learnpygame/
+
+- title: Game Demo
+  url: /gamedemo/
   
