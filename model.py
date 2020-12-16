@@ -184,7 +184,8 @@ class HealthfyModel:
 
 class Button:
     """
-    Keep track of colors and know when the user has clicked the button
+    Keep track of colors and know when the user has clicked the button.
+    Very similar uses as a Controller class.
     Attributes:
         width = An integer showing that the horizontal length of the
         buttons (70 pixels).
