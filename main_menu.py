@@ -149,7 +149,6 @@ def start_game():
 #  Draw and update all screen displays.
         view.draw(background)
         view.display_score()
-        # view.current_status()
         model.feed.draw()
         model.work.draw()
         model.talk.draw()
@@ -195,7 +194,6 @@ def isabele_game():
 #  Draw and update all screen displays.
         view.draw(isabele)
         view.display_score()
-        # view.current_status()
         model.feed.draw()
         model.work.draw()
         model.talk.draw()
@@ -241,7 +239,6 @@ def tom_game():
 #  Draw and update all screen displays.
         view.draw(tom)
         view.display_score()
-        # view.current_status()
         model.feed.draw()
         model.work.draw()
         model.talk.draw()
