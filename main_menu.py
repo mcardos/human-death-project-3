@@ -18,11 +18,33 @@ grey = (80, 80, 80)
 
 
 def text_objects(text, font):
+    """
+    Create a new surface and return a specified text rendered on it.
+        Arguements:
+            text = A string representing the words that shall be rendered
+            on the screen.
+            font = An object representing a font type from the system fonts.
+    """
     text_surface = font.render(text, True, white)
     return text_surface, text_surface.get_rect()
 
 
 def button(msg, x, y, w, h, ic, ac, key=None):
+    """
+    Draw buttons on the screen to represent main menu of the game.
+    Arguements:
+              msg = A string representing the words that shall be rendered
+              x = An integer representing the horizontal(x-axis) position of
+                the buttons on the screen.
+              y = An integer representing the horizontal(y_axis) of the buttons
+                on the screen.
+              w = An integer showing that the horizontal length of the
+                buttons.
+              h = An integer showing that the vertical length of the
+                buttons (50 pixels).
+             ic = Color of the text displayed on the button
+             ac = Color on the background on of the button
+    """
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
     if x + w > mouse[0] > x and y + h > mouse[1] > y:
