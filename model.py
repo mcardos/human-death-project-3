@@ -157,12 +157,12 @@ class HealthfyModel:
             self.bomb_alert = False
             self.bomb.set_to_normal()
 
-    def user_score(self):
+    def convert_user_score(self):
         """
         Convert health bar to scores by multiplying it by 100.
         """
-        self._user_score += health * 100
-        # return self._user_score
+        self._user_score += self.health * 100
+        return self._user_score
 
     def countdown(self):
         """

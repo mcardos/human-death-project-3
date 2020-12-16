@@ -1,5 +1,4 @@
 import pygame
-import model
 
 pygame.font.init()
 black = (0, 0, 0)
