@@ -1,3 +1,7 @@
+layout: page
+title: "Learn Pygame"
+permalink: /learnpygame/
+
 # Learn Pygame
 ## Make your own game today with Pygame!
 You can view all the appropriate docs right at the source: [Pygame](https://www.pygame.org/docs/)
