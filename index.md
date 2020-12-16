@@ -33,18 +33,21 @@ The backgroung song used is [Picket Fences Lol](https://www.youtube.com/watch?v=
 
 ## Stay alive Humanoid!
 ### The MVC Architecture
-    1. [Model Class](https://github.com/mcardos/project-3-healthfy/blob/main/classes.py)
-    2. [View Class](https://github.com/mcardos/project-3-healthfy/blob/main/view.py)
-    3. [Controller Class](https://github.com/mcardos/project-3-healthfy/blob/main/controller.py)
+  1. [Model Class](https://github.com/mcardos/project-3-healthfy/blob/main/classes.py)
+  2. [View Class](https://github.com/mcardos/project-3-healthfy/blob/main/view.py)
+  3. [Controller Class](https://github.com/mcardos/project-3-healthfy/blob/main/controller.py)
 
 ## What's the big idea?
 The big idea behind this game is to create a fun, family game that combines the aspects of several of our favorite games. We have the Whack-a-Mole style buttons; the Sims styled goal of keeping things alive and the cute Animal Crossing visuals. 
 
 ## Who are we:
-The code and this website was developed by Maria and Deng. \n
+The code and this website was developed by Maria and Deng.
+
+
 Maria and Deng are both students at Babson College who decided to take a coding class at Olin College despite not having any prior coding experience. But they came up with this beautiful game.
-LinkedIn: [Maria Cardoso](https://www.linkedin.com/in/mariacardoso18/)
-LinkedIn: [Daniel Deng Chol](https://www.linkedin.com/in/daniel-deng-chol/)
+
+>> LinkedIn: [Maria Cardoso](https://www.linkedin.com/in/mariacardoso18/)
+>> LinkedIn: [Daniel Deng Chol](https://www.linkedin.com/in/daniel-deng-chol/)
 
 ### Need a little more?
 For more information visit our GitHub repo at https://github.com/mcardos/project-3-healthfy/
