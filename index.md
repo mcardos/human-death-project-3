@@ -33,26 +33,19 @@ The backgroung song used is [Picket Fences Lol](https://www.youtube.com/watch?v=
 
 ## Stay alive Humanoid!
 ### The MVC Architecture
-    - _Model_ 
-    - _View_
-    - _Controller_
+    1. [Model Class](https://github.com/mcardos/project-3-healthfy/blob/main/classes.py)
+    2. [View Class](https://github.com/mcardos/project-3-healthfy/blob/main/view.py)
+    3. [Controller Class](https://github.com/mcardos/project-3-healthfy/blob/main/controller.py)
 
-## Who did we made it for?
+## What's the big idea?
 The big idea behind this game is to create a fun, family game that combines the aspects of several of our favorite games. We have the Whack-a-Mole style buttons; the Sims styled goal of keeping things alive and the cute Animal Crossing visuals. 
 
-## Who we are:
-The code and this website was developed by Maria and Deng. 
-Maria and Deng are both students at Babson College who decided to take a coding class at Olin College despite not knowing any Python. But they came up with this beautiful game.
+## Who are we:
+The code and this website was developed by Maria and Deng. \n
+Maria and Deng are both students at Babson College who decided to take a coding class at Olin College despite not having any prior coding experience. But they came up with this beautiful game.
+LinkedIn: [Maria Cardoso](https://www.linkedin.com/in/mariacardoso18/)
+LinkedIn: [Daniel Deng Chol](https://www.linkedin.com/in/daniel-deng-chol/)
 
-[Link](url) and ![Image](src)
-
-
+### Need a little more?
 For more information visit our GitHub repo at https://github.com/mcardos/project-3-healthfy/
 
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/mcardos/project-3-healthfy/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
