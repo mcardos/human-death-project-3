@@ -1,6 +1,9 @@
 ## Welcome to Healthfy
 
 This game is all about keeping a humanoid alive. This humanoid is simply an icon with a health bar. The player needs to keep this humanoid alive by correctly commanding the feeding, working, socializing, sleeping, and bathroom usage of this humanoid.
+[Home Page](https://mcardos.github.io/project-3-healthfy/)
+[Learn Pygame](https://mcardos.github.io/project-3-healthfy/learnpygame)
+[Game Demo](https://mcardos.github.io/project-3-healthfy/gamedemo)
 
 ### The Code
 
