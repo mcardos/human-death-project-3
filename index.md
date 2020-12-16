@@ -25,9 +25,9 @@ while RUNNING:
             model.countdown()
 ```
 # Healthfy Game
-```
-![An image of the game]()
-```
+
+![An image of the game](Pictures/isabele.png)
+
 ## Song Credit:
 The backgroung song used is [Picket Fences Lol](https://www.youtube.com/watch?v=W1tXhcUnwSU) by Huron John. You can check out his [Instagram here](https://www.instagram.com/huronjohnny/?hl=en) and his [Youtube channel](https://www.youtube.com/channel/UCTnqiXwiMtMnTrQLjD6MZFQ) for more!
 
