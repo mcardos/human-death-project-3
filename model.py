@@ -71,16 +71,18 @@ class HealthfyModel:
             self.work_alert = False
             self.sleep_alert = False
             self.bomb_alert = False
+            self.SysFont = pygame.font.get_default_font()
+            self.font = pygame.font.SysFont(None, 50)
 
     def feeding_status(self):
         """
         Add to the health bar if user clicks on the 'Eat'
         button when it flashes red.
         """
-        if 36 <= self.get_timer_sec() <= 40 or 8 <= self.get_timer_sec() <= 10:
+        if 36 <= self.get_timer_sec() <= 38 or 8 <= self.get_timer_sec() <= 10:
             if not self.feed_alert:
                 self.feed.set_to_alert()
-                self.health -= 10
+                self.health -= 15
                 self.feed_alert = True
         else:
             self.feed_alert = False
@@ -92,10 +94,11 @@ class HealthfyModel:
         'Sleep' button when it flashes red.
         """
         if (17 <= self.get_timer_sec() <= 20
-                or 28 <= self.get_timer_sec() <= 30):
+            or 27 <= self.get_timer_sec() <= 29 
+            or 35 <= self.get_timer_sec() <= 33):
             if not self.sleep_alert:
                 self.sleep.set_to_alert()
-                self.health -= 10
+                self.health -= 15
                 self.sleep_alert = True
         else:
             self.sleep_alert = False
@@ -106,10 +109,10 @@ class HealthfyModel:
         Add to the health bar if user clicks on the 'Work'
         button when it flashes red.
         """
-        if 24 <= self.get_timer_sec() <= 26:
+        if (24 <= self.get_timer_sec() <= 26 or 1 <= self.get_timer_sec() <= 2 or 15 <= self.get_timer_sec() <= 17):
             if not self.work_alert:
                 self.work.set_to_alert()
-                self.health -= 10
+                self.health -= 15
                 self.work_alert = True
         else:
             self.work_alert = False
@@ -121,11 +124,17 @@ class HealthfyModel:
         button when it flashes red.
         """
         # self.talk_alert = False
-        if 44 <= self.get_timer_sec() <= 46 or 4 <= self.get_timer_sec() <= 10:
+        if 44 <= self.get_timer_sec() <= 46 or 4 <= self.get_timer_sec() <= 6:
             if not self.talk_alert:
                 self.talk.set_to_alert()
-                self.health -= 10
+                self.health -= 15
                 self.talk_alert = True
+                # print("HUmanoid needs to play")
+                socializing_text = self.font.render("Humanoid need to play!!!", True, red)
+                self.screen.blit(socializing_text, (20, 160))
+                # print(socializing_text)
+                pygame.display.update()
+        
 
         else:
             self.talk_alert = False
@@ -137,10 +146,10 @@ class HealthfyModel:
         button when it flashes red.
         """
         if (40 <= self.get_timer_sec() <= 42
-                or 30 <= self.get_timer_sec() <= 35):
+                or 30 <= self.get_timer_sec() <= 32):
             if not self.potty_alert:
                 self.potty.set_to_alert()
-                self.health -= 10
+                self.health -= 15
                 self.potty_alert = True
         else:
             self.potty_alert = False
@@ -154,8 +163,9 @@ class HealthfyModel:
         if (self.random_sec <= self.timer_sec <= self.random_sec
                 or 3 <= self.timer_sec <= 4 or 10 <= self.timer_sec <= 11):
             if not self.bomb_alert:
-                self.health -= 10
                 self.bomb.set_to_alert()
+                self.health -= 15
+                self.bomb_alert = True
         else:
             self.bomb_alert = False
             self.bomb.set_to_normal()
