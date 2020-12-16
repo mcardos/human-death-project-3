@@ -80,7 +80,7 @@ def main_menu():
 TIMER = USEREVENT + 1
 
 #  Set classes to simple name.
-model = model.HealthfyModel()
+model = model.HealthfyModel.get_instance()
 view = view.HealthfyView(model)
 controller = controller.HealthfyController()
 

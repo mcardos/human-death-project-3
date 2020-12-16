@@ -29,7 +29,7 @@ class HealthfyModel:
     """
     __instance = None
     @staticmethod
-    def getInstance():
+    def get_instance():
       """ Static access method. """
       if HealthfyModel.__instance == None:
          HealthfyModel()
@@ -220,7 +220,7 @@ class Button:
         self.click_color = green
         self.current_color = black
         self.screen = screen
-        self.model = HealthfyModel.getInstance()
+        self.model = HealthfyModel.get_instance()
         # TODO: EXPLAIN SINGLETON
 
     def set_to_alert(self):

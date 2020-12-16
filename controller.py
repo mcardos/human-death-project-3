@@ -23,7 +23,7 @@ class HealthfyController:
         """
         Instantiate the controller class.
         """
-        self.model = model.HealthfyModel()
+        self.model = model.HealthfyModel.get_instance()
 
     def get_input(self):
         """
