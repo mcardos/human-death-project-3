@@ -8,8 +8,6 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 0, 0)
 green = (27, 133, 27)
-global health
-health = 240
 
 
 class HealthfyModel:
@@ -28,12 +26,15 @@ class HealthfyModel:
         at 0 seconds in a single game.
     """
     __instance = None
+
     @staticmethod
     def get_instance():
-      """ Static access method. """
-      if HealthfyModel.__instance == None:
-         HealthfyModel()
-      return HealthfyModel.__instance
+        """
+        Static access method.
+        """
+        if HealthfyModel.__instance is None:
+            HealthfyModel()
+        return HealthfyModel.__instance
 
     def __init__(self):
         """
@@ -42,7 +43,7 @@ class HealthfyModel:
 
         Initializing the health, user score and current status of the humanoid.
         """
-        if HealthfyModel.__instance != None:
+        if HealthfyModel.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
             HealthfyModel.__instance = self
@@ -51,10 +52,12 @@ class HealthfyModel:
             self._user_score = 0
             self.screen = pygame.display.set_mode((500, 500))
             self.timer_sec = 48
-            self.feed = Button(100, 375, "Eat", self.feeding_status, self.screen)
-            self.work = Button(200, 375, "Work", self.working_status, self.screen)
+            self.feed = Button(100, 375, "Eat", self.feeding_status,
+                               self.screen)
+            self.work = Button(200, 375, "Work", self.working_status,
+                               self.screen)
             self.talk = Button(300, 375, "Talk", self.socializing_status,
-                            self.screen)
+                               self.screen)
             self.potty = Button(300, 315, "Potty", self.bathroom_status,
                                 self.screen)
             self.sleep = Button(100, 315, "Sleep", self.sleeping_status,
@@ -88,8 +91,8 @@ class HealthfyModel:
         Add to the health bar if user clicks on the
         'Sleep' button when it flashes red.
         """
-        if (17 <= self.get_timer_sec() <= 20 or
-                28 <= self.get_timer_sec() <= 30):
+        if (17 <= self.get_timer_sec() <= 20
+                or 28 <= self.get_timer_sec() <= 30):
             if not self.sleep_alert:
                 self.sleep.set_to_alert()
                 self.health -= 10
@@ -123,7 +126,7 @@ class HealthfyModel:
                 self.talk.set_to_alert()
                 self.health -= 10
                 self.talk_alert = True
-    
+
         else:
             self.talk_alert = False
             self.talk.set_to_normal()
@@ -133,8 +136,8 @@ class HealthfyModel:
         Add to the health bar if user clicks on the 'Potty'
         button when it flashes red.
         """
-        if (40 <= self.get_timer_sec() <= 42 or
-                30 <= self.get_timer_sec() <= 35):
+        if (40 <= self.get_timer_sec() <= 42
+                or 30 <= self.get_timer_sec() <= 35):
             if not self.potty_alert:
                 self.potty.set_to_alert()
                 self.health -= 10
@@ -221,7 +224,8 @@ class Button:
         self.current_color = black
         self.screen = screen
         self.model = HealthfyModel.get_instance()
-        # TODO: EXPLAIN SINGLETON
+        #  Added singleton class to have all uses of model refer to the
+        #  same instance.
 
     def set_to_alert(self):
         """
@@ -242,8 +246,8 @@ class Button:
         """
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
-        if (self.x+self.width > mouse[0] > self.x and
-                self.y+self.height > mouse[1] > self.y):
+        if (self.x + self.width > mouse[0] > self.x
+                and self.y + self.height > mouse[1] > self.y):
             if click[0] == 1 and self.on_click is not None:
                 self.on_click()
                 self.current_color = self.click_color
@@ -259,8 +263,8 @@ class Button:
         small_text = pygame.font.SysFont("comicsansms", 30)
         text_surface, text_rectangle = self.create_text_objects(self.name,
                                                                 small_text)
-        text_rectangle.center = ((self.x+(self.width/2)),
-                                 (self.y+(self.height/2)))
+        text_rectangle.center = ((self.x + (self.width / 2)),
+                                 (self.y + (self.height / 2)))
         self.screen.blit(text_surface, text_rectangle)
 
     def create_text_objects(self, text, font):

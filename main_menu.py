@@ -25,7 +25,7 @@ def text_objects(text, font):
 def button(msg, x, y, w, h, ic, ac, key=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
-    if x+w > mouse[0] > x and y+h > mouse[1] > y:
+    if x + w > mouse[0] > x and y + h > mouse[1] > y:
         pygame.draw.rect(screen, ac, (x, y, w, h))
         if click[0] == 1:
             pass
@@ -33,7 +33,7 @@ def button(msg, x, y, w, h, ic, ac, key=None):
         pygame.draw.rect(screen, ic, (x, y, w, h))
     smallText = pygame.font.SysFont("comicsansms", 20)
     text_surface, text_rectangle = text_objects(msg, smallText)
-    text_rectangle.center = ((x+(w/2)), (y+(h/2)))
+    text_rectangle.center = ((x + (w / 2)), (y + (h / 2)))
     screen.blit(text_surface, text_rectangle)
 
 
@@ -130,13 +130,16 @@ def start_game():
         model.bomb.draw()
         pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
         pygame.draw.rect(model.screen, green, (
-            0, 0, 240*model.health/model.max_health, 30
+            0, 0, 240 * model.health / model.max_health, 30
         ))
         pygame.display.update()
     pygame.quit()
 
 
 def isabele_game():
+    """
+    Play the game with the background of Isabelle from Animal Crossing.
+    """
     running = True
     while running:
         screen.fill(white)
@@ -173,13 +176,16 @@ def isabele_game():
         model.bomb.draw()
         pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
         pygame.draw.rect(model.screen, green, (
-            0, 0, 240*model.health/model.max_health, 30
+            0, 0, 240 * model.health / model.max_health, 30
         ))
         pygame.display.update()
     pygame.quit()
 
 
 def tom_game():
+    """
+    Play the game with Tom as the background.
+    """
     RUNNING = True
     while RUNNING:
         screen.fill(white)
@@ -216,11 +222,12 @@ def tom_game():
         model.bomb.draw()
         pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
         pygame.draw.rect(model.screen, green, (
-            0, 0, 240*model.health/model.max_health, 30
+            0, 0, 240 * model.health / model.max_health, 30
         ))
         pygame.display.update()
     pygame.quit()
 
 
 #  Call main_menu.
-main_menu()
+if __name__ == "__main__":
+    main_menu()

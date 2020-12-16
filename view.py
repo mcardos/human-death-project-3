@@ -36,7 +36,6 @@ class HealthfyView:
         self.background = pygame.image.load("Images/background.jpg")
         self.humanoid = pygame.image.load("Images/humanoid.jpg")
 
-
     def draw(self, backdrop):
         """
         Draw the current game state to the screen.
