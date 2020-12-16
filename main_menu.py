@@ -137,6 +137,9 @@ def start_game():
 
 
 def isabele_game():
+    """
+    Play the game with the background of Isabelle from Animal Crossing.
+    """
     running = True
     while running:
         screen.fill(white)
@@ -173,13 +176,16 @@ def isabele_game():
         model.bomb.draw()
         pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
         pygame.draw.rect(model.screen, green, (
-            0, 0, 240*model.health/model.max_health, 30
+            0, 0, 240 * model.health / model.max_health, 30
         ))
         pygame.display.update()
     pygame.quit()
 
 
 def tom_game():
+    """
+    Play the game with Tom as the background.
+    """
     RUNNING = True
     while RUNNING:
         screen.fill(white)
@@ -216,11 +222,12 @@ def tom_game():
         model.bomb.draw()
         pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
         pygame.draw.rect(model.screen, green, (
-            0, 0, 240*model.health/model.max_health, 30
+            0, 0, 240 * model.health / model.max_health, 30
         ))
         pygame.display.update()
     pygame.quit()
 
 
 #  Call main_menu.
-main_menu()
+if __name__ == "__main__":
+    main_menu()
