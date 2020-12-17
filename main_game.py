@@ -14,11 +14,6 @@ green = (27, 133, 27)
 TIMER = USEREVENT + 1
 background = pygame.image.load("Images/background.jpg")
 
-#  Set classes to simple name.
-# model = m.HealthfyModel()
-# view = view.HealthfyView(model)
-# controller = controller.HealthfyController()
-
 model = model.HealthfyModel.get_instance()
 view = view.HealthfyView(model)
 controller = controller.HealthfyController()
@@ -59,7 +54,6 @@ while RUNNING:
 #  Draw and update all screen displays.
     view.draw(background)
     view.display_score()
-    # view.current_status()
     model.feed.draw()
     model.work.draw()
     model.talk.draw()
@@ -68,7 +62,7 @@ while RUNNING:
     model.bomb.draw()
     pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
     pygame.draw.rect(model.screen, green, (
-        0, 0, 240*model.health/model.max_health, 30
+        0, 0, 240 * model.health / model.max_health, 30
     ))
     pygame.display.update()
 pygame.quit()

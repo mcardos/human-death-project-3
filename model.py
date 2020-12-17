@@ -3,7 +3,6 @@ import pygame
 from pygame.locals import (USEREVENT)
 
 
-
 # Constant variables.
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -57,13 +56,34 @@ class HealthfyModel:
                                self.screen, "The Humanoid is hungry!!")
             self.work = Button(200, 375, "Work", self.working_status,
                                self.screen, "The Humanoid needs to work!!")
-            self.talk = Button(300, 375, "Talk", self.socializing_status,
-                               self.screen, "The Humanoid is bored and wants to play!!")
-            self.potty = Button(300, 315, "Potty", self.bathroom_status,
-                                self.screen, "The Humanoid is in need of a bathroom!!")
-            self.sleep = Button(100, 315, "Sleep", self.sleeping_status,
-                                self.screen, "The Humanoid is tired and needs sleep!!")
-            self.bomb = Button(200, 315, "Bomb", self.bomb_status, self.screen, "")
+            self.talk = Button(
+                300,
+                375,
+                "Talk",
+                self.socializing_status,
+                self.screen,
+                "The Humanoid is bored and wants to play!!")
+            self.potty = Button(
+                300,
+                315,
+                "Potty",
+                self.bathroom_status,
+                self.screen,
+                "The Humanoid is in need of a bathroom!!")
+            self.sleep = Button(
+                100,
+                315,
+                "Sleep",
+                self.sleeping_status,
+                self.screen,
+                "The Humanoid is tired and needs sleep!!")
+            self.bomb = Button(
+                200,
+                315,
+                "Bomb",
+                self.bomb_status,
+                self.screen,
+                "")
             self.TIMER = USEREVENT + 1
             self.random_sec = random.randint(0, 48)
             self.talk_alert = False
@@ -75,12 +95,13 @@ class HealthfyModel:
             self.SysFont = pygame.font.get_default_font()
             self.font = pygame.font.SysFont(None, 50)
             self.message = ""
-            # self.positions = [(random.randrange(0, 400, 70), random.randrange(260, 400, 50)) for i in range(100)
+            # self.positions = [(random.randrange(0, 400, 70),
+            # random.randrange(260, 400, 50)) for i in range(100)
             self.positions = []
-            for x in range (0, 400, 80): # Space them out by 80 pixels
-                for y in range (300, 400, 80):
+            for x in range(0, 400, 80):  # Space them out by 80 pixels
+                for y in range(300, 400, 80):
                     self.positions.append((x, y))
-                    
+
     def feeding_status(self):
         """
         Add to the health bar if user clicks on the 'Eat'
@@ -101,8 +122,8 @@ class HealthfyModel:
         'Sleep' button when it flashes red.
         """
         if (17 <= self.get_timer_sec() <= 20
-            or 27 <= self.get_timer_sec() <= 29 
-            or 35 <= self.get_timer_sec() <= 33):
+            or 27 <= self.get_timer_sec() <= 29
+                or 35 <= self.get_timer_sec() <= 33):
             if not self.sleep_alert:
                 self.sleep.set_to_alert()
                 self.health -= 15
@@ -116,7 +137,8 @@ class HealthfyModel:
         Add to the health bar if user clicks on the 'Work'
         button when it flashes red.
         """
-        if (24 <= self.get_timer_sec() <= 26 or 1 <= self.get_timer_sec() <= 2 or 15 <= self.get_timer_sec() <= 17):
+        if (24 <= self.get_timer_sec() <= 26 or 1 <= self.get_timer_sec()
+                <= 2 or 15 <= self.get_timer_sec() <= 17):
             if not self.work_alert:
                 self.work.set_to_alert()
                 self.health -= 15
@@ -184,19 +206,16 @@ class HealthfyModel:
         self.timer_sec -= 1
         if self.timer_sec == 0:
             pygame.time.set_timer(self.TIMER, 0)
-            
-        if self.timer_sec %3 == 0:
-            choice = random.sample(self.positions,6)
+
+        if self.timer_sec % 3 == 0:
+            choice = random.sample(self.positions, 6)
             self.feed.x, self.feed.y = choice[0][0], choice[0][1]
             self.work.x, self.work.y = choice[4][0], choice[1][1]
             self.talk.x, self.talk.y = choice[3][0], choice[2][1]
             self.potty.x, self.potty.y = choice[2][0], choice[3][1]
             self.sleep.x, self.sleep.y = choice[1][0], choice[4][1]
             self.bomb.x, self.bomb.y = choice[5][0], choice[5][1]
-            
-           
-           
-        
+
     def get_timer_sec(self):
         """
         Return the current time, an integer.
@@ -222,6 +241,7 @@ class Button:
         current_color = A string representing the color of the button
         in current status.
     """
+
     def __init__(self, x, y, name, on_click, screen, message):
         """
         Instantiate the button class.
@@ -248,8 +268,6 @@ class Button:
         self.screen = screen
         self.model = HealthfyModel.get_instance()
         self.message = message
-        #  Added singleton class to have all uses of model refer to the
-        #  same instance.
 
     def set_to_alert(self):
         """
@@ -258,13 +276,11 @@ class Button:
         self.current_color = self.alert_color
         self.model.message = self.message
 
-
     def set_to_normal(self):
         """
         Set current color to the normal color
         """
         self.current_color = self.normal_color
-        # self.model.message = ""
 
     def check_click(self):
         """
