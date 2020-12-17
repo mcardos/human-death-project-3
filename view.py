@@ -7,7 +7,7 @@ red = (255, 0, 0)
 green = (27, 133, 27)
 TIMER = pygame.USEREVENT + 1
 pygame.time.set_timer(TIMER, 1000)
-font = pygame.font.SysFont("freesans", 50)
+font = pygame.font.SysFont("freesans", 25)
 
 
 class HealthfyView:
@@ -61,5 +61,11 @@ class HealthfyView:
         """
         Display the top score and the current score to the player.
         """
-        score = font.render(f"Score: {self.model._user_score}", True, black)
+        score = font.render(f"Score: {self.model.convert_user_score()}", True, black)
         self.screen.blit(score, (250, 0))
+    
+    def display_message(self):
+        """
+        """
+        message = font.render(self.model.message, True, black)
+        self.screen.blit(message, (0, 120))

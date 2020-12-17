@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import (USEREVENT, MOUSEBUTTONDOWN, QUIT)
-import model as m
+import model
 import view
 import controller
 
@@ -15,7 +15,11 @@ TIMER = USEREVENT + 1
 background = pygame.image.load("Images/background.jpg")
 
 #  Set classes to simple name.
-model = m.HealthfyModel()
+# model = m.HealthfyModel()
+# view = view.HealthfyView(model)
+# controller = controller.HealthfyController()
+
+model = model.HealthfyModel.get_instance()
 view = view.HealthfyView(model)
 controller = controller.HealthfyController()
 
@@ -64,7 +68,7 @@ while RUNNING:
     model.bomb.draw()
     pygame.draw.rect(model.screen, red, (0, 0, 240, 30))
     pygame.draw.rect(model.screen, green, (
-        0, 0, 240*m.health/model.max_health, 30
+        0, 0, 240*model.health/model.max_health, 30
     ))
     pygame.display.update()
 pygame.quit()
