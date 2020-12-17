@@ -67,6 +67,7 @@ class HealthfyView:
 
     def display_message(self):
         """
+        Display the current state of the humanod and what it needs
         """
         message = font.render(self.model.message, True, black)
         self.screen.blit(message, (0, 120))

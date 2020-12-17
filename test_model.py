@@ -16,7 +16,7 @@ status_cases = [(40, model.red, game_model.feeding_status, game_model.feed),
                 (23, model.black, game_model.bathroom_status, game_model.potty),
                 (23, model.black, game_model.bathroom_status, game_model.potty),
                 (3, model.black, game_model.bathroom_status, game_model.bomb),
-                ]
+                ] # Test cases to check time, color, status and button
 
 
 @pytest.mark.parametrize("time, color, status, button", status_cases)

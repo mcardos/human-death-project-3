@@ -111,7 +111,7 @@ controller = controller.HealthfyController()
 
 #  Add background music.
 pygame.mixer.init()
-pygame.mixer.music.load('Audio/Picket Fence Lol.wav')
+pygame.mixer.music.load('Audio/Picket Fence Lol.ogg')
 pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
 pygame.mixer.music.play(-1)
 
@@ -195,6 +195,7 @@ def isabele_game():
 #  Draw and update all screen displays.
         view.draw(isabele)
         view.display_score()
+        view.display_message()
         model.feed.draw()
         model.work.draw()
         model.talk.draw()
@@ -240,6 +241,7 @@ def tom_game():
 #  Draw and update all screen displays.
         view.draw(tom)
         view.display_score()
+        view.display_message()
         model.feed.draw()
         model.work.draw()
         model.talk.draw()
